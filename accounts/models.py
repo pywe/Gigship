@@ -1,7 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
-from django_mysql.models import ListTextField
+# from django_mysql.models import ListTextField
 
 
 # Create your models here.
