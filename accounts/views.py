@@ -33,3 +33,21 @@ def forgot(request):
     template_name = "accounts/forgot.html"
     args = {}
     return render(request,template_name,args)
+
+# faq page, showing faq page to users
+def faq(request):
+    template_name = "accounts/faq.html"
+    args = {}
+    return render(request,template_name,args)
+
+# create resume page, showing create resume page to users
+def create_resume(request):
+    template_name = "accounts/create-resume.html"
+    args = {}
+    return render(request,template_name,args)
+
+# support page, showing support page to users
+def support(request):
+    template_name = "accounts/contact.html"
+    args = {}
+    return render(request,template_name,args)
