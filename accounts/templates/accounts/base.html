@@ -54,7 +54,10 @@
 			<img src="/static/images/loader.svg" class="loader-img" alt="">
 		</div>
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 8b90c8f74797f6f652f7a44552b67855807f4cd1
 		<!--Header Main-->
 		<div class="header-main">
 			<!--Top Bar-->
@@ -64,7 +67,7 @@
 						<div class="col-xl-7 col-lg-7 col-sm-4 col-7">
 							<div class="top-bar-left d-flex">
 								<div class="clearfix">
-									<ul class="socials">
+									<!-- <ul class="socials">
 										<li>
 											<a class="social-icon" href="#"><i class="fa fa-facebook"></i></a>
 										</li>
@@ -77,7 +80,7 @@
 										<li>
 											<a class="social-icon" href="#"><i class="fa fa-google-plus"></i></a>
 										</li>
-									</ul>
+									</ul> -->
 								</div>
 								<div class="clearfix">
 									<ul class="contact border-left">
@@ -131,17 +134,17 @@
 							<li><a href="/admin">Administration</a></li>
 							<li><a href="/how-it-works">How It Works</a></li>
 							<li><a href="#">Our Team</a></li>
-							<li><a href="#">FAQ</a></li>
-							<li><a href="#">Support <span class="horizontal-arrow"></span></a></li>
+							<li><a href="/faq">FAQ</a></li>
+							<li><a href="/support">Support <span class="horizontal-arrow"></span></a></li>
 						</ul>
 						<ul class="mb-0 pr-2">
 							<li class="d-none d-lg-flex">
-								<span><a class="btn btn-secondary ad-post mt-1" href="ad-posts.html"><i class="fa fa-briefcase"></i> Submit a Job</a></span>
+								<span><a class="btn btn-secondary ad-post mt-1" href="/post-job"><i class="fa fa-briefcase"></i> Submit a Job</a></span>
 							</li>
 						</ul>
 						<ul class="mb-0 pl-2 create-resume-btn">
 							<li class="d-none d-lg-flex">
-								<span><a class="btn btn-info ad-post mt-1" href="create-resume.html"><i class="fa fa-edit"></i> Create Resume</a></span>
+								<span><a class="btn btn-info ad-post mt-1" href="/create-resume"><i class="fa fa-edit"></i> Create Resume</a></span>
 							</li>
 						</ul>
 					</nav>
@@ -150,7 +153,8 @@
 			</div>
 			<!--/Horizontal-main-->
 		</div>
-        <!--/Header Main-->
+		<!--/Header Main-->
+		
 <!--Template body inserted here-->
 {% block content %}
 {% endblock content %}
@@ -161,7 +165,7 @@
 				<div class="footer-main">
 					<div class="container">
 						<div class="row">
-							<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="col-lg-2 col-md-12 col-sm-12">
 								<h6>Job Categories</h6>
 								<hr class="deep-purple  accent-2 mb-4 mt-0 d-inline-block mx-auto">
 								<ul class="list-unstyled mb-0">
@@ -171,7 +175,7 @@
 									<li><a href="#">Others</a></li>
 								</ul>
 							</div>
-							<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="col-lg-2 col-md-12 col-sm-12">
 								<h6>Job Type</h6>
 								<hr class="deep-purple accent-2 mb-4 mt-0 d-inline-block mx-auto">
 								<ul class="list-unstyled mb-0">
@@ -181,17 +185,17 @@
 									<li><a href="#">Full time</a></li>
 								</ul>
 							</div>
-							<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="col-lg-2 col-md-12 col-sm-12">
 								<h6>Resources</h6>
 								<hr class="deep-purple  accent-2 mb-4 mt-0 d-inline-block mx-auto">
 								<ul class="list-unstyled mb-0">
-									<li><a href="#">Support</a></li>
-									<li><a href="#">FAQ</a></li>
+									<li><a href="/support">Support</a></li>
+									<li><a href="/faq">FAQ</a></li>
 									<li><a href="#">Our Team</a></li>
 									<li><a href="#">Terms of Service</a></li>
 								</ul>
 							</div>
-							<div class="col-lg-2 col-md-3 col-sm-12">
+							<div class="col-lg-3 col-md-12 col-sm-12">
 								<h6>Payments</h6>
 								<hr class="deep-purple  accent-2 mb-4 mt-0 d-inline-block mx-auto">
 								<ul class="payments mb-0">
@@ -212,7 +216,7 @@
 									</li>
 								</ul>
 							</div>
-							<div class="col-lg-4 col-md-12 col-sm-12">
+							<div class="col-lg-3 col-md-12 col-sm-12">
 								<h6 class="mb-2">Subscribe</h6>
 								<hr class="deep-purple  accent-2 mb-4 mt-0 d-inline-block mx-auto">
 								<div class="input-group w-100">
@@ -259,10 +263,10 @@
 				<div class="text-white p-0 border-top">
 					<div class="container">
 						<div class="p-2 text-center footer-links">
-							<a href="#" class="btn btn-link">How It Works</a>
+							<a href="/how-it-works" class="btn btn-link">How It Works</a>
 							<a href="#" class="btn btn-link">Our Team</a>
-							<a href="#" class="btn btn-link">Create Resume</a>
-							<a href="#" class="btn btn-link">Submit a Job</a>
+							<a href="/create-resume" class="btn btn-link">Create Resume</a>
+							<a href="/post-job" class="btn btn-link">Submit a Job</a>
 							<a href="#" class="btn btn-link">Terms Of Conditions</a>
 						</div>
 					</div>
