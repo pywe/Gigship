@@ -16,7 +16,7 @@
 		<link rel="shortcut icon" type="image/x-icon" href="/static/images/brand/favicon.png"/>
 
 		<!-- Title -->
-		<title>Gigship-Africa’s Market For Freelance Services!</title>
+		<title>Gigship | Africa’s Market For Freelance Services!</title>
 
 		<!-- Bootstrap Css -->
 		<link href="/static/plugins/bootstrap-4.3.1-dist/css/bootstrap.min.css" rel="stylesheet" />
@@ -128,6 +128,9 @@
 					<nav class="horizontalMenu clearfix d-md-flex">
 						<ul class="horizontalMenu-list">
 							<li><a href="/">Home</a></li>
+							{% if user.is_superuser %}
+							<li><a href="/admin">Administration</a></li>
+							{% endif %}
 							<li><a href="/how-it-works">How It Works</a></li>
 							<li><a href="#">Our Team</a></li>
 							<li><a href="#">FAQ</a></li>
