@@ -13,7 +13,7 @@ def index(request):
 def how_it_works(request):
     template_name = "accounts/how-it-works.html"
     args = {}
-    return render(request,template_name,args) 
+    return render(request,template_name,args)
 
 
 # registration page, showing registration page to users
