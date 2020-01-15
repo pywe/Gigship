@@ -51,3 +51,9 @@ def support(request):
     template_name = "accounts/contact.html"
     args = {}
     return render(request,template_name,args)
+
+# post job page, post job page to users
+def post_job(request):
+    template_name = "accounts/post-job.html"
+    args = {}
+    return render(request,template_name,args)
