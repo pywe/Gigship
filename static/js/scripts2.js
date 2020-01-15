@@ -29,7 +29,12 @@
 	
 	
 	// ______________ Modal
+	if(localStorage['old_user']){
+		// don't show tutorial
+	}else{
 	$("#myModal").modal('show');
+	localStorage['old_user'] = true;
+}
 	
 	
 	// ______________Rating Stars
