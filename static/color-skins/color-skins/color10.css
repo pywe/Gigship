@@ -1003,7 +1003,7 @@ a.bg-secondary:hover, a.bg-secondary:focus, button.bg-secondary:hover, button.bg
 	background: #3C5A99;
 }
 .header-main i {
-	color: #1650e2;
+	color: #000;
 }
 .item-card .item-card-desc:before {
 	background: rgba(40, 35, 47, 0.5);
@@ -1171,7 +1171,7 @@ a.bg-secondary:hover, a.bg-secondary:focus, button.bg-secondary:hover, button.bg
 	background: #1650e2;
 }
 .header-main i {
-	color: #fff;
+	color: #000;
 }
 .pricingTable .title {
 	color: #1650e2;
@@ -1229,7 +1229,7 @@ a.bg-secondary:hover, a.bg-secondary:focus, button.bg-secondary:hover, button.bg
 	background-color: #1650e2;
 }
 .top-bar {
-	background: linear-gradient(135deg, rgba(22, 80, 226) 0%, rgba(126, 81, 236) 100%);
+	background: linear-gradient(135deg, rgb(241, 90, 36) 0%, rgb(245, 245, 245) 100%);
 }
 .top-bar .select2-container--default .select2-selection--single .select2-selection__rendered {
 	color: #fff !important;
@@ -1238,7 +1238,7 @@ a.bg-secondary:hover, a.bg-secondary:focus, button.bg-secondary:hover, button.bg
 	border-color: #fff transparent transparent transparent;
 }
 .header-main .top-bar .contact li a, .header-main .top-bar-right .custom li a {
-	color: rgba(255, 255, 255);
+	color: #000;
 }
 .header-main .top-bar .contact li a.dropdown-item, .header-main .top-bar-right .custom li a.dropdown-item {
 	color: #363169;
