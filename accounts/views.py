@@ -61,6 +61,7 @@ def post_job(request):
     args = {}
     return render(request,template_name,args)
 
+<<<<<<< HEAD
 
 @csrf_exempt
 def create_freelancer(request):
@@ -98,3 +99,10 @@ def create_employer(request):
     'message':"Employer created"}
     dump = json.dumps(data)
     return HttpResponse(dump, content_type='application/json')
+=======
+# dashboard page, dashboard page to users
+def dashboard(request):
+    template_name = "accounts/dashboard.html"
+    args = {}
+    return render(request,template_name,args)
+>>>>>>> 7a6047e951fd1907ae6d09017ed2877e555897e8
