@@ -1,4 +1,7 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect,HttpResponse
+import json
+from django.views.decorators.csrf import csrf_exempt
+from .models import *
 
 
 # Create your views here.
@@ -58,14 +61,57 @@ def post_job(request):
     args = {}
     return render(request,template_name,args)
 
+<<<<<<< HEAD
+
+@csrf_exempt
+def create_freelancer(request):
+    json_data = json.loads(str(request.body, encoding='utf-8'))
+    username = json_data['username']
+    email = json_data['email']
+    password = json_data['password']
+    user = Freelancer()
+    user.username = username
+    user.set_password(password)
+    user.email = email
+    user.save()
+    # send mail to user here
+    data = {
+    'success':True,
+    'message':"Freelancer created"}
+    dump = json.dumps(data)
+    return HttpResponse(dump, content_type='application/json')
+
+
+@csrf_exempt
+def create_employer(request):
+    json_data = json.loads(str(request.body, encoding='utf-8'))
+    username = json_data['username']
+    email = json_data['email']
+    password = json_data['password']
+    user = Employer()
+    user.username = username
+    user.set_password(password)
+    user.email = email
+    user.save()
+    # send mail to user here
+    data = {
+    'success':True,
+    'message':"Employer created"}
+    dump = json.dumps(data)
+    return HttpResponse(dump, content_type='application/json')
+=======
 # dashboard page, dashboard page to users
 def dashboard(request):
     template_name = "accounts/dashboard.html"
     args = {}
     return render(request,template_name,args)
+<<<<<<< HEAD
 
 # myjobs page, myjobs page to users
 def myjobs(request):
     template_name = "accounts/myjobs.html"
     args = {}
     return render(request,template_name,args)
+=======
+>>>>>>> 7a6047e951fd1907ae6d09017ed2877e555897e8
+>>>>>>> c0d8a3c5c05c998d412563555273853c8626f1a8
