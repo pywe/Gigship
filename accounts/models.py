@@ -5,11 +5,14 @@ from django.conf import settings
 
 
 # Create your models here.
+
+# First class model
 class CustomUser(AbstractUser):
     # add additional fields in here
     is_staff = models.BooleanField(default=False)
 
 
+# Second class model
 # Freelancer model:migrates into database as accounts_freelancer table
 class Freelancer(CustomUser):
     referral_token = models.CharField(max_length=30,null=True,blank=True)
@@ -18,6 +21,7 @@ class Freelancer(CustomUser):
         verbose_name = "Freelancer"
 
 
+# Second class model
 # Employer model:migrates into database as accounts_emploer table
 class Employer(CustomUser):
     referral_token = models.CharField(max_length=30,null=True,blank=True)

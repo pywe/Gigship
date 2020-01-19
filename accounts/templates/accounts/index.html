@@ -527,11 +527,14 @@
 			</div>
 		</section>
 		<!--Sections-->
+		{% if not user.is_authenticated %}
+		<!-- Script to redirect unregistered or non logged in mobile users -->
 		<script>
 		window.onload = function Load(){
 		    if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/Blackberry/i) || navigator.userAgent.match(/WebOs/i)) { // detect mobile browser
-            window.location.replace("https://gigship.pywe.org/registration/"); // redirect if mobile browser detected
+			window.location.replace("https://gigship.pywe.org/registration/"); // redirect if mobile browser detected
           }
 		}
 		</script>
+		{% endif %}
 {% endblock content %}
