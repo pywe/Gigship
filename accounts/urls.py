@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^create-resume/$', views.create_resume,name="create-resume"),
     url(r'^support/$', views.support,name="support"), 
     url(r'^post-job/$', views.post_job,name="post-job"),  
+    url(r'^dashboard/$', views.dashboard,name="dashboard"),  
     ]

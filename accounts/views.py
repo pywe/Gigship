@@ -57,3 +57,9 @@ def post_job(request):
     template_name = "accounts/post-job.html"
     args = {}
     return render(request,template_name,args)
+
+# dashboard page, dashboard page to users
+def dashboard(request):
+    template_name = "accounts/dashboard.html"
+    args = {}
+    return render(request,template_name,args)
