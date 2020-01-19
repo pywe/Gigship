@@ -67,11 +67,13 @@ def dashboard(request):
     args = {}
     return render(request,template_name,args)
 
+
 # myjobs page, myjobs page to users
 def myjobs(request):
     template_name = "accounts/myjobs.html"
     args = {}
     return render(request,template_name,args)
+
 
 @csrf_exempt
 def create_freelancer(request):

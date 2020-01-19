@@ -30,10 +30,15 @@
                         <div class="profile-pic">
                             <div class="profile-pic-img">
                                 <span class="bg-success dots" data-toggle="tooltip" data-placement="top" title="online"></span>
+                                {% if user.user_img %}
+                                <img src="/{{user.user_img.url}}" class="brround" alt="user">
+
+                                {% else %}
                                 <img src="/static/images/users/male/25.jpg" class="brround" alt="user">
+                                {% endif %}
                             </div>
                             <a href="#" class="text-dark">
-                                <h4 class="mt-3 mb-0 font-weight-semibold">Username</h4>
+                                <h4 class="mt-3 mb-0 font-weight-semibold">{{user.username}}</h4>
                             </a>
                         </div>
                     </div>
@@ -90,7 +95,7 @@
                             <div class="col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Email address</label>
-                                    <input type="email" class="form-control" placeholder="Email">
+                                    <input type="email" class="form-control" placeholder="Email" value="{{user.email}}">
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6">
