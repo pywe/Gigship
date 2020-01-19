@@ -63,3 +63,9 @@ def dashboard(request):
     template_name = "accounts/dashboard.html"
     args = {}
     return render(request,template_name,args)
+
+# myjobs page, myjobs page to users
+def myjobs(request):
+    template_name = "accounts/myjobs.html"
+    args = {}
+    return render(request,template_name,args)
