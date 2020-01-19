@@ -13,4 +13,6 @@ urlpatterns = [
     url(r'^post-job/$', views.post_job,name="post-job"),
     url(r'^accounts/create-freelancer/$', views.create_freelancer,name="create-freelancer"),
     url(r'^accounts/create-employer/$', views.create_employer,name="create-employer"),  
+    url(r'^dashboard/$', views.dashboard,name="dashboard"),
+    url(r'^myjobs/$', views.myjobs,name="myjobs"),
     ]
