@@ -45,21 +45,31 @@
                                             </div>
                                         </div> -->
                                         <!-- <hr class="divider"> -->
-                                        <form id="login" class="card-body" tabindex="500">
+                                        <form method="POST" action="/accounts/login/" id="login" class="card-body" tabindex="500">
                                             <h3 class="pb-2">Login</h3>
+                                            {% csrf_token %}
+                                            {% if messages %}
+                                            <div>
+                                            <ul>
+                                                {% for message in messages %}
+                                                <li style="color:red;">{{ message }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                            </div>
+                                            {% endif %}
                                             <div class="mail">
-                                                <input type="email" name="mail">
-                                                <label>Mail or Username</label>
+                                                <input type="text" name="username">
+                                                <label>Username</label>
                                             </div>
                                             <div class="passwd">
                                                 <input type="password" name="password">
                                                 <label>Password</label>
                                             </div>
                                             <div class="submit">
-                                                <a class="btn btn-primary btn-block" href="#">Login</a>
+                                                <input type="submit" class="btn btn-primary btn-block" value="login">
                                             </div>
                                             <p class="mb-2"><a href="/forgot">Forgot Password</a></p>
-                                            <p class="text-dark mb-0">Don't have account?<a href="/registration" class="text-primary ml-1">Sign UP</a></p>
+                                            <!-- <p class="text-dark mb-0">Don't have account?<a href="/registration" class="text-primary ml-1">Sign UP</a></p> -->
                                         </form>
                                     </div>
                                 </div>
@@ -76,24 +86,40 @@
                                             </div>
                                         </div> -->
                                         <!-- <hr class="divider"> -->
-                                        <form id="Register" class="card-body" tabindex="500">
+                                        <form method="POST" action="/accounts/registration/" id="Register" class="card-body" tabindex="500">
                                             <h3 class="pb-2">Register</h3>
+                                            {% csrf_token %}
+                                            {% if messages %}
+                                            <div>
+                                            <ul>
+                                                {% for message in messages %}
+                                                <li style="color:blue;">{{ message }}</li>
+                                                {% endfor %}
+                                            </ul>
+                                            </div>
+                                            {% endif %}
                                             <div class="name">
-                                                <input type="text" name="name">
-                                                <label>Name</label>
+                                                <input type="text" name="username" required="required">
+                                                <label>Username</label>
                                             </div>
                                             <div class="mail">
-                                                <input type="email" name="mail">
-                                                <label>Mail</label>
+                                                <input type="email" name="email" required="required">
+                                                <label>Email</label>
                                             </div>
                                             <div class="passwd">
-                                                <input type="password" name="password">
+                                                <input type="password" name="password" required="required">
                                                 <label>Password</label>
                                             </div>
+                                           <div>
+                                           <select name="account_type" class="form-control" required="required">
+                                                <option value="employer">I'm an employer</option>
+                                                <option value="freelancer">I want jobs</option>
+                                           </select>
+                                           </div>
                                             <div class="submit">
-                                                <a class="btn btn-primary btn-block" href="#">Register</a>
+                                                <input type="submit" class="btn btn-primary btn-block" value="Register">
                                             </div>
-                                            <p class="text-dark mb-0">Already have an account?<a href="/login" class="text-primary ml-1">Sign In</a></p>
+                                            <!-- <p class="text-dark mb-0">Already have an account?<a href="/login" class="text-primary ml-1">Sign In</a></p> -->
                                         </form>
                                     </div>
                                 </div>

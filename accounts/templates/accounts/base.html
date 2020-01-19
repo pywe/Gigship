@@ -93,17 +93,20 @@
                     <div class="col-xl-5 col-lg-5 col-sm-8 col-5">
                         <div class="top-bar-right">
                             <ul class="custom">
+                            {% if not user.is_authenticated %}
                                 <li>
-                                    <a href="/registration" class=""><i class="fa fa-user mr-1"></i> <span>Register</span></a>
+                                    <a href="/accounts/registration" class=""><i class="fa fa-user mr-1"></i> <span>Register</span></a>
                                 </li>
                                 <li>
-                                    <a href="/login" class=""><i class="fa fa-sign-in mr-1"></i> <span>Login</span></a>
+                                    <a href="/accounts/login" class=""><i class="fa fa-sign-in mr-1"></i> <span>Login</span></a>
                                 </li>
+                            {% else %}
                                 <li>
-                                    <a href="/dashboard" class=""><i class="fa fa-home mr-1"></i><span> My Dashboard</span></a>
-                        </div>
-                        </li>
+                                    <a href="/accounts/dashboard" class=""><i class="fa fa-home mr-1"></i><span> My Dashboard</span></a>
+                                </li>
+                            {% endif %}
                         </ul>
+                        </div>
                     </div>
                 </div>
             </div>
