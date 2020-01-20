@@ -48,15 +48,15 @@
                                         <form method="POST" action="/accounts/registration/" id="Register" class="card-body" tabindex="500">
                                             <h3 class="pb-2">Register</h3>
                                             {% csrf_token %}
-                                            {% if messages %}
-                                            <div>
-                                            <ul>
-                                                {% for message in messages %}
-                                                <li style="color:blue;">{{ message }}</li>
-                                                {% endfor %}
-                                            </ul>
-                                            </div>
-                                            {% endif %}
+                                            <!--{% if messages %}-->
+                                            <!--<div>-->
+                                            <!--<ul>-->
+                                            <!--    {% for message in messages %}-->
+                                            <!--    <li style="color:blue;">{{ message }}</li>-->
+                                            <!--    {% endfor %}-->
+                                            <!--</ul>-->
+                                            <!--</div>-->
+                                            <!--{% endif %}-->
                                             <div class="name">
                                                 <input type="text" name="username" required="required">
                                                 <label>Username</label>
@@ -98,15 +98,15 @@
                                         <form method="POST" action="/accounts/login/" id="login" class="card-body" tabindex="500">
                                             <h3 class="pb-2">Login</h3>
                                             {% csrf_token %}
-                                            {% if messages %}
-                                            <div>
-                                            <ul>
-                                                {% for message in messages %}
-                                                <li style="color:red;">{{ message }}</li>
-                                                {% endfor %}
-                                            </ul>
-                                            </div>
-                                            {% endif %}
+                                            <!--{% if messages %}-->
+                                            <!--<div>-->
+                                            <!--<ul>-->
+                                            <!--    {% for message in messages %}-->
+                                            <!--    <li style="color:red;">{{ message }}</li>-->
+                                            <!--    {% endfor %}-->
+                                            <!--</ul>-->
+                                            <!--</div>-->
+                                            <!--{% endif %}-->
                                             <div class="mail">
                                                 <input type="text" name="username">
                                                 <label>Username</label>
