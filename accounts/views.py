@@ -77,6 +77,13 @@ def mylogin(request):
         messages.error(request,"Failed. Please check your credentials")
         return redirect("/accounts/login/")
 
+
+def mylogout(request):
+    logout(request)
+    messages.success(request,"Thanks for spending time with us")
+    return redirect('/')
+
+    
 # forgot password page, showing forgot password page to users
 def forgot(request):
     template_name = "accounts/forgot.html"
