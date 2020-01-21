@@ -9,6 +9,8 @@ from django.conf import settings
 # First class model
 class CustomUser(AbstractUser):
     # add additional fields in here
+    phone = models.CharField(max_length=14,null=True)
+    user_img = models.FileField(null=True,upload_to="static/profiles/")
     is_staff = models.BooleanField(default=False)
 
 

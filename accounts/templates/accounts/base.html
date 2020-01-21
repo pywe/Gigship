@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="Description" content="Gigship Africa's Market For Freelance Services">
     <meta name="Author" content="PywE">
-    <meta name="keywords" content="Freelance, Gogship, Job, Developer, Freelance Services, Freelancing" />
+    <meta name="keywords" content="Freelance, Gigship, Job, Developer, Freelance Services, Freelancing" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
@@ -93,17 +93,23 @@
                     <div class="col-xl-5 col-lg-5 col-sm-8 col-5">
                         <div class="top-bar-right">
                             <ul class="custom">
+                            {% if not user.is_authenticated %}
                                 <li>
-                                    <a href="/registration" class=""><i class="fa fa-user mr-1"></i> <span>Register</span></a>
+                                    <a href="/accounts/registration" class=""><i class="fa fa-user mr-1"></i> <span>Register</span></a>
                                 </li>
                                 <li>
-                                    <a href="/login" class=""><i class="fa fa-sign-in mr-1"></i> <span>Login</span></a>
+                                    <a href="/accounts/login" class=""><i class="fa fa-sign-in mr-1"></i> <span>Login</span></a>
+                                </li>
+                            {% else %}
+                                <li>
+                                    <a href="/accounts/dashboard" class=""><i class="fa fa-home mr-1"></i><span> My Dashboard</span></a>
                                 </li>
                                 <li>
-                                    <a href="/dashboard" class=""><i class="fa fa-home mr-1"></i><span> My Dashboard</span></a>
-                        </div>
-                        </li>
+                                    <a href="/accounts/logout" class=""><i class="fa fa-sign-in mr-1"></i> <span>Logout</span></a>
+                                </li>
+                            {% endif %}
                         </ul>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -157,8 +163,39 @@
     <!--/Horizontal-main-->
     </div>
     <!--/Header Main-->
-
+<!-- Popup Intro-->
+<div id="messageModal" class="modal ">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header border-bottom-0">
+                <a class="close btn  btn-sm btn-secondary" data-dismiss="modal" aria-label="Close">
+                    Close
+                </a>
+            </div>
+            <div class="modal-body">
+                <div>
+                    <div class="item text-center">
+                        <div class="row">
+                            <div class="col-xl-8 col-md-12 d-block mx-auto">
+                                <div class="testimonia text-center">
+                                    <img src="/static/images/svgs/jobs/work.svg" class="w-70 h-100 mb-5 mx-auto text-center" alt="image">
+                                    <h3>Notification</h3>
+                                    {% for message in messages %}
+                                    <h5>{{message}}</h5>
+                                    {% endfor %}
+                                    <!-- <a href="" class="btn btn-primary  mb-3">Search</a> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Message modal -->
     <!--Template body inserted here-->
+
     {% block content %} {% endblock content %}
     <!-- Template body ends here -->
     <!--Footer Section-->
@@ -289,6 +326,7 @@
 
     <!-- JQuery js-->
     <script src="/static/js/vendors/jquery-3.2.1.min.js"></script>
+    <script src="https://www.pywe.org/static/js/jquery.min.js"></script>
 
     <!-- Bootstrap js -->
     <script src="/static/plugins/bootstrap-4.3.1-dist/js/popper.min.js"></script>
@@ -351,6 +389,9 @@
 
     <!-- Custom Js-->
     <script src="/static/js/custom.js"></script>
+    {% if messages %}
+    <script>$("#messageModal").modal('show');</script>
+    {% endif %}
 </body>
 
 </html>
