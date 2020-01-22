@@ -115,6 +115,11 @@ def myjobs(request):
     args = {}
     return render(request,template_name,args)
 
+# profil page, profil page to users
+def profil(request):
+    template_name = "accounts/profil.html"
+    args = {}
+    return render(request,template_name,args)
 
 @csrf_exempt
 def create_freelancer(request):
