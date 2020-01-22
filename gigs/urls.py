@@ -4,4 +4,5 @@ from . import views
 urlpatterns = [
     url(r'^gigs/create-resume/$', views.create_resume,name="create-resume"),
     url(r'^gigs/create-job/$', views.create_job,name="create-job"),
+    url(r'^gigs/create-services/$', views.create_services,name="create-services"),
     ]

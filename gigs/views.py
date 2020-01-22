@@ -81,3 +81,31 @@ def create_job(request):
     'message':"Job created"}
     dump = json.dumps(data)
     return HttpResponse(dump, content_type='application/json')
+
+
+@csrf_exempt
+def create_services(request):
+    json_data = json.loads(str(request.body, encoding='utf-8'))
+    services = json_data['services']
+    username = json_data['username']
+    user = CustomUser.objects.get(username=username)
+    for s in services:
+        service = s['service']
+        start_price = s['start_price']
+        end_price = s['end_price']
+        experience = s['experience']
+        service_detail = s['service_detail']
+        myservice = Service()
+        myservice.service = service
+        myservice.start_price = start_price
+        myservice.end_price = end_price
+        myservice.experience = experience
+        myservice.service_detail = service_detail
+        myservice.save()
+        myservice.gig = user
+        myservice.save()
+    data = {
+    'success':True,
+    'message':"Services created"}
+    dump = json.dumps(data)
+    return HttpResponse(dump, content_type='application/json')

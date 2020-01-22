@@ -63,3 +63,14 @@ class Job(models.Model):
     category = models.ForeignKey(Category,null=True,on_delete=models.SET_NULL)
     employer = models.ForeignKey(settings.AUTH_USER_MODEL,null=True,on_delete=models.SET_NULL)
     date_added = models.DateField(null=True,auto_now_add=True)
+
+
+class Service(models.Model):
+    service = models.CharField(max_length=50,null=True)
+    start_price = models.FloatField(default=0.0)
+    end_price = models.FloatField(default=0.0)
+    experience = models.IntegerField(default=0)
+    service_detail = models.TextField(null=True)
+    rating = models.FloatField(0.0)
+    gig = models.ForeignKey(settings.AUTH_USER_MODEL,null=True,on_delete=models.SET_NULL)
+

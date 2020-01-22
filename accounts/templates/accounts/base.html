@@ -140,7 +140,9 @@
             <nav class="horizontalMenu clearfix d-md-flex">
                 <ul class="horizontalMenu-list">
                     <li><a href="/">Home</a></li>
+                    {% if user.is_superuser %}
                     <li><a href="/admin">Administration</a></li>
+                    {% endif %}
                     <li><a href="/how-it-works">How It Works</a></li>
                     <li><a href="#">Our Team</a></li>
                     <li><a href="/faq">FAQ</a></li>
