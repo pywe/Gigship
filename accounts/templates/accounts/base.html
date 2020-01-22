@@ -93,22 +93,22 @@
                     <div class="col-xl-5 col-lg-5 col-sm-8 col-5">
                         <div class="top-bar-right">
                             <ul class="custom">
-                            {% if not user.is_authenticated %}
+                                {% if not user.is_authenticated %}
                                 <li>
                                     <a href="/accounts/registration" class=""><i class="fa fa-user mr-1"></i> <span>Register</span></a>
                                 </li>
                                 <li>
                                     <a href="/accounts/login" class=""><i class="fa fa-sign-in mr-1"></i> <span>Login</span></a>
                                 </li>
-                            {% else %}
+                                {% else %}
                                 <li>
                                     <a href="/accounts/dashboard" class=""><i class="fa fa-home mr-1"></i><span> My Dashboard</span></a>
                                 </li>
                                 <li>
                                     <a href="/accounts/logout" class=""><i class="fa fa-sign-in mr-1"></i> <span>Logout</span></a>
                                 </li>
-                            {% endif %}
-                        </ul>
+                                {% endif %}
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -146,16 +146,6 @@
                     <li><a href="/faq">FAQ</a></li>
                     <li><a href="/support">Support <span class="horizontal-arrow"></span></a></li>
                 </ul>
-                <ul class="mb-0 pr-2">
-                    <li class="d-none d-lg-flex">
-                        <span><a class="btn btn-secondary ad-post mt-1" href="/post-job"><i class="fa fa-briefcase"></i> Submit a Job</a></span>
-                    </li>
-                </ul>
-                <ul class="mb-0 pl-2 create-resume-btn">
-                    <li class="d-none d-lg-flex">
-                        <span><a class="btn btn-info ad-post mt-1" href="/create-resume"><i class="fa fa-edit"></i> Create Resume</a></span>
-                    </li>
-                </ul>
             </nav>
             <!--/Nav-->
         </div>
@@ -163,27 +153,28 @@
     <!--/Horizontal-main-->
     </div>
     <!--/Header Main-->
-<!-- Popup Intro-->
-<div id="messageModal" class="modal ">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header border-bottom-0">
-                <a class="close btn  btn-sm btn-secondary" data-dismiss="modal" aria-label="Close">
+    <!-- Popup Intro-->
+    <div id="messageModal" class="modal ">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <a class="close btn  btn-sm btn-secondary" data-dismiss="modal" aria-label="Close">
                     Close
                 </a>
-            </div>
-            <div class="modal-body">
-                <div>
-                    <div class="item text-center">
-                        <div class="row">
-                            <div class="col-xl-8 col-md-12 d-block mx-auto">
-                                <div class="testimonia text-center">
-                                    <img src="/static/images/svgs/jobs/work.svg" class="w-70 h-100 mb-5 mx-auto text-center" alt="image">
-                                    <h3>Notification</h3>
-                                    {% for message in messages %}
-                                    <h5>{{message}}</h5>
-                                    {% endfor %}
-                                    <!-- <a href="" class="btn btn-primary  mb-3">Search</a> -->
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="item text-center">
+                            <div class="row">
+                                <div class="col-xl-8 col-md-12 d-block mx-auto">
+                                    <div class="testimonia text-center">
+                                        <img src="/static/images/svgs/jobs/work.svg" class="w-70 h-100 mb-5 mx-auto text-center" alt="image">
+                                        <h3>Notification</h3>
+                                        {% for message in messages %}
+                                        <h5>{{message}}</h5>
+                                        {% endfor %}
+                                        <!-- <a href="" class="btn btn-primary  mb-3">Search</a> -->
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -192,8 +183,7 @@
             </div>
         </div>
     </div>
-</div>
-<!-- End Message modal -->
+    <!-- End Message modal -->
     <!--Template body inserted here-->
 
     {% block content %} {% endblock content %}
@@ -307,8 +297,8 @@
                     <div class="p-2 text-center footer-links">
                         <a href="/how-it-works" class="btn btn-link">How It Works</a>
                         <a href="#" class="btn btn-link">Our Team</a>
-                        <a href="/create-resume" class="btn btn-link">Create Resume</a>
-                        <a href="/post-job" class="btn btn-link">Submit a Job</a>
+                        <!-- <a href="/create-resume" class="btn btn-link">Create Resume</a>
+                        <a href="/post-job" class="btn btn-link">Submit a Job</a> -->
                         <a href="#" class="btn btn-link">Terms Of Conditions</a>
                     </div>
                 </div>
@@ -390,7 +380,9 @@
     <!-- Custom Js-->
     <script src="/static/js/custom.js"></script>
     {% if messages %}
-    <script>$("#messageModal").modal('show');</script>
+    <script>
+        $("#messageModal").modal('show');
+    </script>
     {% endif %}
 </body>
 
