@@ -143,6 +143,9 @@
                     {% if user.is_superuser %}
                     <li><a href="/admin">Administration</a></li>
                     {% endif %}
+                    {% if user.is_authenticated %}
+                    <li><a href="/accounts/add-services/">Add Services</a></li>
+                    {% endif %}
                     <li><a href="/how-it-works">How It Works</a></li>
                     <li><a href="/faq">FAQ</a></li>
                     <li><a href="/support">Support <span class="horizontal-arrow"></span></a></li>

@@ -14,5 +14,5 @@ urlpatterns = [
     url(r'^accounts/create-employer/$', views.create_employer,name="create-employer"),  
     url(r'^accounts/dashboard/$', views.dashboard,name="dashboard"),
     url(r'^accounts/myjobs/$', views.myjobs,name="myjobs"),
-    url(r'^accounts/profil/$', views.profil,name="profil"),
+    url(r'^accounts/add-services/$', views.add_services,name="add-services"),
     ]

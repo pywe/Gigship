@@ -20,6 +20,7 @@ class ResumeAdmin(admin.ModelAdmin):
 
 
 # Register your models here.
-admin.site.register(Job)
+# admin.site.register(Job)
 admin.site.register(Category)
-admin.site.register(Resume,ResumeAdmin)
+admin.site.register(Service)
+# admin.site.register(Resume,ResumeAdmin)

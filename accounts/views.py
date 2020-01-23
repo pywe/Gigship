@@ -116,7 +116,7 @@ def myjobs(request):
     return render(request,template_name,args)
 
 # profil page, profil page to users
-def profil(request):
+def add_services(request):
     template_name = "accounts/profil.html"
     args = {}
     return render(request,template_name,args)

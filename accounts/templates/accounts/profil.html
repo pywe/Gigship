@@ -1,15 +1,38 @@
 {% extends "accounts/base.html" %} {% block content %}
 <link rel="stylesheet" href="https://www.pywe.org/static/css/animate.css">
+<style>
+        #snackbar {
+        visibility: hidden;
+        min-width: 250px;
+        margin-left: -125px;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+        border-radius: 2px;
+        padding: 16px;
+        position: fixed;
+        z-index: 1;
+        left: 50%;
+        bottom: 30px;
+        font-size: 17px;
+        }
+        
+        #snackbar.show {
+        visibility: visible;
+        -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+        </style>
 <!--Sliders Section-->
 <section>
     <div class="bannerimg cover-image bg-background3" data-image-src="../assets/images/banners/banner2.jpg">
         <div class="header-text mb-0">
             <div class="container">
                 <div class="text-center text-white">
-                    <h1>Ad Post</h1>
+                    <h1>Add Services</h1>
                     <ol class="breadcrumb text-center">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active text-white" aria-current="page">Profil</li>
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">Add Services</li>
                     </ol>
                 </div>
             </div>
@@ -21,6 +44,7 @@
 <!--Job posts-section-->
 <section class="sptb">
     <div class="container">
+        <form id="serviceform" action="#" method="dialog" onsubmit="submitForm()">
         <div class="row ">
             <div class="col-lg-12 col-md-12 col-md-12">
                 <div class="card">
@@ -30,10 +54,10 @@
 
                     <div class="card-body">
                         <h3 class="card-title mb-3">Services details </h3>
-                        <form id="serviceform" action="#">
+                        <div id="services">
                             <div class="form-group">
                                 <label class="form-label text-dark">Service</label>
-                                <input type="text" class="form-control" placeholder="Eg: Logo Design">
+                                <input required="required" name="firstservice" type="text" class="form-control" placeholder="Eg: Logo Design">
                             </div>
                             <div class="row">
                                 <div class="col-sm-6 col-md-6">
@@ -41,10 +65,10 @@
                                         <label class="form-label text-dark">Price</label>
                                         <div class="row gutters-xs">
                                             <div class="col-6">
-                                                <input type="number" step=".01" min="0.0" class="form-control" placeholder="Starting Price">
+                                                <input required="required" name="firststart_price" type="number" step=".01" min="0.0" class="form-control" placeholder="Starting Price">
                                             </div>
                                             <div class="col-6">
-                                                <input type="number" min="0.0" class="form-control" placeholder="Ending Price">
+                                                <input required="required" name="firstend_price" type="number" min="0.0" class="form-control" placeholder="Ending Price">
                                             </div>
                                         </div>
                                     </div>
@@ -54,7 +78,7 @@
                                         <label class="form-label text-dark">Year Experience</label>
                                         <div class="row gutters-xs">
                                             <div class="col-12">
-                                                <input type="number" class="form-control" placeholder="Year Experience">
+                                                <input required="required" name="firstexperience" type="number" class="form-control" placeholder="Year Experience">
                                             </div>
                                         </div>
                                     </div>
@@ -62,13 +86,14 @@
                             </div>
                             <div class="form-group text-dark">
                                 <label class="form-label text-dark">Service Detail</label>
-                                <textarea class="form-control" name="example-textarea-input" rows="5" placeholder="Eg: I will design fascinating logo with free revision" required></textarea>
+                                <textarea required="required" name="firstservice_detail" class="form-control" name="example-textarea-input" rows="5" placeholder="Eg: I will design fascinating logo with free revision" required></textarea>
                             </div>
+                        </div>
 
-                        </form>
+                        
                     </div>
                     <div class="card-footer bg-light-50">
-                        <input type="submit" style="float: right;" class="btn btn-success ">
+                        <button type="submit" style="float: right;" class="btn btn-success" id="submitbtn">Submit</button>
                         <div class="card-options">
                             <a class="btn btn-light btn-sm" onclick="addService()" href="#/"><i class="fa fa-plus"></i> Add Another</a>
                         </div>
@@ -76,10 +101,13 @@
                 </div>
             </div>
         </div>
+    </form>
     </div>
+    <div id="snackbar"></div>
 </section>
 <!--/Job posts-section-->
 <script>
+    window.specials = ['first']
     function makeid(length) {
         var result = '';
         var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -91,13 +119,14 @@
     }
 
     function addService() {
-        var id = makeid(10)
-        form = document.getElementById("serviceform")
-        form.innerHTML += `    <div class="animated slideInUp" id="` + id + `">
+        var id = makeid(5)
+        window.specials.push(id)
+        // forms = document.getElementById("services")
+        $("#services").append(`<div class="animated slideInUp" id="` + id + `">
 								<a class="btn btn-danger btn-sm" style="float:right" onclick="removeService('` + id + `')" href="#/">Remove</a>
 								<div class="form-group">
                                 <label class="form-label text-dark">Service</label>
-                                <input type="text" class="form-control" placeholder="Eg: Logo Design">
+                                <input required="required" name="`+id+`service" type="text" class="form-control" placeholder="Eg: Logo Design">
                             </div>
                             <div class="row">
                                 <div class="col-sm-6 col-md-6">
@@ -105,10 +134,10 @@
                                         <label class="form-label text-dark">Price</label>
                                         <div class="row gutters-xs">
                                             <div class="col-6">
-                                                <input type="number" step=".01" min="0.0" class="form-control" placeholder="Starting Price">
+                                                <input required="required" name="`+id+`start_price" type="number" step=".01" min="0.0" class="form-control" placeholder="Starting Price">
                                             </div>
                                             <div class="col-6">
-                                                <input type="number" min="0.0" class="form-control" placeholder="Ending Price">
+                                                <input required="required" name="`+id+`end_price" type="number" min="0.0" class="form-control" placeholder="Ending Price">
                                             </div>
                                         </div>
                                     </div>
@@ -118,7 +147,7 @@
                                         <label class="form-label text-dark">Year Experience</label>
                                         <div class="row gutters-xs">
                                             <div class="col-12">
-                                                <input type="number" class="form-control" placeholder="Year Experience">
+                                                <input required="required" name="`+id+`experience" type="number" class="form-control" placeholder="Year Experience">
                                             </div>
                                         </div>
                                     </div>
@@ -126,12 +155,81 @@
                             </div>
                             <div class="form-group text-dark">
                                 <label class="form-label text-dark">Service Detail</label>
-                                <textarea class="form-control" name="example-textarea-input" rows="5" placeholder="Eg: I will design fascinating logo with free revision" required></textarea>
-                            </div></div>`
+                                <textarea required="required" name="`+id+`service_detail" class="form-control" name="example-textarea-input" rows="5" placeholder="Eg: I will design fascinating logo with free revision" required></textarea>
+                            </div></div>`)
     }
 
     function removeService(id) {
         $("#" + id).remove();
     }
+    function collectForm(){
+        let myForm = document.getElementById("serviceform");
+                        var saved = "first";
+                        let formData = new FormData(myForm);
+                        var myarray = [];
+                        var big = {}
+                        var info = {};
+                        //This will build the form from name, value pairs
+
+                        for(var pair of formData.entries()){
+                            var str = pair[0]
+                            var res = str.substring(0,5);
+                            if (window.specials.includes(res)){
+                            if(saved === res){
+                                var key = (pair[0]).replace(res,"")
+                                info[key] = pair[1]
+                            }
+                            else{
+                                myarray.push(info)
+                                var info = {};
+                                var key = (pair[0]).replace(res,"")
+                                info[key] = pair[1]
+                                saved = (pair[0]).substring(0,5);
+                            }}else{
+                                big[pair[0]] = pair[1]
+                            }
+                        }
+                        myarray.push(info)
+                        big['services']=myarray
+                        return big
+		};
+        function submitForm(){
+            document.getElementById('submitbtn').innerHTML = 'processing...'
+            $("#submitbtn").prop("disabled",true);
+            const data = collectForm()
+            data['username']="{{user.username}}";
+            url = window.location.origin +"/gigs/create-services/";
+            console.log(url)
+            const http = new XMLHttpRequest();
+                        http.open('POST', url);
+                        http.setRequestHeader('Content-type', 'application/json');
+                            // http.setRequestHeader('Authentication','id_token');
+                            http.send(JSON.stringify(data)); // Make sure to stringify
+                            // http.onreadystatechange=(e)=>{
+                            //     // console.log(
+                            //     //     http.responseText
+                            //     // )
+                            // }
+                        http.onload = function() {
+                        state = true;
+                        var resp = http.responseText;
+                        var json_resp = JSON.parse(resp);
+                        // You can now use the response for what you want
+                        if(json_resp['success']){
+                            toast(json_resp['message'],3000)
+                            window.location.reload(false);
+                        }else{
+                            toast(json_resp['message'],3000)
+                        }
+                        console.log(json_resp)
+                        }
+
+        }
+        function toast(msg,time) {
+          var x = document.getElementById("snackbar");
+          x.innerHTML = msg;
+          x.className = "show";
+          setTimeout(function(){ x.className = x.className.replace("show", ""); }, time);
+        }
 </script>
 {% endblock content %}

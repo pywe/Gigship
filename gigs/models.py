@@ -71,6 +71,11 @@ class Service(models.Model):
     end_price = models.FloatField(default=0.0)
     experience = models.IntegerField(default=0)
     service_detail = models.TextField(null=True)
-    rating = models.FloatField(0.0)
+    rating = models.FloatField(default=0.0)
     gig = models.ForeignKey(settings.AUTH_USER_MODEL,null=True,on_delete=models.SET_NULL)
 
+    def __str__(self):
+        if self.gig:
+            return "{} by {} starting at GHC{}".format(self.service,self.gig.username,self.start_price)
+        else:
+            return "{} starting at GHC{}".format(self.service,self.start_price)
