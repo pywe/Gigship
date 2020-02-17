@@ -62,10 +62,11 @@ window.specials = ['first']
                                 <label class="form-label text-dark">Service Detail</label>
                                 <textarea required="required" name="`+id+`service_detail" class="form-control" name="example-textarea-input" rows="5" placeholder="Eg: I will design fascinating logo with free revision" required></textarea>
                             </div>
+                            <div class="form-group text-dark">
+                                <label class="form-label text-dark">Add Experience Files</label>
+                                <input name="`+id+`fileInput" type="file" id='`+id+`fileInput' multiple><br>
+                            </div>
                             <div>
-                            <form id="files" action="#" method="post" enctype="multipart/form-data">
-                                <input name="userfiles[]" type="file" multiple="multiple">    
-                            </form>
                             <br/>
                             </div>
                             </div>`)
@@ -93,14 +94,25 @@ window.specials = ['first']
                             var res = str.substring(0,5);
                             if (window.specials.includes(res)){
                             if(saved === res){
+                                if (pair[0].includes('fileInput')){
+                                    
+                                    info['file'] = pair[0]
+                                }else{
                                 var key = (pair[0]).replace(res,"")
                                 info[key] = pair[1]
+                            }
+                            
                             }
                             else{
                                 myarray.push(info)
                                 var info = {};
+                                if (pair[0].includes('fileInput')){
+                                    info['file'] = pair[0]
+                                }else{
                                 var key = (pair[0]).replace(res,"")
                                 info[key] = pair[1]
+                                }
+                                
                                 saved = (pair[0]).substring(0,5);
                             }
                             }else{
@@ -111,45 +123,13 @@ window.specials = ['first']
                         big['services']=myarray
                         return big
 		};
-// use this to attach files to a service object after
-// a service object id has been returned
-function submitFiles(special,id){
-   let form_data = new FormData(document.getElementById('former'));
-   console.log(form_data)
-   // Read selected files
-//    var totalfiles = document.getElementById('files').files.length;
-//    for (var index = 0; index < totalfiles; index++) {
-//       form_data.append("files[]", document.getElementById('files').files[index]);
-//       console.log(form_data)
-//    }
-   
-   // AJAX request
-   url = window.location.origin +"/gigs/service-files/"+id+"/";
-   $.ajax({
-     url: url, 
-     type: 'post',
-     data: form_data,
-     dataType: 'json',
-     contentType: false,
-     processData: false,
-     success: function (response) {
 
-       for(var index = 0; index < response.length; index++) {
-         var src = response[index];
-         // Add img element in <div id='preview'>
-         $('#preview').append('<img src="'+src+'" width="200px;" height="200px">');
-       }
-
-     }
-   });
-
-}
         function submitForm(){
             document.getElementById('submitbtn').innerHTML = 'processing...'
-            // $("#submitbtn").prop("disabled",true);
+            $("#submitbtn").prop("disabled",true);
             const data = collectForm()
             // console.log(data)
-            data['username']="{{user.username}}";
+            data['username']=localStorage.getItem('gig-username');
             url = window.location.origin +"/gigs/create-services/";
             // console.log(url)
             const http = new XMLHttpRequest();
@@ -170,12 +150,14 @@ function submitFiles(special,id){
                         var json_resp = JSON.parse(resp);
                         // You can now use the response for what you want
                         if(json_resp['success']){
-                            toast(json_resp['message'],3000)
-                            for(var e=0; e < json_resp['services'].length;e++){
-                                var special = (window.specials[e])
-                                submitFiles(special,json_resp['services'][e])
+                            toast('Please wait...',3000);
+                            for(var i=0;i<json_resp['services'].length;i++){
+                                var service = json_resp['services'][i]
+                                const file = $("#"+service['fileId']).prop('files')
+                                uploadFile(file,window.location.origin+'/gigs/service-files/'+service['serviceId']+'/');
                             }
-                            // window.location.reload(false);
+                            toast('Successfully saved',3000);
+                            window.location.href = window.location.href
                         }else{
                             toast(json_resp['message'],3000)
                         }
@@ -238,3 +220,28 @@ axios.post("/gigs/service-files/"+id+"/", formData, {
       'Content-Type': 'multipart/form-data'
     }
 })}
+
+const uploadFile = (files,url) => {
+    console.log("Uploading file...");
+    const API_ENDPOINT = url;
+    const request = new XMLHttpRequest();
+    const formData = new FormData();
+  
+    request.open("POST", API_ENDPOINT, true);
+    request.onreadystatechange = () => {
+      if (request.readyState === 4 && request.status === 200) {
+        console.log(request.responseText);
+      }
+    };
+    
+    for (let i = 0; i < files.length; i++) {
+      formData.append(files[i].name, files[i])
+    }
+    request.send(formData);
+  };
+
+
+//   $('#firstfileInput').on("change", function (event) {
+//     const files = event.target.files;
+//     uploadFile(files,'http://127.0.0.1:8000/gigs/service-files/5/');
+//   });

@@ -87,16 +87,20 @@ def create_job(request):
 def create_services(request):
     json_data = json.loads(str(request.body, encoding='utf-8'))
     # print(json_data)
-    ids = []
+    objs = []
     services = json_data['services']
     username = json_data['username']
-    user = CustomUser.objects.get(username=username)
+    try:
+        user = CustomUser.objects.get(username=username)
+    except:
+        user = None
     for s in services:
         service = s['service']
         start_price = s['start_price']
         category = s['category']
         experience = s['experience']
         service_detail = s['service_detail']
+        servicefile = s['file']
         myservice = Service()
         myservice.service = service
         myservice.start_price = start_price
@@ -104,25 +108,38 @@ def create_services(request):
         myservice.experience = experience
         myservice.service_detail = service_detail
         myservice.save()
-        myservice.gig = user
+        if user:
+            myservice.gig = user
         myservice.save()
-        ids.append(myservice.id)
+        obj = {}
+        obj['fileId']=servicefile
+        obj['serviceId']= myservice.id
+        objs.append(obj)
     data = {
     'success':True,
     'message':"Services created",
-    "services":ids}
+    "services":objs}
     dump = json.dumps(data)
     return HttpResponse(dump, content_type='application/json')
 
 @csrf_exempt
 def add_service_files(request,id):
-    files = request.FILES.getlist('files')
-    service = Service.objects.get(ide=int(id))
-    for f in files:
-        sf = ServiceFile()
-        sf.servicefile = f
-        sf.service = service
-        sf.save()
+    try:
+        files = request.FILES
+    except Exception as e:
+        print(e)
+    try:
+        service = Service.objects.get(id=int(id))
+    except Exception as e:
+        print(e)
+    for key,val in files.items():
+        try:
+            sf = ServiceFile()
+            sf.servicefile = val
+            sf.service = service
+            sf.save()
+        except Exception as e:
+            pass
     data = {
     'success':True,
     'message':"Services created"}

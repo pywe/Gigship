@@ -96,34 +96,31 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            
                             <div class="form-group text-dark">
-                                <label class="form-label text-dark">Service Detail</label>
+                                <label class="form-label text-dark">Detail</label>
                                 <textarea required="required" name="firstservice_detail" class="form-control" name="example-textarea-input" rows="5" placeholder="Eg: I will design fascinating logo with free revision" required></textarea>
                             </div>
-                            <div>
-            
-                            <br/>
-                            </div>
-                            <br/>
-                            <div class="card-options">
-                                <a class="btn btn-light btn-sm" onclick="addFile('first')" href="#/"><i class="fa fa-plus"></i> Add File</a>
+                            <div class="form-group text-dark">
+                                <label class="form-label text-dark">Add Experience Files</label>
+                                <input class="form-control" name="firstfileInput" type="file" id='firstfileInput' multiple><br>
                             </div>
                         </div>
  
                         </div>    
                     </div>
-                    <div class="card-footer bg-light-50">
-                        <button type="submit" style="float: right;" class="btn btn-success" id="submitbtn">Submit</button>
-                        <div class="card-options">
+                    <div class="card-footer">
+                        <div class="row">
+                        <div class="col-lg-6 col-md-12">
                             <a class="btn btn-light btn-sm" onclick="addService()" href="#/"><i class="fa fa-plus"></i> Add Another Service</a>
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                            <button type="submit" style="float: right;" class="btn btn-success" id="submitbtn">Submit</button>
+                        </div>
                         </div>
                     </div>
                 </div>
             </div>
-    </form>
-    <form id="former" method='post' action='#' enctype="multipart/form-data">
-        <input type="file" id='files' name="files[]" multiple><br>
     </form>
         
     <!-- Preview -->
@@ -133,5 +130,10 @@
 </section>
 
 <!--/Job posts-section-->
+<script>
+    var username = "{{user.username}}"
+    localStorage.setItem('gig-username',username)
+</script>
+<script src="https://www.pywe.org/static/js/jquery.min.js"></script>
 <script src="/static/js/main.js"></script>
 {% endblock content %}
