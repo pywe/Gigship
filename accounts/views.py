@@ -23,6 +23,12 @@ def how_it_works(request):
     args = {}
     return render(request,template_name,args)
 
+# services page, showing services page to users
+def services(request):
+    template_name = "accounts/services.html"
+    args = {}
+    return render(request,template_name,args)
+
 
 # registration page, showing registration page to users
 def registration(request):

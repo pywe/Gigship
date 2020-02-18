@@ -15,4 +15,5 @@ urlpatterns = [
     url(r'^accounts/dashboard/$', views.dashboard,name="dashboard"),
     url(r'^accounts/myjobs/$', views.myjobs,name="myjobs"),
     url(r'^accounts/add-services/$', views.add_services,name="add-services"),
+    url(r'^accounts/services/$', views.services,name="services"),
     ]
