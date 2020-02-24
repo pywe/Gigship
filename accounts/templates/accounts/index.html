@@ -69,30 +69,30 @@
                         <div class="search-background bg-transparent">
                             <div class="form row no-gutters ">
                                 <div class="form-group  col-xl-4 col-lg-3 col-md-12 mb-0 bg-white ">
-                                    <input type="text" class="form-control input-lg br-tr-md-0 br-br-md-0" id="text4" placeholder="Enter Your Keywords">
+                                    <input id="query" name="q" type="text" class="form-control input-lg br-tr-md-0 br-br-md-0" id="text4" placeholder="Enter Your Keywords">
                                 </div>
                                 <!-- <div class="form-group  col-xl-3 col-lg-3 col-md-12 mb-0 bg-white">
 											<input type="text" class="form-control input-lg br-md-0" id="text5" placeholder="Select Location">
 											<span><img src="/static/images/svg/gps.svg" class="location-gps"></span>
 										</div> -->
                                 <div class="form-group col-xl-5 col-lg-5 col-md-12 select2-lg  mb-0 bg-white">
-                                    <select class="form-control select2-show-search  border-bottom-0" data-placeholder="Select Category" name ="firstcategory">
-												<optgroup label="Categories">
-													<option>All Categories</option>
-													<option value="1">Accountant</option>
-													<option value="2">IT Software</option>
-													<option value="3">Banking</option>
-													<option value="4">Finaces</option>
-													<option value="5">Cook/Chef</option>
-													<option value="6">Driving</option>
-													<option value="7">HR Recruiter</option>
-													<option value="8">IT Hardware</option>
-													<option value="9">Sales</option>
-												</optgroup>
+                                    <select id="category" name="category" class="form-control select2-show-search  border-bottom-0" data-placeholder="Select Category" name ="firstcategory">
+                                                <optgroup label="Categories">
+                                                    <option>All Categories</option>
+                                                    <option value="Accountant">Accountant</option>
+                                                    <option value="IT Software">IT Software</option>
+                                                    <option value="Banking">Banking</option>
+                                                    <option value="Finances">Finaces</option>
+                                                    <option value="Cooking">Cook/Chef</option>
+                                                    <option value="Driving">Driving</option>
+                                                    <option value="7">HR Recruiter</option>
+                                                    <option value="IT Hardware">IT Hardware</option>
+                                                    <option value="Sales">Sales</option>
+                                                </optgroup>
 											</select>
                                 </div>
                                 <div class="col-xl-3 col-lg-4 col-md-12 mb-0">
-                                    <a href="#" class="btn btn-lg btn-block btn-secondary br-tl-md-0 br-bl-md-0">Search Here</a>
+                                    <a id="search-btn" href="/accounts/services/" class="btn btn-lg btn-block btn-secondary br-tl-md-0 br-bl-md-0">Search Here</a>
                                 </div>
                             </div>
                         </div>
@@ -120,28 +120,25 @@
     }
 </script>
 {% endif %} 
+<script src="https://pharst.pywe.org/static/js/jquery.min.js"></script>
 <script>
-    function search(keywords,category){
-            var url = window.location.origin +"/gigs/search-gigs/";
-            const data = {
-                q:keywords,category:category
-            }
-            const http = new XMLHttpRequest();
-                http.open('POST', url);
-                http.setRequestHeader('Content-type', 'application/json');
-                // http.setRequestHeader('Authentication','id_token');
-                http.send(JSON.stringify(data)); // Make sure to stringify
-                http.onload = function() {
-                state = true;
-                var resp = http.responseText;
-                var json_resp = JSON.parse(resp);
-                // You can now use the response for what you want
-                if(json_resp['success']){
-                    // look for id of element that will hold the results and append to it
-                    // objects received from calling api
+$(document).ready(function(){
+    document.getElementById('query').onkeyup = function(e) {
+    if (e.keyCode === 13) {
+        document.getElementById('search-btn').click();
+    }
 
-                }
-                console.log(json_resp)
-                }
-            }</script>
+}
+// when search button at home page is clicked
+$('#search-btn').on("click", function (event) {
+    // we save what the user searched for
+    var query = $("#query").val()
+    var category = $("#category").val()
+    const search = {q:query,category:category}
+    localStorage.setItem('query',JSON.stringify(search))
+    console.log(search)
+});
+    
+});            
+</script>
 {% endblock content %}

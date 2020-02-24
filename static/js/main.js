@@ -31,18 +31,18 @@ window.specials = ['first']
                                             </div>
                                             <div class="col-6">
                                                 <select name="`+id+`category" class="form-control select2-show-search  border-bottom-0" data-placeholder="Select Category">
-                                                    <optgroup label="Categories">
-                                                        <option>All Categories</option>
-                                                        <option value="1">Accountant</option>
-                                                        <option value="2">IT Software</option>
-                                                        <option value="3">Banking</option>
-                                                        <option value="4">Finaces</option>
-                                                        <option value="5">Cook/Chef</option>
-                                                        <option value="6">Driving</option>
-                                                        <option value="7">HR Recruiter</option>
-                                                        <option value="8">IT Hardware</option>
-                                                        <option value="9">Sales</option>
-                                                    </optgroup>
+                                                <optgroup label="Categories">
+                                                    <option>All Categories</option>
+                                                    <option value="Accountant">Accountant</option>
+                                                    <option value="IT Software">IT Software</option>
+                                                    <option value="Banking">Banking</option>
+                                                    <option value="Finances">Finaces</option>
+                                                    <option value="Cooking">Cook/Chef</option>
+                                                    <option value="Driving">Driving</option>
+                                                    <option value="7">HR Recruiter</option>
+                                                    <option value="IT Hardware">IT Hardware</option>
+                                                    <option value="Sales">Sales</option>
+                                                </optgroup>
                                                 </select>                                            </div>
                                         </div>
                                     </div>
@@ -157,7 +157,8 @@ window.specials = ['first']
                                 uploadFile(file,window.location.origin+'/gigs/service-files/'+service['serviceId']+'/');
                             }
                             toast('Successfully saved',3000);
-                            window.location.href = window.location.href
+                            var url = window.location.href
+                            window.location.href = url
                         }else{
                             toast(json_resp['message'],3000)
                         }
@@ -179,23 +180,24 @@ function fileValidation(id){
     var filePath = fileInput.value;
     var allowedExtensions = /(\.jpg|\.jpeg|\.png|\.gif|\.mp4|\.mpeg)$/i;
     if(!allowedExtensions.exec(filePath)){
-        alert('Please upload file having extensions .jpeg,.jpg,.png,.gif,.mp4,.mpeg only.');
+        alert('Please upload only images or videos');
         fileInput.value = '';
         return false;
-    }else{
-        if (imageValidation(id)){
-              //Image preview
-        if (fileInput.files && fileInput.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                document.getElementById(id+'imagePreview').innerHTML = '<img height="200px" width="200px" src="'+e.target.result+'"/>';
-                document.getElementById(id+'imagePreview').style.display = "block";
-            };
-            reader.readAsDataURL(fileInput.files[0]);
-        }
-    
     }
-}
+    // else{
+    //     if (imageValidation(id)){
+    //           //Image preview
+    //     if (fileInput.files && fileInput.files[0]) {
+    //         var reader = new FileReader();
+    //         reader.onload = function(e) {
+    //             document.getElementById(id+'imagePreview').innerHTML = '<img height="200px" width="200px" src="'+e.target.result+'"/>';
+    //             document.getElementById(id+'imagePreview').style.display = "block";
+    //         };
+    //         reader.readAsDataURL(fileInput.files[0]);
+    //     }
+    
+    // }
+// }
 }
 function imageValidation(id){
     var fileInput = document.getElementById(id+"file");
@@ -211,6 +213,8 @@ function imageValidation(id){
         return true
     }
 }
+
+// function used to send files
 function sendFile(id){
 var formData = new FormData();
 var imagefile = document.querySelector('#'+id+'files');

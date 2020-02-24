@@ -187,24 +187,30 @@ def search_api(request):
     services = Service.objects.all()
     service_names = [i.service for i in services]
     service_cats = [i.category for i in services]
-    result_names = [i for i in service_names if ratio_match(i,q) >= 0.5]
+    result_names = [i for i in service_names if ratio_match(i,q) >= 0.4]
     cat_names = [i for i in service_cats if ratio_match(i,cat) >= 0.8]
-    all_names = result_names
+    # adding up search word list and category list
+    result_names.extend(cat_names)
+    # removing duplicates
+    all_names = list(set(result_names))
     objects = []
     for i in all_names:
         item = getItembyService(i,services)
         if not item:
             item = getItembyCategory(i,services)
         if item:
+            # print(item.service)
             obj = {}
             obj['service'] = item.service
             obj['start_price'] = item.start_price
             obj['gig'] = item.gig.username
             obj['detail'] = item.service_detail
             obj['experience'] = item.experience
-            objects.append(item)
-    data = {
-    'success':True,
-    'objects':objects}
+            files=[]
+            for f in item.files.all():
+                files.append(f.servicefile.url)
+            obj['files']=files
+            objects.append(obj)
+    data = {'success':True,'objects':objects}
     dump = json.dumps(data)
     return HttpResponse(dump, content_type='application/json')

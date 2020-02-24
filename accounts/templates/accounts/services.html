@@ -1,5 +1,21 @@
 {% extends "accounts/base.html" %} {% block content %}
 <!-- Form widget -->
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+<style>
+
+.scrolling-wrapper {
+  overflow-x: scroll !important;
+  overflow-y: hidden !important;
+  white-space: nowrap !important;
+
+}
+ .scrolling-wrapper .img{
+    display: inline-block !important;
+  }
+  .slick-arrow{
+	  display:none !important;
+  }
+  </style>
 <div class="row">
     <div class="col-md-12">
         <div class="card card-blog-img  minh-210 br-2  spacing">
@@ -7,11 +23,11 @@
                 <div class="search-background bg-transparent">
                     <div class="form row no-gutters ">
                         <div class="form-group  col-xl-4 col-lg-3 col-md-12 mb-0 bg-white">
-                            <input type="text" class="form-control input-lg br-tr-md-0 br-br-md-0" placeholder="Enter Your Keywords">
+                            <input id="query" type="text" class="form-control input-lg br-tr-md-0 br-br-md-0" placeholder="Enter Your Keywords">
                         </div>
 
                         <div class="form-group  col-xl-2 col-lg-2 col-md-12 mb-0 ">
-                            <a href="#" class="btn btn-lg btn-block btn-secondary br-tl-md-0 br-bl-md-0">Search Here</a>
+                            <a id="search-btn" href="#" class="btn btn-lg btn-block btn-secondary br-tl-md-0 br-bl-md-0">Search Here</a>
                         </div>
                     </div>
                 </div>
@@ -26,8 +42,9 @@
 		<div class="sptb-1">
 			<div class="container">
 
-				<div class="row">
-					<div class="col-xl-4 col-md-6">
+				<div class="row" id="found-gigs">
+					<!-- card to show found gigs -->
+					<!-- <div class="col-xl-4 col-md-6">
 						<div class="card overflow-hidden">
 							<div class="item-card7-img">
 								<div class="item-card7-imgs">
@@ -65,9 +82,9 @@
 								</div>
 							</div>
 						</div>
-                    </div>
+                    </div> -->
                     
-					<div class="col-xl-4 col-md-6">
+					<!-- <div class="col-xl-4 col-md-6">
 						<div class="card overflow-hidden">
 							<div class="power-ribbon power-ribbon-top-left text-warning"><span class="bg-warning"><i class="fa fa-bolt"></i></span></div>
 							<div class="item-card7-img">
@@ -147,13 +164,15 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 			</div>
         </div>
-        
+		<script src="https://pharst.pywe.org/static/js/jquery.min.js"></script>
+		<script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+		<script type="text/javascript" src="/static/js/search.js"></script>
         <script type="text/javascript">
-            $('.cover-image').slick();
+
           </script>
 
 	
