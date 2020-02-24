@@ -149,6 +149,7 @@ body {
 [tabindex="-1"]:focus {
 	outline: 0 !important;
 }
+
 hr {
 	box-sizing: content-box;
 	height: 0;
@@ -218,6 +219,7 @@ a {
 	background-color: transparent;
 	-webkit-text-decoration-skip: objects;
 }
+
 a:not([href]):not([tabindex]) {
 	color: inherit;
 	text-decoration: none;
@@ -386,6 +388,7 @@ template {
 .h6, h6 {
 	font-size: .875rem;
 }
+
 .br-100 {
 	border-radius: 100% !important;
 }
@@ -628,11 +631,13 @@ pre code {
 	.container {
 		max-width: 960px;
 	}
+
 }
 @media (min-width:1280px) {
 	.container {
 		max-width: 1200px;
 	}
+	
 }
 .container-fluid {
 	width: 100%;
@@ -3031,6 +3036,7 @@ div.dataTables_wrapper div.dataTables_filter input {
 		-ms-flex-pack: start;
 		justify-content: flex-start;
 	}
+
 	.navbar-expand-md .navbar-nav {
 		-ms-flex-direction: row;
 		flex-direction: row;
@@ -3068,6 +3074,9 @@ div.dataTables_wrapper div.dataTables_filter input {
 		flex-flow: row nowrap;
 		-ms-flex-pack: start;
 		justify-content: flex-start;
+	}
+	.hidelarge{
+		display: none;
 	}
 	.navbar-expand-lg .navbar-nav {
 		-ms-flex-direction: row;
@@ -15788,14 +15797,14 @@ svg {
 	font-size: .8625rem;
 }
 .card-blog-img {
-	background: url(../images/other/about.jpg);
+	background-color: rgba(22, 80, 226);
 	background-size: cover;
 }
 .card-blog-img:before {
 	content: '';
 	display: block;
 	position: absolute;
-	background: rgba(0, 0, 0, 0.6);
+	background: rgba(22, 80, 226);
 	width: 100%;
 	height: 100%;
 	right: 0;
@@ -20403,6 +20412,7 @@ body .modal-open {
 	.blog-list .item7-card-img {
 		height: 100%  !important;
 	}
+
 }
 .item-overly-trans .rating-stars {
 	position: absolute;
@@ -21089,6 +21099,10 @@ footer.cover-image:before{
 @media (max-width:991px) and (min-width:321px){
 	.horizontalMenucontainer {
 		min-width: 360px !important;
+	}
+
+	#hidephone{
+		display: none;
 	}
 }
 @media (max-width: 320px){

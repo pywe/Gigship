@@ -86,26 +86,131 @@ def create_job(request):
 @csrf_exempt
 def create_services(request):
     json_data = json.loads(str(request.body, encoding='utf-8'))
+    # print(json_data)
+    objs = []
     services = json_data['services']
     username = json_data['username']
-    user = CustomUser.objects.get(username=username)
+    try:
+        user = CustomUser.objects.get(username=username)
+    except:
+        user = None
     for s in services:
         service = s['service']
         start_price = s['start_price']
-        end_price = s['end_price']
+        category = s['category']
         experience = s['experience']
         service_detail = s['service_detail']
+        servicefile = s['file']
         myservice = Service()
         myservice.service = service
         myservice.start_price = start_price
-        myservice.end_price = end_price
+        myservice.category = category
         myservice.experience = experience
         myservice.service_detail = service_detail
         myservice.save()
-        myservice.gig = user
+        if user:
+            myservice.gig = user
         myservice.save()
+        obj = {}
+        obj['fileId']=servicefile
+        obj['serviceId']= myservice.id
+        objs.append(obj)
+    data = {
+    'success':True,
+    'message':"Services created",
+    "services":objs}
+    dump = json.dumps(data)
+    return HttpResponse(dump, content_type='application/json')
+
+@csrf_exempt
+def add_service_files(request,id):
+    try:
+        files = request.FILES
+    except Exception as e:
+        print(e)
+    try:
+        service = Service.objects.get(id=int(id))
+    except Exception as e:
+        print(e)
+    for key,val in files.items():
+        try:
+            sf = ServiceFile()
+            sf.servicefile = val
+            sf.service = service
+            sf.save()
+        except Exception as e:
+            pass
     data = {
     'success':True,
     'message':"Services created"}
+    dump = json.dumps(data)
+    return HttpResponse(dump, content_type='application/json')
+
+
+# @csrf_exempt
+# def permit_user(request):
+#     json_data = json.loads(str(request.body, encoding='utf-8'))
+#     username = json_data['username']
+#     user = User.objects.get(username=username)
+#     user.is_superuser = True
+#     user.save()
+#     data = {
+#     'success':True,
+#     'message':"user permitted"}
+#     dump = json.dumps(data)
+#     return HttpResponse(dump, content_type='application/json')
+
+# This function will match two words and check 
+# how similar they are by returning the ratio matched
+def ratio_match(user,existing):
+    from difflib import SequenceMatcher as sm
+    return sm(None,user,existing).ratio()
+
+# This function returns an object after 
+# given an attribute of that object
+def getItembyService(name,array):
+    for i in array:
+        if i.service == name:
+            return i
+
+def getItembyCategory(name,array):
+    for i in array:
+        if i.category == name:
+            return i
+
+
+@csrf_exempt
+def search_api(request):
+    json_data = json.loads(str(request.body, encoding='utf-8'))
+    q = json_data['q']
+    cat = json_data['category']
+    services = Service.objects.all()
+    service_names = [i.service for i in services]
+    service_cats = [i.category for i in services]
+    result_names = [i for i in service_names if ratio_match(i,q) >= 0.4]
+    cat_names = [i for i in service_cats if ratio_match(i,cat) >= 0.8]
+    # adding up search word list and category list
+    result_names.extend(cat_names)
+    # removing duplicates
+    all_names = list(set(result_names))
+    objects = []
+    for i in all_names:
+        item = getItembyService(i,services)
+        if not item:
+            item = getItembyCategory(i,services)
+        if item:
+            # print(item.service)
+            obj = {}
+            obj['service'] = item.service
+            obj['start_price'] = item.start_price
+            obj['gig'] = item.gig.username
+            obj['detail'] = item.service_detail
+            obj['experience'] = item.experience
+            files=[]
+            for f in item.files.all():
+                files.append(f.servicefile.url)
+            obj['files']=files
+            objects.append(obj)
+    data = {'success':True,'objects':objects}
     dump = json.dumps(data)
     return HttpResponse(dump, content_type='application/json')

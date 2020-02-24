@@ -68,7 +68,7 @@ class Job(models.Model):
 class Service(models.Model):
     service = models.CharField(max_length=50,null=True)
     start_price = models.FloatField(default=0.0)
-    end_price = models.FloatField(default=0.0)
+    category = models.CharField(max_length=50,null=True)
     experience = models.IntegerField(default=0)
     service_detail = models.TextField(null=True)
     rating = models.FloatField(default=0.0)
@@ -79,3 +79,9 @@ class Service(models.Model):
             return "{} by {} starting at GHC{}".format(self.service,self.gig.username,self.start_price)
         else:
             return "{} starting at GHC{}".format(self.service,self.start_price)
+
+
+# Third class model
+class ServiceFile(models.Model):
+    service = models.ForeignKey(Service,null=True,on_delete=models.SET_NULL,related_name="files")
+    servicefile = models.FileField(null=True,upload_to="static/services/")

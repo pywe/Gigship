@@ -44,7 +44,7 @@
 <!--Job posts-section-->
 <section class="sptb">
     <div class="container">
-        <form id="serviceform" action="#" method="dialog" onsubmit="submitForm()">
+        <form id="serviceform" enctype="multipart/form-data" action="#" method="dialog" onsubmit="submitForm()">
         <div class="row ">
             <div class="col-lg-12 col-md-12 col-md-12">
                 <div class="card">
@@ -68,8 +68,21 @@
                                                 <input required="required" name="firststart_price" type="number" step=".01" min="0.0" class="form-control" placeholder="Starting Price">
                                             </div>
                                             <div class="col-6">
-                                                <input required="required" name="firstend_price" type="number" min="0.0" class="form-control" placeholder="Ending Price">
-                                            </div>
+                                                <select name="firstcategory" class="form-control select2-show-search  border-bottom-0" data-placeholder="Select Category">
+                                                    <optgroup label="Categories">
+                                                        <option>All Categories</option>
+                                                        <option value="Accountant">Accountant</option>
+                                                        <option value="IT Software">IT Software</option>
+                                                        <option value="Banking">Banking</option>
+                                                        <option value="Finances">Finaces</option>
+                                                        <option value="Cooking">Cook/Chef</option>
+                                                        <option value="Driving">Driving</option>
+                                                        <option value="7">HR Recruiter</option>
+                                                        <option value="IT Hardware">IT Hardware</option>
+                                                        <option value="Sales">Sales</option>
+                                                    </optgroup>
+                                                </select>   
+                                            </div>                                         </div>
                                         </div>
                                     </div>
                                 </div>
@@ -83,153 +96,44 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            
                             <div class="form-group text-dark">
-                                <label class="form-label text-dark">Service Detail</label>
+                                <label class="form-label text-dark">Detail</label>
                                 <textarea required="required" name="firstservice_detail" class="form-control" name="example-textarea-input" rows="5" placeholder="Eg: I will design fascinating logo with free revision" required></textarea>
                             </div>
+                            <div class="form-group text-dark">
+                                <label class="form-label text-dark">Add Experience Files</label>
+                                <input class="form-control" name="firstfileInput" type="file" id='firstfileInput' multiple><br>
+                            </div>
                         </div>
-
-                        
+ 
+                        </div>    
                     </div>
-                    <div class="card-footer bg-light-50">
-                        <button type="submit" style="float: right;" class="btn btn-success" id="submitbtn">Submit</button>
-                        <div class="card-options">
-                            <a class="btn btn-light btn-sm" onclick="addService()" href="#/"><i class="fa fa-plus"></i> Add Another</a>
+                    <div class="card-footer">
+                        <div class="row">
+                        <div class="col-lg-6 col-md-12">
+                            <a class="btn btn-light btn-sm" onclick="addService()" href="#/"><i class="fa fa-plus"></i> Add Another Service</a>
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                            <button type="submit" style="float: right;" class="btn btn-success" id="submitbtn">Submit</button>
+                        </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
     </form>
+        
+    <!-- Preview -->
+    <div id='preview'></div>
     </div>
     <div id="snackbar"></div>
 </section>
+
 <!--/Job posts-section-->
 <script>
-    window.specials = ['first']
-    function makeid(length) {
-        var result = '';
-        var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        var charactersLength = characters.length;
-        for (var i = 0; i < length; i++) {
-            result += characters.charAt(Math.floor(Math.random() * charactersLength));
-        }
-        return result;
-    }
-
-    function addService() {
-        var id = makeid(5)
-        window.specials.push(id)
-        // forms = document.getElementById("services")
-        $("#services").append(`<div class="animated slideInUp" id="` + id + `">
-								<a class="btn btn-danger btn-sm" style="float:right" onclick="removeService('` + id + `')" href="#/">Remove</a>
-								<div class="form-group">
-                                <label class="form-label text-dark">Service</label>
-                                <input required="required" name="`+id+`service" type="text" class="form-control" placeholder="Eg: Logo Design">
-                            </div>
-                            <div class="row">
-                                <div class="col-sm-6 col-md-6">
-                                    <div class="form-group m-0">
-                                        <label class="form-label text-dark">Price</label>
-                                        <div class="row gutters-xs">
-                                            <div class="col-6">
-                                                <input required="required" name="`+id+`start_price" type="number" step=".01" min="0.0" class="form-control" placeholder="Starting Price">
-                                            </div>
-                                            <div class="col-6">
-                                                <input required="required" name="`+id+`end_price" type="number" min="0.0" class="form-control" placeholder="Ending Price">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-sm-6 col-md-6">
-                                    <div class="form-group">
-                                        <label class="form-label text-dark">Year Experience</label>
-                                        <div class="row gutters-xs">
-                                            <div class="col-12">
-                                                <input required="required" name="`+id+`experience" type="number" class="form-control" placeholder="Year Experience">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="form-group text-dark">
-                                <label class="form-label text-dark">Service Detail</label>
-                                <textarea required="required" name="`+id+`service_detail" class="form-control" name="example-textarea-input" rows="5" placeholder="Eg: I will design fascinating logo with free revision" required></textarea>
-                            </div></div>`)
-    }
-
-    function removeService(id) {
-        $("#" + id).remove();
-    }
-    function collectForm(){
-        let myForm = document.getElementById("serviceform");
-                        var saved = "first";
-                        let formData = new FormData(myForm);
-                        var myarray = [];
-                        var big = {}
-                        var info = {};
-                        //This will build the form from name, value pairs
-
-                        for(var pair of formData.entries()){
-                            var str = pair[0]
-                            var res = str.substring(0,5);
-                            if (window.specials.includes(res)){
-                            if(saved === res){
-                                var key = (pair[0]).replace(res,"")
-                                info[key] = pair[1]
-                            }
-                            else{
-                                myarray.push(info)
-                                var info = {};
-                                var key = (pair[0]).replace(res,"")
-                                info[key] = pair[1]
-                                saved = (pair[0]).substring(0,5);
-                            }}else{
-                                big[pair[0]] = pair[1]
-                            }
-                        }
-                        myarray.push(info)
-                        big['services']=myarray
-                        return big
-		};
-        function submitForm(){
-            document.getElementById('submitbtn').innerHTML = 'processing...'
-            $("#submitbtn").prop("disabled",true);
-            const data = collectForm()
-            data['username']="{{user.username}}";
-            url = window.location.origin +"/gigs/create-services/";
-            console.log(url)
-            const http = new XMLHttpRequest();
-                        http.open('POST', url);
-                        http.setRequestHeader('Content-type', 'application/json');
-                            // http.setRequestHeader('Authentication','id_token');
-                            http.send(JSON.stringify(data)); // Make sure to stringify
-                            // http.onreadystatechange=(e)=>{
-                            //     // console.log(
-                            //     //     http.responseText
-                            //     // )
-                            // }
-                        http.onload = function() {
-                        state = true;
-                        var resp = http.responseText;
-                        var json_resp = JSON.parse(resp);
-                        // You can now use the response for what you want
-                        if(json_resp['success']){
-                            toast(json_resp['message'],3000)
-                            window.location.reload(false);
-                        }else{
-                            toast(json_resp['message'],3000)
-                        }
-                        console.log(json_resp)
-                        }
-
-        }
-        function toast(msg,time) {
-          var x = document.getElementById("snackbar");
-          x.innerHTML = msg;
-          x.className = "show";
-          setTimeout(function(){ x.className = x.className.replace("show", ""); }, time);
-        }
+    var username = "{{user.username}}"
+    localStorage.setItem('gig-username',username)
 </script>
+<script src="https://www.pywe.org/static/js/jquery.min.js"></script>
+<script src="/static/js/main.js"></script>
 {% endblock content %}
