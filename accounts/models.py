@@ -16,18 +16,18 @@ class CustomUser(AbstractUser):
 
 # Second class model
 # Freelancer model:migrates into database as accounts_freelancer table
-class Freelancer(CustomUser):
+class Gigger(CustomUser):
     referral_token = models.CharField(max_length=30,null=True,blank=True)
 
     class Meta:
-        verbose_name = "Freelancer"
+        verbose_name = "Gigger"
 
 
 # Second class model
 # Employer model:migrates into database as accounts_emploer table
-class Employer(CustomUser):
+class Buyer(CustomUser):
     referral_token = models.CharField(max_length=30,null=True,blank=True)
 
     class Meta:
-        verbose_name = "Employer"
+        verbose_name = "Buyer"
 
