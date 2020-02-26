@@ -1,26 +1,31 @@
-function exists(ele){
-    if (ele !== null && ele !== undefined){return true}else{return false}
+function exists(ele) {
+    if (ele !== null && ele !== undefined) {
+        return true
+    } else {
+        return false
+    }
 }
-function search(data){
-    var url = window.location.origin +"/gigs/search-gigs/";
+
+function search(data) {
+    var url = window.location.origin + "/gigs/search-gigs/";
     // const data = {
     //     q:keywords,category:category
     // }
     const http = new XMLHttpRequest();
-        http.open('POST', url);
-        http.setRequestHeader('Content-type', 'application/json');
-        // http.setRequestHeader('Authentication','id_token');
-        http.send(JSON.stringify(data)); // Make sure to stringify
-        http.onload = function() {
+    http.open('POST', url);
+    http.setRequestHeader('Content-type', 'application/json');
+    // http.setRequestHeader('Authentication','id_token');
+    http.send(JSON.stringify(data)); // Make sure to stringify
+    http.onload = function () {
         state = true;
         var resp = http.responseText;
         var json_resp = JSON.parse(resp);
         // You can now use the response for what you want
-        if(json_resp['success']){
+        if (json_resp['success']) {
             // look for id of element that will hold the results and append to it
             // objects received from calling api
             $("#found-gigs").text("")
-            for(var i=0;i<json_resp.objects.length;i++){
+            for (var i = 0; i < json_resp.objects.length; i++) {
                 var object = json_resp.objects[i]
                 var card = constructCard(object);
                 $("#found-gigs").append(card)
@@ -30,14 +35,14 @@ function search(data){
                 slidesToScroll: 1,
                 autoplay: true,
                 autoplaySpeed: 3000,
-              });
+            });
 
         }
         console.log(json_resp)
-        }
     }
+}
 
-function constructCard(object){
+function constructCard(object) {
     var service = object.service
     var start_price = object.start_price
     var comment = object.detail
@@ -74,7 +79,7 @@ function constructCard(object){
                     <small class="d-block text-muted">Verified User</small>
                 </div>
                 <div class="ml-auto text-muted">
-                    <a class="btn btn-warning text-white">Hirer</a>
+                    <a class="btn btn-warning text-white">Hire</a>
                 </div>
             </div>
         </div>
@@ -82,14 +87,15 @@ function constructCard(object){
 </div>`
     return html
 }
-function execute_search(){
-var search_q = localStorage.getItem('query')
-if(exists(search_q)){
-    $("#query").val(JSON.parse(search_q).q)
-    search(JSON.parse(search_q))
+
+function execute_search() {
+    var search_q = localStorage.getItem('query')
+    if (exists(search_q)) {
+        $("#query").val(JSON.parse(search_q).q)
+        search(JSON.parse(search_q))
+    }
 }
-}
-document.getElementById('query').onkeyup = function(e) {
+document.getElementById('query').onkeyup = function (e) {
     if (e.keyCode === 13) {
         document.getElementById('search-btn').click();
     }
@@ -100,8 +106,11 @@ $('#search-btn').on("click", function (event) {
     // we save what the user searched for
     var query = $("#query").val()
     var category = ""
-    const search = {q:query,category:category}
-    localStorage.setItem('query',JSON.stringify(search))
+    const search = {
+        q: query,
+        category: category
+    }
+    localStorage.setItem('query', JSON.stringify(search))
     execute_search()
 });
 execute_search()
