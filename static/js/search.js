@@ -59,27 +59,22 @@ function constructCard(object){
                 <div class="item-card7-text">
                     <a href="jobs.html" class="text-dark"><h4 class="font-weight-semibold">${service}</h4></a>
                 </div>
-                <ul class="d-flex mt-2">
-                    <li class=""><a href="#" class="icons"><i class="icon icon-location-pin text-muted mr-1"></i> USA</a></li>
-                    <li><a href="#" class="icons"><i class="icon icon-event text-muted mr-1"></i>1 min ago</a></li>
-                    <li class=""><a href="#" class="icons"><i class="icon icon-phone text-muted mr-1"></i> 14 675 65</a></li>
-                </ul>
                 <p class="mb-0">${comment}</p>
             </div>
         </div>
         <div class="card-body">
-            <a href="mr-4" class="icons">GHC ${start_price}</a>
-            <a class="mr-4 float-right"><i class="fa fa-clock-o  text-muted mr-1"></i>Full Time Job</a>
+            <a href="mr-4" class="icons">Starting Price: GHC ${start_price}</a>
+            <a class="mr-4 float-right"><i class="fa fa-star text-warning"> </i>Rating(250)</a>
         </div>
         <div class="card-body">
             <div class="d-flex align-items-center pt-2 mt-auto">
                 <img src="/static/images/users/male/7.jpg" class="avatar brround avatar-md mr-3" alt="avatar-img">
                 <div>
                     <a href="profile.html" class="text-default">Tanner Mallari</a>
-                    <small class="d-block text-muted">2 days ago</small>
+                    <small class="d-block text-muted">Verified User</small>
                 </div>
                 <div class="ml-auto text-muted">
-                    <a class="btn btn-warning text-white">See Details</a>
+                    <a class="btn btn-warning text-white">Hirer</a>
                 </div>
             </div>
         </div>
