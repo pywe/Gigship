@@ -160,13 +160,13 @@ def add_service_files(request,id):
 #     dump = json.dumps(data)
 #     return HttpResponse(dump, content_type='application/json')
 
-# This function will match two words and check 
+# This function will match two words and check
 # how similar they are by returning the ratio matched
 def ratio_match(user,existing):
     from difflib import SequenceMatcher as sm
     return sm(None,user,existing).ratio()
 
-# This function returns an object after 
+# This function returns an object after
 # given an attribute of that object
 def getItembyService(name,array):
     for i in array:
@@ -187,8 +187,14 @@ def search_api(request):
     services = Service.objects.all()
     service_names = [i.service for i in services]
     service_cats = [i.category for i in services]
-    result_names = [i for i in service_names if ratio_match(i,q) >= 0.4]
-    cat_names = [i for i in service_cats if ratio_match(i,cat) >= 0.8]
+    if len(service_names)>0:
+        result_names = [i for i in service_names if ratio_match(i,q) >= 0.4]
+    else:
+        result_names = []
+    if len(service_cats)>0:
+        cat_names = [i for i in service_cats if ratio_match(i,cat) >= 0.8]
+    else:
+        cat_names = []
     # adding up search word list and category list
     result_names.extend(cat_names)
     # removing duplicates

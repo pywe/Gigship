@@ -82,7 +82,7 @@ window.specials = ['first']
                         let formData = new FormData(myForm);
                         // var myfile = document.getElementById(saved+"file");
                         // console.log(myfile.files[0])
-                       
+
                         // formData.append("file", myfile.files[0]);
                         var myarray = [];
                         var big = {}
@@ -95,13 +95,13 @@ window.specials = ['first']
                             if (window.specials.includes(res)){
                             if(saved === res){
                                 if (pair[0].includes('fileInput')){
-                                    
+
                                     info['file'] = pair[0]
                                 }else{
                                 var key = (pair[0]).replace(res,"")
                                 info[key] = pair[1]
                             }
-                            
+
                             }
                             else{
                                 myarray.push(info)
@@ -112,7 +112,7 @@ window.specials = ['first']
                                 var key = (pair[0]).replace(res,"")
                                 info[key] = pair[1]
                                 }
-                                
+
                                 saved = (pair[0]).substring(0,5);
                             }
                             }else{
@@ -150,16 +150,27 @@ window.specials = ['first']
                         var json_resp = JSON.parse(resp);
                         // You can now use the response for what you want
                         if(json_resp['success']){
-                            toast('Please wait...',3000);
+
                             for(var i=0;i<json_resp['services'].length;i++){
                                 var service = json_resp['services'][i]
                                 const file = $("#"+service['fileId']).prop('files')
-                                uploadFile(file,window.location.origin+'/gigs/service-files/'+service['serviceId']+'/');
+
+                                if(i === (json_resp['services'].length)-1){
+                                    final = true
+                                    uploadFile(file,window.location.origin+'/gigs/service-files/'+service['serviceId']+'/',final);
+                                    toast('Please wait...',3000);
+                                }else{
+                                    final = false
+                                    uploadFile(file,window.location.origin+'/gigs/service-files/'+service['serviceId']+'/',final);
+                                    toast('Please wait...',3000);
+                                }
+
+                                }
                             }
-                            toast('Successfully saved',3000);
-                            var url = window.location.href
-                            window.location.href = url
-                        }else{
+                            // toast('Successfully saved',3000);
+                            // var url = window.location.href
+                            //
+                            else{
                             toast(json_resp['message'],3000)
                         }
                         console.log(json_resp)
@@ -174,7 +185,7 @@ window.specials = ['first']
         }
 
 
-            
+
 function fileValidation(id){
     var fileInput = document.getElementById(id+"file");
     var filePath = fileInput.value;
@@ -195,7 +206,7 @@ function fileValidation(id){
     //         };
     //         reader.readAsDataURL(fileInput.files[0]);
     //     }
-    
+
     // }
 // }
 }
@@ -225,19 +236,25 @@ axios.post("/gigs/service-files/"+id+"/", formData, {
     }
 })}
 
-const uploadFile = (files,url) => {
+const uploadFile = (files,url,final) => {
     console.log("Uploading file...");
     const API_ENDPOINT = url;
     const request = new XMLHttpRequest();
     const formData = new FormData();
-  
+
     request.open("POST", API_ENDPOINT, true);
     request.onreadystatechange = () => {
       if (request.readyState === 4 && request.status === 200) {
         console.log(request.responseText);
+        // this is how we know the files have been uploaded
+        if(final){
+            setTimeout(function () {
+            window.location.reload(true);
+            }, 3000);
+        }
       }
     };
-    
+
     for (let i = 0; i < files.length; i++) {
       formData.append(files[i].name, files[i])
     }
