@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import Employer
+from accounts.models import Buyer
 from django.conf import settings
 
 # Create your models here.
@@ -74,6 +74,9 @@ class Service(models.Model):
     rating = models.FloatField(default=0.0)
     gig = models.ForeignKey(settings.AUTH_USER_MODEL,null=True,on_delete=models.SET_NULL)
 
+    class Meta:
+        verbose_name = "Gig"
+    
     def __str__(self):
         if self.gig:
             return "{} by {} starting at GHC{}".format(self.service,self.gig.username,self.start_price)
@@ -85,3 +88,6 @@ class Service(models.Model):
 class ServiceFile(models.Model):
     service = models.ForeignKey(Service,null=True,on_delete=models.SET_NULL,related_name="files")
     servicefile = models.FileField(null=True,upload_to="static/services/")
+    
+    class Meta:
+        verbose_name = "Gig File"
