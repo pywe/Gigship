@@ -32,7 +32,7 @@ class CustomUser(AbstractUser):
 # Freelancer model:migrates into database as accounts_freelancer table
 class Gigger(CustomUser):
     referral_token = models.CharField(max_length=30,null=True,blank=True)
-    categories =models.ManyToManyField(GiggerCategory)
+    # categories =models.ManyToManyField(GiggerCategory)
 
     class Meta:
         verbose_name = "Gigger"

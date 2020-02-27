@@ -14,7 +14,10 @@ from django.contrib.auth import authenticate,login,logout
 def index(request):
     if request.user.is_authenticated:
         links = {'Gigger':'accounts/dashboard.html','Shipper':'accounts/index.html','Admin':'accounts/index.html'}
-        template_name = links[request.user.user_type]
+        try:
+            template_name = links[request.user.user_type]
+        except:
+            template_name = "accounts/index.html"
         categories = GiggerCategory.objects.all()
         args = {'categories':categories}
         return render(request,template_name,args)
