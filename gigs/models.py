@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import Buyer
+from accounts.models import Shipper,GiggerCategory
 from django.conf import settings
 
 # Create your models here.
@@ -11,7 +11,7 @@ class Skill(models.Model):
 
 # Second class model
 class Resume(models.Model):
-    profession = models.CharField(max_length=50,null=True) 
+    profession = models.CharField(max_length=50,null=True)
     years_experience = models.IntegerField(default=0)
     months_experience = models.IntegerField(default=0)
     skills = models.ManyToManyField(Skill)
@@ -68,7 +68,7 @@ class Job(models.Model):
 class Service(models.Model):
     service = models.CharField(max_length=50,null=True)
     start_price = models.FloatField(default=0.0)
-    category = models.CharField(max_length=50,null=True)
+    categories = models.ManyToManyField(GiggerCategory)
     experience = models.IntegerField(default=0)
     service_detail = models.TextField(null=True)
     rating = models.FloatField(default=0.0)
@@ -76,7 +76,7 @@ class Service(models.Model):
 
     class Meta:
         verbose_name = "Gig"
-    
+
     def __str__(self):
         if self.gig:
             return "{} by {} starting at GHC{}".format(self.service,self.gig.username,self.start_price)
@@ -88,6 +88,6 @@ class Service(models.Model):
 class ServiceFile(models.Model):
     service = models.ForeignKey(Service,null=True,on_delete=models.SET_NULL,related_name="files")
     servicefile = models.FileField(null=True,upload_to="static/services/")
-    
+
     class Meta:
         verbose_name = "Gig File"

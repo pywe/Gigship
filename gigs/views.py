@@ -3,6 +3,7 @@ import json
 from django.views.decorators.csrf import csrf_exempt
 from accounts.models import CustomUser
 from .models import *
+from django.contrib import messages
 
 
 # Create your views here.
@@ -104,7 +105,12 @@ def create_services(request):
         myservice = Service()
         myservice.service = service
         myservice.start_price = start_price
-        myservice.category = category
+        try:
+            real_cat = GiggerCategory.objects.get(name=category)
+        except:
+            pass
+        else:
+            myservice.categories.add(real_cat)
         myservice.experience = experience
         myservice.service_detail = service_detail
         myservice.save()
@@ -144,6 +150,7 @@ def add_service_files(request,id):
     'success':True,
     'message':"Services created"}
     dump = json.dumps(data)
+    messages.success(request,"Your Gig(s) have beens added")
     return HttpResponse(dump, content_type='application/json')
 
 
@@ -186,13 +193,16 @@ def search_api(request):
     cat = json_data['category']
     services = Service.objects.all()
     service_names = [i.service for i in services]
-    service_cats = [i.category for i in services]
+    service_cats = []
+    for each in services:
+        for c in each.categories.all():
+            service_cats.append(c.name)
     if len(service_names)>0:
-        result_names = [i for i in service_names if ratio_match(i,q) >= 0.4]
+        result_names = [i for i in service_names if ratio_match(i,q) >= 0.7]
     else:
         result_names = []
     if len(service_cats)>0:
-        cat_names = [i for i in service_cats if ratio_match(i,cat) >= 0.8]
+        cat_names = [i for i in service_cats if ratio_match(i,cat) >= 0.5]
     else:
         cat_names = []
     # adding up search word list and category list
@@ -203,9 +213,20 @@ def search_api(request):
     for i in all_names:
         item = getItembyService(i,services)
         if not item:
-            item = getItembyCategory(i,services)
-        if item:
-            # print(item.service)
+            items = services.filter(category=i)
+            for item in items:
+                obj = {}
+                obj['service'] = item.service
+                obj['start_price'] = item.start_price
+                obj['gig'] = item.gig.username
+                obj['detail'] = item.service_detail
+                obj['experience'] = item.experience
+                files=[]
+                for f in item.files.all():
+                    files.append(f.servicefile.url)
+                obj['files']=files
+                objects.append(obj)
+        else:
             obj = {}
             obj['service'] = item.service
             obj['start_price'] = item.start_price

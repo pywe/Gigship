@@ -12,9 +12,14 @@ from django.contrib.auth import authenticate,login,logout
 # Create your views here.
 # index page, showing homepage to users
 def index(request):
-    template_name = "accounts/index.html"
-    args = {}
-    return render(request,template_name,args)
+    if request.user.is_authenticated:
+        links = {'Gigger':'accounts/dashboard.html','Shipper':'accounts/index.html','Admin':'accounts/index.html'}
+        template_name = links[request.user.user_type]
+        categories = GiggerCategory.objects.all()
+        args = {'categories':categories}
+        return render(request,template_name,args)
+    else:
+        return redirect("/accounts/login/")
 
 
 # how it works page, showing how it works page to users
@@ -34,17 +39,35 @@ def services(request):
 def registration(request):
     if request.method == "GET":
         template_name = "accounts/registration.html"
-        args = {}
+        categories = GiggerCategory.objects.all()
+        args = {'categories':categories}
         return render(request,template_name,args)
     else:
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
         account_type = request.POST['account_type']
-        if account_type == "freelancer":
-            user = Freelancer()
+        if account_type == "Gigger":
+            user = Gigger()
+            user.user_type = 'Gigger'
+            category1 = request.POST['category1']
+            category2 = request.POST['category2']
+            try:
+                real_1 = GiggerCategory.objects.get(name=category1)
+            except:
+                pass
+            else:
+                user.categories.add(real_1)
+            try:
+                real_2 = GiggerCategory.objects.get(name=category2)
+            except:
+                pass
+            else:
+                user.categories.add(real_2)
+
         else:
-            user = Employer()
+            user = Shipper()
+            user.user_type = 'Shipper'
         user.username = username
         user.email = email
         user.set_password(password)
@@ -53,7 +76,7 @@ def registration(request):
         except Exception as e:
             messages.error(request,str(e))
             return redirect("/accounts/registration/")
-        msg = """Hello {}, we are excited to have you on board. 
+        msg = """Hello {}, we are excited to have you on board.
         Here is your link ### to verify your email and officially be accepted on the platform as a/an {}""".format(username,account_type)
         send_mail(
         'Welcome To Gigship',
@@ -70,15 +93,18 @@ def registration(request):
 def mylogin(request):
     if request.method == "GET":
         template_name = "accounts/login.html"
-        args = {}
+        categories = GiggerCategory.objects.all()
+        args = {'categories':categories}
         return render(request,template_name,args)
+    links = {'Gigger':'/accounts/dashboard/','Shipper':'/','Admin':'/'}
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(request, username=username, password=password)
     if user is not None:
         login(request, user)
         messages.success(request,"login successful")
-        return redirect("/")
+        link = links[user.user_type]
+        return redirect(link)
     else:
         messages.error(request,"Failed. Please check your credentials")
         return redirect("/accounts/login/")
@@ -89,7 +115,7 @@ def mylogout(request):
     messages.success(request,"Thanks for spending time with us")
     return redirect('/')
 
-    
+
 # forgot password page, showing forgot password page to users
 def forgot(request):
     template_name = "accounts/forgot.html"
@@ -123,17 +149,22 @@ def myjobs(request):
 
 # profil page, profil page to users
 def add_services(request):
-    template_name = "accounts/profil.html"
-    args = {}
-    return render(request,template_name,args)
+    if request.user.is_authenticated:
+        template_name = "accounts/profil.html"
+        categories = GiggerCategory.objects.all()
+        args = {'categories':categories}
+        return render(request,template_name,args)
+    else:
+        return redirect("/accounts/login/")
+
 
 @csrf_exempt
-def create_freelancer(request):
+def create_gigger(request):
     json_data = json.loads(str(request.body, encoding='utf-8'))
     username = json_data['username']
     email = json_data['email']
     password = json_data['password']
-    user = Freelancer()
+    user = Gigger()
     user.username = username
     user.set_password(password)
     user.email = email
@@ -141,18 +172,18 @@ def create_freelancer(request):
     # send mail to user here
     data = {
     'success':True,
-    'message':"Freelancer created"}
+    'message':"Gigger created"}
     dump = json.dumps(data)
     return HttpResponse(dump, content_type='application/json')
 
 
 @csrf_exempt
-def create_employer(request):
+def create_shipper(request):
     json_data = json.loads(str(request.body, encoding='utf-8'))
     username = json_data['username']
     email = json_data['email']
     password = json_data['password']
-    user = Employer()
+    user = Shipper()
     user.username = username
     user.set_password(password)
     user.email = email
@@ -160,7 +191,7 @@ def create_employer(request):
     # send mail to user here
     data = {
     'success':True,
-    'message':"Employer created"}
+    'message':"Shipper created"}
     dump = json.dumps(data)
     return HttpResponse(dump, content_type='application/json')
 

@@ -110,16 +110,62 @@
                                                 <input type="password" name="password" required="required">
                                                 <label>Password</label>
                                             </div>
-                                           <div>
-                                           <select name="account_type" class="form-control" required="required">
-                                                <option value="employer">I'm an employer</option>
-                                                <option value="freelancer">I want jobs</option>
-                                           </select>
-                                           </div>
+
+                                           <div class="form-group select2-lg bg-white">
+                                            <select onchange="checkType()" id="account-type" name="account_type" class="form-control select2-show-search  border-bottom-0" data-placeholder="Select Account Type">
+                                                <optgroup label="Account Type">
+                                                    <option disabled selected>Choose One</option>
+                                                    <option value="Gigger">Gigger</option>
+                                                    <option value="Shipper">Shipper</option>
+                                                </optgroup>
+										    </select>
+                                            </div>
+                                            <div class="form-group select2-lg bg-white" hidden="true" id="type1">
+                                                <p style="color:blue;">Choose Two Primary Gig Categories that you have much experience at below</p>
+
+                                            <select required="required" id="category1" name="category1" class="form-control select2-show-search  border-bottom-0" data-placeholder="Select Account Type">
+                                                <optgroup label="type1">
+                                                    <option disabled selected>First</option>
+                                                    {% for category in categories %}
+                                                        <option value="{{category.name}}">{{category.name}}</option>
+                                                    {% endfor %}
+                                                    <!--<option value="IT Software">IT Software</option>-->
+                                                    <!--<option value="Music">Music</option>-->
+                                                    <!--<option value="Banking">Banking</option>-->
+                                                    <!--<option value="Finances">Finaces</option>-->
+                                                    <!--<option value="Cooking">Cook/Chef</option>-->
+                                                    <!--<option value="Driving">Driving</option>-->
+                                                    <!--<option value="HR Recruiter">HR Recruiter</option>-->
+                                                    <!--<option value="IT Hardware">IT Hardware</option>-->
+                                                    <!--<option value="Sales">Sales</option>-->
+                                                </optgroup>
+										    </select>
+                                        </div>
+                                        <div class="form-group select2-lg bg-white" hidden="true" id="type2">
+                                            <select required="required" id="category2" name="category2" class="form-control select2-show-search  border-bottom-0" data-placeholder="Select Account Type">
+                                                <optgroup label="type2">
+                                                    <option disabled selected>Second</option>
+                                                    {% for category in categories %}
+                                                        <option value="{{category.name}}">{{category.name}}</option>
+                                                    {% endfor %}
+                                                    <!--<option value="IT Software">IT Software</option>-->
+                                                    <!--<option value="Music">Music</option>-->
+                                                    <!--<option value="Banking">Banking</option>-->
+                                                    <!--<option value="Finances">Finaces</option>-->
+                                                    <!--<option value="Cooking">Cook/Chef</option>-->
+                                                    <!--<option value="Driving">Driving</option>-->
+                                                    <!--<option value="HR Recruiter">HR Recruiter</option>-->
+                                                    <!--<option value="IT Hardware">IT Hardware</option>-->
+                                                    <!--<option value="Sales">Sales</option>-->
+                                                </optgroup>
+										    </select>
+                                        </div>
+
                                             <div class="submit">
                                                 <input type="submit" class="btn btn-primary btn-block" value="Register">
                                             </div>
                                             <!-- <p class="text-dark mb-0">Already have an account?<a href="/login" class="text-primary ml-1">Sign In</a></p> -->
+                                        </div>
                                         </form>
                                     </div>
                                 </div>
@@ -132,4 +178,16 @@
     </div>
 </section>
 <!--/Login-Section-->
+<script>
+    function checkType(){
+        var type = $("#account-type").val()
+        if (type === "Gigger" ){
+            $("#type1").attr('hidden',false)
+            $("#type2").attr('hidden',false)
+        }else{
+             $("#type1").attr('hidden',true)
+             $("#type2").attr('hidden',true)
+        }
+    }
+</script>
 {% endblock content %}

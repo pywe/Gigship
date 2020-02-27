@@ -15,10 +15,10 @@
                             <div class="col-xl-8 col-md-12 d-block mx-auto">
                                 <div class="testimonia text-center">
                                     <img src="/static/images/products/intro/search.svg" class="w-70 h-100 mb-5 mx-auto text-center" alt="image">
-                                    <h3>Search Job</h3>
+                                    <h3>Search Giggers</h3>
                                     <p>
-                                        Now You Become a Part of Our Website<br> rejoin is free classified ads website template with awesome responsive webOffline. It has a huge collection of widgets</p>
-                                    <a href="" class="btn btn-primary  mb-3">Search</a>
+                                        Get the best giggers now</p>
+                                    <a href="#" class="btn btn-primary  mb-3">Search</a>
                                 </div>
                             </div>
                         </div>
@@ -28,10 +28,9 @@
                             <div class="col-xl-8 col-md-12 d-block mx-auto">
                                 <div class="testimonia text-center">
                                     <img src="/static/images/products/intro/join.svg" class="w-70 mb-5 mx-auto text-center" alt="image">
-                                    <h3>Join With Us</h3>
-                                    <p>
-                                        Now You Become a Part of Our Website<br> There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in humour</p>
-                                    <a href="" class="btn btn-primary  mb-3">Join</a>
+                                    <h3>Join Us</h3>
+                                    <p>Add a Gig and get hired</p>
+                                    <a href="#" class="btn btn-primary  mb-3">Join</a>
                                 </div>
                             </div>
                         </div>
@@ -41,9 +40,9 @@
                             <div class="col-xl-8 col-md-12 d-block mx-auto">
                                 <div class="testimonia text-center">
                                     <img src="/static/images/products/intro/notification.svg" class="w-55 h-100 mb-5 mx-auto text-center" alt="image">
-                                    <h3>Get Notifications</h3>
-                                    <p>Now You Become a Part of Our Website<br> There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in humour</p>
-                                    <a href="settings.html" class="btn btn-primary  mb-3">Change</a>
+                                    <h3>Simply Gigship</h3>
+                                    <p>People ship goods, we ship Gigs</p>
+                                    <a href="#" class="btn btn-primary  mb-3">Change</a>
                                 </div>
                             </div>
                         </div>
@@ -61,8 +60,8 @@
         <div class="header-text mb-0">
             <div class="container">
                 <div class="text-center text-white mb-7">
-                    <h1 class="mb-1">Welcome to Africa’s Market For Freelance Services!</h1>
-                    <p>Find The Best Gig and Get Your Work Done.</p>
+                    <h1 class="mb-1">Welcome to Africa’s No. 1 Market For Gigs!</h1>
+                    <p>Find The Best Giggers and Get Your Gig Done.</p>
                 </div>
                 <div class="row">
                     <div class="col-xl-10 col-lg-12 col-md-12 d-block mx-auto">
@@ -79,15 +78,19 @@
                                     <select id="category" name="category" class="form-control select2-show-search  border-bottom-0" data-placeholder="Select Category" name ="firstcategory">
                                                 <optgroup label="Categories">
                                                     <option>All Categories</option>
-                                                    <option value="Accountant">Accountant</option>
-                                                    <option value="IT Software">IT Software</option>
-                                                    <option value="Banking">Banking</option>
-                                                    <option value="Finances">Finaces</option>
-                                                    <option value="Cooking">Cook/Chef</option>
-                                                    <option value="Driving">Driving</option>
-                                                    <option value="7">HR Recruiter</option>
-                                                    <option value="IT Hardware">IT Hardware</option>
-                                                    <option value="Sales">Sales</option>
+                                                    {% for category in categories %}
+                                                        <option value="{{category.name}}">{{category.name}}</option>
+                                                    {% endfor %}
+                                                    <!--<option value="Accountant">Accountant</option>-->
+                                                    <!--<option value="IT Software">IT Software</option>-->
+                                                    <!--<option value="Banking">Banking</option>-->
+                                                    <!--<option value="Finances">Finaces</option>-->
+                                                    <!--<option value="Cooking">Cook/Chef</option>-->
+                                                    <!--<option value="Driving">Driving</option>-->
+                                                    <!--<option value="HR Recruiter">HR Recruiter</option>-->
+                                                    <!--<option value="IT Hardware">IT Hardware</option>-->
+                                                    <!--<option value="Sales">Sales</option>-->
+                                                    <!--<option value="Music">Music</option>-->
                                                 </optgroup>
 											</select>
                                 </div>
@@ -119,7 +122,7 @@
         }
     }
 </script>
-{% endif %} 
+{% endif %}
 <script src="https://pharst.pywe.org/static/js/jquery.min.js"></script>
 <script>
 $(document).ready(function(){
@@ -138,7 +141,7 @@ $('#search-btn').on("click", function (event) {
     localStorage.setItem('query',JSON.stringify(search))
     console.log(search)
 });
-    
-});            
+
+});
 </script>
 {% endblock content %}
