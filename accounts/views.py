@@ -7,6 +7,7 @@ from django.template.loader import render_to_string
 from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate,login,logout
+from gigs.models import Service
 
 
 # Create your views here.
@@ -20,6 +21,20 @@ def index(request):
             template_name = "accounts/index.html"
         categories = GiggerCategory.objects.all()
         args = {'categories':categories}
+        return render(request,template_name,args)
+    else:
+        return redirect("/accounts/login/")
+
+# myjobs page, myjobs page to users
+def mygigs(request):
+    if request.user.is_authenticated:
+        links = {'Gigger':'accounts/mygigs.html','Shipper':'accounts/mygigs.html','Admin':'accounts/mygigs.html'}
+        try:
+            template_name = "accounts/mygigs.html"
+        except:
+            template_name = "accounts/mygigs.html"
+        service = Service.objects.filter(gig = request.user)
+        args = {'service':service}
         return render(request,template_name,args)
     else:
         return redirect("/accounts/login/")
@@ -140,13 +155,6 @@ def support(request):
 # dashboard page, dashboard page to users
 def dashboard(request):
     template_name = "accounts/dashboard.html"
-    args = {}
-    return render(request,template_name,args)
-
-
-# myjobs page, myjobs page to users
-def myjobs(request):
-    template_name = "accounts/myjobs.html"
     args = {}
     return render(request,template_name,args)
 

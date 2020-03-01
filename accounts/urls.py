@@ -13,7 +13,7 @@ urlpatterns = [
     url(r'^accounts/create-freelancer/$', views.create_gigger,name="create-freelancer"),
     url(r'^accounts/create-employer/$', views.create_shipper,name="create-employer"),
     url(r'^accounts/dashboard/$', views.dashboard,name="dashboard"),
-    url(r'^accounts/myjobs/$', views.myjobs,name="myjobs"),
+    url(r'^accounts/mygigs/$', views.mygigs,name="mygigs"),
     url(r'^accounts/add-gigs/$', views.add_services,name="add-gigs"),
     url(r'^accounts/services/$', views.services,name="services"),
     ]

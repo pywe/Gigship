@@ -5,8 +5,8 @@
         <div class="modal-content">
             <div class="modal-header border-bottom-0">
                 <a class="close btn  btn-sm btn-secondary" data-dismiss="modal" aria-label="Close">
-							Skip
-						</a>
+                    Skip
+                </a>
             </div>
             <div class="modal-body">
                 <div id="popupcarousel" class="owl-carousel testimonial-owl-carousel4">
@@ -14,7 +14,8 @@
                         <div class="row">
                             <div class="col-xl-8 col-md-12 d-block mx-auto">
                                 <div class="testimonia text-center">
-                                    <img src="/static/images/products/intro/search.svg" class="w-70 h-100 mb-5 mx-auto text-center" alt="image">
+                                    <img src="/static/images/products/intro/search.svg"
+                                        class="w-70 h-100 mb-5 mx-auto text-center" alt="image">
                                     <h3>Search Giggers</h3>
                                     <p>
                                         Get the best giggers now</p>
@@ -27,7 +28,8 @@
                         <div class="row">
                             <div class="col-xl-8 col-md-12 d-block mx-auto">
                                 <div class="testimonia text-center">
-                                    <img src="/static/images/products/intro/join.svg" class="w-70 mb-5 mx-auto text-center" alt="image">
+                                    <img src="/static/images/products/intro/join.svg"
+                                        class="w-70 mb-5 mx-auto text-center" alt="image">
                                     <h3>Join Us</h3>
                                     <p>Add a Gig and get hired</p>
                                     <a href="#" class="btn btn-primary  mb-3">Join</a>
@@ -39,7 +41,8 @@
                         <div class="row">
                             <div class="col-xl-8 col-md-12 d-block mx-auto">
                                 <div class="testimonia text-center">
-                                    <img src="/static/images/products/intro/notification.svg" class="w-55 h-100 mb-5 mx-auto text-center" alt="image">
+                                    <img src="/static/images/products/intro/notification.svg"
+                                        class="w-55 h-100 mb-5 mx-auto text-center" alt="image">
                                     <h3>Simply Gigship</h3>
                                     <p>People ship goods, we ship Gigs</p>
                                     <a href="#" class="btn btn-primary  mb-3">Change</a>
@@ -56,7 +59,8 @@
 
 <!--Sliders Section-->
 <section>
-    <div class="banner-1 cover-image sptb-2 sptb-tab bg-background2" data-image-src="/static/images/banners/banner1.jpg">
+    <div class="banner-1 cover-image sptb-2 sptb-tab bg-background2"
+        data-image-src="/static/images/banners/banner1.jpg">
         <div class="header-text mb-0">
             <div class="container">
                 <div class="text-center text-white mb-7">
@@ -68,34 +72,27 @@
                         <div class="search-background bg-transparent">
                             <div class="form row no-gutters ">
                                 <div class="form-group  col-xl-4 col-lg-3 col-md-12 mb-0 bg-white ">
-                                    <input id="query" name="q" type="text" class="form-control input-lg br-tr-md-0 br-br-md-0" id="text4" placeholder="Enter Your Keywords">
+                                    <input id="query" name="q" type="text"
+                                        class="form-control input-lg br-tr-md-0 br-br-md-0" id="text4"
+                                        placeholder="Enter Your Keywords">
                                 </div>
-                                <!-- <div class="form-group  col-xl-3 col-lg-3 col-md-12 mb-0 bg-white">
-											<input type="text" class="form-control input-lg br-md-0" id="text5" placeholder="Select Location">
-											<span><img src="/static/images/svg/gps.svg" class="location-gps"></span>
-										</div> -->
+
                                 <div class="form-group col-xl-5 col-lg-5 col-md-12 select2-lg  mb-0 bg-white">
-                                    <select id="category" name="category" class="form-control select2-show-search  border-bottom-0" data-placeholder="Select Category" name ="firstcategory">
-                                                <optgroup label="Categories">
-                                                    <option>All Categories</option>
-                                                    {% for category in categories %}
-                                                        <option value="{{category.name}}">{{category.name}}</option>
-                                                    {% endfor %}
-                                                    <!--<option value="Accountant">Accountant</option>-->
-                                                    <!--<option value="IT Software">IT Software</option>-->
-                                                    <!--<option value="Banking">Banking</option>-->
-                                                    <!--<option value="Finances">Finaces</option>-->
-                                                    <!--<option value="Cooking">Cook/Chef</option>-->
-                                                    <!--<option value="Driving">Driving</option>-->
-                                                    <!--<option value="HR Recruiter">HR Recruiter</option>-->
-                                                    <!--<option value="IT Hardware">IT Hardware</option>-->
-                                                    <!--<option value="Sales">Sales</option>-->
-                                                    <!--<option value="Music">Music</option>-->
-                                                </optgroup>
-											</select>
+                                    <select id="category" name="category"
+                                        class="form-control select2-show-search  border-bottom-0"
+                                        data-placeholder="Select Category" name="firstcategory">
+                                        <optgroup label="Categories">
+                                            <option>All Categories</option>
+                                            {% for category in categories %}
+                                            <option value="{{category.name}}">{{category.name}}</option>
+                                            {% endfor %}
+
+                                        </optgroup>
+                                    </select>
                                 </div>
                                 <div class="col-xl-3 col-lg-4 col-md-12 mb-0">
-                                    <a id="search-btn" href="/accounts/services/" class="btn btn-lg btn-block btn-secondary br-tl-md-0 br-bl-md-0">Search Here</a>
+                                    <a id="search-btn" href="/accounts/services/"
+                                        class="btn btn-lg btn-block btn-secondary br-tl-md-0 br-bl-md-0">Search Here</a>
                                 </div>
                             </div>
                         </div>
@@ -103,7 +100,7 @@
                 </div>
             </div>
         </div>
-        <p style="height:100px;"></p>
+        <p style="height:230px;"></p>
         <!-- /header-text -->
     </div>
 
@@ -117,31 +114,37 @@
 <!-- Script to redirect unregistered or non logged in mobile users -->
 <script>
     window.onload = function Load() {
-        if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(/Android/i) || navigator.userAgent.match(/Blackberry/i) || navigator.userAgent.match(/WebOs/i)) { // detect mobile browser
-            window.location.replace("https://gigship.pywe.org/accounts/registration/"); // redirect if mobile browser detected
+        if (navigator.userAgent.match(/iPhone/i) || navigator.userAgent.match(/iPad/i) || navigator.userAgent.match(
+                /Android/i) || navigator.userAgent.match(/Blackberry/i) || navigator.userAgent.match(
+            /WebOs/i)) { // detect mobile browser
+            window.location.replace(
+            "https://gigship.pywe.org/accounts/registration/"); // redirect if mobile browser detected
         }
     }
 </script>
 {% endif %}
 <script src="https://pharst.pywe.org/static/js/jquery.min.js"></script>
 <script>
-$(document).ready(function(){
-    document.getElementById('query').onkeyup = function(e) {
-    if (e.keyCode === 13) {
-        document.getElementById('search-btn').click();
-    }
+    $(document).ready(function () {
+        document.getElementById('query').onkeyup = function (e) {
+            if (e.keyCode === 13) {
+                document.getElementById('search-btn').click();
+            }
 
-}
-// when search button at home page is clicked
-$('#search-btn').on("click", function (event) {
-    // we save what the user searched for
-    var query = $("#query").val()
-    var category = $("#category").val()
-    const search = {q:query,category:category}
-    localStorage.setItem('query',JSON.stringify(search))
-    console.log(search)
-});
+        }
+        // when search button at home page is clicked
+        $('#search-btn').on("click", function (event) {
+            // we save what the user searched for
+            var query = $("#query").val()
+            var category = $("#category").val()
+            const search = {
+                q: query,
+                category: category
+            }
+            localStorage.setItem('query', JSON.stringify(search))
+            console.log(search)
+        });
 
-});
+    });
 </script>
 {% endblock content %}
