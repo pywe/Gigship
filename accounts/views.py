@@ -39,6 +39,11 @@ def mygigs(request):
     else:
         return redirect("/accounts/login/")
 
+# how it works page, showing how it works page to users
+def myorders(request):
+    template_name = "accounts/myorders.html"
+    args = {}
+    return render(request,template_name,args)
 
 # how it works page, showing how it works page to users
 def how_it_works(request):

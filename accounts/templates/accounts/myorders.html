@@ -1,0 +1,189 @@
+{% extends "accounts/base.html" %} {% block content %}
+<!--Breadcrumb-->
+<section>
+    <div class="bannerimg cover-image bg-background3" data-image-src="/static/images/banners/banner2.jpg">
+        <div class="header-text mb-0">
+            <div class="text-center text-white">
+                <h1 class="">My Orders</h1>
+                <ol class="breadcrumb text-center">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">My Dashboard </a></li>
+                    <li class="breadcrumb-item active text-white" aria-current="page">My Orders</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/Breadcrumb-->
+
+<!--User Dashboard-->
+<section class="sptb">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3 col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">My Dashboard</h3>
+                    </div>
+                    <div class="card-body text-center item-user border-bottom">
+                        <div class="card-body text-center item-user border-bottom">
+                            <div class="profile-pic">
+                                <div class="profile-pic-img">
+                                    <span class="bg-success dots" data-toggle="tooltip" data-placement="top"
+                                        title="online"></span>
+                                    {% if user.user_img %}
+                                    <img src="{{user.user_img.url}}" class="brround" alt="user">
+
+                                    {% else %}
+                                    <img src="/static/images/users/male/25.jpg" class="brround" alt="user">
+                                    {% endif %}
+                                </div>
+                                <a href="#" class="text-dark">
+                                    <h4 class="mt-3 mb-0 font-weight-semibold">{{user.username}}</h4>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item1-links  mb-0">
+                        <a href="/dashboard" class="d-flex border-bottom">
+                            <span class="icon1 mr-2"><i class="typcn typcn-edit fs-20"></i></span> Edit Profile
+                        </a>
+                        <a href="/accounts/myorders/" class="active d-flex  border-bottom">
+                            <span class="icon1 mr-2"><i class="typcn typcn-shopping-cart fs-20"></i></span> Orders
+                        </a>
+                        <a href="/accounts/mygigs/" class="d-flex border-bottom">
+                            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> My Gigs
+                        </a>
+                        <a href="myfavorite.html" class="d-flex border-bottom">
+                            <span class="icon1 mr-2"><i class="typcn typcn-heart-outline fs-20"></i></span> My Favorite
+                            Gigs
+                        </a>
+                        <a href="manged.html" class="d-flex  border-bottom">
+                            <span class="icon1 mr-2"><i class="typcn typcn-folder fs-20"></i></span> Managed Gigs
+                        </a>
+                        <a href="payments.html" class=" d-flex  border-bottom">
+                            <span class="icon1 mr-2"><i class="typcn typcn-credit-card fs-20"></i></span> Payments
+                        </a>
+
+                        <a href="tips.html" class="d-flex border-bottom">
+                            <span class="icon1 mr-2"><i class="typcn typcn-flag-outline fs-20"></i></span> Safety Tips
+                        </a>
+                        <a href="settings.html" class="d-flex border-bottom">
+                            <span class="icon1 mr-2"><i class="typcn typcn-cog-outline fs-20"></i></span> Settings
+                        </a>
+                        <a href="login.html" class="d-flex">
+                            <span class="icon1 mr-2"><i class="typcn typcn-power-outline fs-20"></i></span> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <dcd iv class="col-xl-9 col-lg-12 col-md-12">
+                <div class="card mb-0">
+
+                    <!--Job lists-->
+                    <section class="sptb">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-xl-12 col-lg-12 col-md-12">
+                                    <!--Related Posts-->
+                                    <div id="myCarousel2" class="owl-carousel owl-carousel-icons3">
+                                        <div class="item">
+                                            <div class="card">
+                                                <div class="arrow-ribbon bg-purple">Part time</div>
+                                                <div class="item-card7-img">
+                                                    <div class="item-card7-imgs">
+                                                        <a href="jobs.html"></a>
+                                                        <img src="/static/images/products/products/j2.jpg" alt="img" class="cover-image">
+                                                    </div>
+                                                    <div class="item-card7-overlaytext">
+                                                        <a href="jobs.html" class="text-white"> Jobs </a>
+                                                        <h4  class="font-weight-semibold mb-0">$389</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="item-card7-desc">
+                                                        <a href="jobs.html" class="text-dark"><h4 class="font-weight-semibold">Female Receptionist Jobs</h4></a>
+                                                    </div>
+                                                    <div class="item-card7-text">
+                                                        <ul class="icon-card mb-0">
+                                                            <li class=""><a href="#" class="icons"><i class="si si-location-pin text-muted mr-1"></i>  Los Angles</a></li>
+                                                            <li><a href="#" class="icons"><i class="si si-event text-muted mr-1"></i> 5 hours ago</a></li>
+                                                            <li class="mb-0"><a href="#" class="icons"><i class="si si-user text-muted mr-1"></i> Sally Peake</a></li>
+                                                            <li class="mb-0"><a href="#" class="icons"><i class="si si-phone text-muted mr-1"></i> 5-67987608</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="card">
+                                                <div class="ribbon ribbon-top-left text-danger"><span class="bg-danger">featured</span></div>
+                                                <div class="item-card7-img">
+                                                    <div class="item-card7-imgs">
+                                                        <a href="jobs.html"></a>
+                                                        <img src="/static/images/products/products/j3.jpg" alt="img" class="cover-image">
+                                                    </div>
+                                                    <div class="item-card7-overlaytext">
+                                                        <a href="jobs.html" class="text-white"> Jobs</a>
+                                                        <h4  class="font-weight-semibold mb-0">$854</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="item-card7-desc">
+                                                        <a href="jobs.html" class="text-dark"><h4 class="font-weight-semibold">Delivery Boys Jobs</h4></a>
+                                                    </div>
+                                                    <div class="item-card7-text">
+                                                        <ul class="icon-card mb-0">
+                                                            <li class=""><a href="#" class="icons"><i class="si si-location-pin text-muted mr-1"></i>  Los Angles</a></li>
+                                                            <li><a href="#" class="icons"><i class="si si-event text-muted mr-1"></i> 5 hours ago</a></li>
+                                                            <li class="mb-0"><a href="#" class="icons"><i class="si si-user text-muted mr-1"></i> Sally Peake</a></li>
+                                                            <li class="mb-0"><a href="#" class="icons"><i class="si si-phone text-muted mr-1"></i> 5-67987608</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="item">
+                                            <div class="card">
+                                                <div class="arrow-ribbon bg-info">Full time</div>
+                                                <div class="item-card7-img">
+                                                    <div class="item-card7-imgs">
+                                                        <a href="jobs.html"></a>
+                                                        <img src="/static/images/products/products/h4.jpg" alt="img" class="cover-image">
+                                                    </div>
+                                                    <div class="item-card7-overlaytext">
+                                                        <a href="jobs.html" class="text-white"> Jobs</a>
+                                                        <h4  class="font-weight-semibold mb-0">$786</h4>
+                                                    </div>
+                                                </div>
+                                                <div class="card-body">
+                                                    <div class="item-card7-desc">
+                                                        <a href="jobs.html" class="text-dark"><h4 class="font-weight-semibold">Customer Care Jobs</h4></a>
+                                                    </div>
+                                                    <div class="item-card7-text">
+                                                        <ul class="icon-card mb-0">
+                                                            <li class=""><a href="#" class="icons"><i class="si si-location-pin text-muted mr-1"></i>  Los Angles</a></li>
+                                                            <li><a href="#" class="icons"><i class="si si-event text-muted mr-1"></i> 5 hours ago</a></li>
+                                                            <li class="mb-0"><a href="#" class="icons"><i class="si si-user text-muted mr-1"></i> Sally Peake</a></li>
+                                                            <li class="mb-0"><a href="#" class="icons"><i class="si si-phone text-muted mr-1"></i> 5-67987608</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--/Related Posts-->
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                    <!--/Job lists-->
+
+                </div>
+            </dcd iv>
+        </div>
+    </div>
+</section>
+
+
+{% endblock content %}
