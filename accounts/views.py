@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect,HttpResponse
+from django.shortcuts import render, redirect, HttpResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
 from .models import *
@@ -6,7 +6,7 @@ from django.contrib import messages
 from django.template.loader import render_to_string
 from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
-from django.contrib.auth import authenticate,login,logout
+from django.contrib.auth import authenticate, login, logout
 from gigs.models import Service
 
 
@@ -14,43 +14,66 @@ from gigs.models import Service
 # index page, showing homepage to users
 def index(request):
     if request.user.is_authenticated:
-        links = {'Gigger':'accounts/dashboard.html','Shipper':'accounts/index.html','Admin':'accounts/index.html'}
+        links = {'Gigger': 'accounts/dashboard.html',
+                 'Shipper': 'accounts/index.html', 'Admin': 'accounts/index.html'}
         try:
             template_name = links[request.user.user_type]
         except:
             template_name = "accounts/index.html"
         categories = GiggerCategory.objects.all()
-        args = {'categories':categories}
-        return render(request,template_name,args)
+        args = {'categories': categories}
+        return render(request, template_name, args)
     else:
         return redirect("/accounts/login/")
 
 # myjobs page, myjobs page to users
+
+
 def mygigs(request):
     if request.user.is_authenticated:
-        links = {'Gigger':'accounts/mygigs.html','Shipper':'accounts/mygigs.html','Admin':'accounts/mygigs.html'}
+        links = {'Gigger': 'accounts/mygigs.html',
+                 'Shipper': 'accounts/mygigs.html', 'Admin': 'accounts/mygigs.html'}
         try:
             template_name = "accounts/mygigs.html"
         except:
             template_name = "accounts/mygigs.html"
-        service = Service.objects.filter(gig = request.user)
-        args = {'service':service}
-        return render(request,template_name,args)
+        service = Service.objects.filter(gig=request.user)
+        args = {'service': service}
+        return render(request, template_name, args)
     else:
         return redirect("/accounts/login/")
 
+# how it works page, showing how it works page to users
+
+
+def myorders(request):
+    template_name = "accounts/myorders.html"
+    args = {}
+    return render(request, template_name, args)
+
+# settings page, showing settings page to users
+
+
+def mysettings(request):
+    template_name = "accounts/settings.html"
+    args = {}
+    return render(request, template_name, args)
 
 # how it works page, showing how it works page to users
+
+
 def how_it_works(request):
     template_name = "accounts/how-it-works.html"
     args = {}
-    return render(request,template_name,args)
+    return render(request, template_name, args)
 
 # services page, showing services page to users
+
+
 def services(request):
     template_name = "accounts/services.html"
     args = {}
-    return render(request,template_name,args)
+    return render(request, template_name, args)
 
 
 # registration page, showing registration page to users
@@ -58,8 +81,8 @@ def registration(request):
     if request.method == "GET":
         template_name = "accounts/registration.html"
         categories = GiggerCategory.objects.all()
-        args = {'categories':categories}
-        return render(request,template_name,args)
+        args = {'categories': categories}
+        return render(request, template_name, args)
     else:
         username = request.POST['username']
         email = request.POST['email']
@@ -92,18 +115,18 @@ def registration(request):
         try:
             user.save()
         except Exception as e:
-            messages.error(request,str(e))
+            messages.error(request, str(e))
             return redirect("/accounts/registration/")
         msg = """Hello {}, we are excited to have you on board.
-        Here is your link ### to verify your email and officially be accepted on the platform as a/an {}""".format(username,account_type)
+        Here is your link ### to verify your email and officially be accepted on the platform as a/an {}""".format(username, account_type)
         send_mail(
-        'Welcome To Gigship',
-        msg,
-        'pythonwithelli@gmail.com',
-        [email],
-        fail_silently=False,
+            'Welcome To Gigship',
+            msg,
+            'pythonwithelli@gmail.com',
+            [email],
+            fail_silently=False,
         )
-        messages.success(request,"Account created. Please verify your mail")
+        messages.success(request, "Account created. Please verify your mail")
         return redirect("/accounts/registration/")
 
 
@@ -112,25 +135,25 @@ def mylogin(request):
     if request.method == "GET":
         template_name = "accounts/login.html"
         categories = GiggerCategory.objects.all()
-        args = {'categories':categories}
-        return render(request,template_name,args)
-    links = {'Gigger':'/accounts/dashboard/','Shipper':'/','Admin':'/'}
+        args = {'categories': categories}
+        return render(request, template_name, args)
+    links = {'Gigger': '/accounts/dashboard/', 'Shipper': '/', 'Admin': '/'}
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(request, username=username, password=password)
     if user is not None:
         login(request, user)
-        messages.success(request,"login successful")
+        messages.success(request, "login successful")
         link = links[user.user_type]
         return redirect(link)
     else:
-        messages.error(request,"Failed. Please check your credentials")
+        messages.error(request, "Failed. Please check your credentials")
         return redirect("/accounts/login/")
 
 
 def mylogout(request):
     logout(request)
-    messages.success(request,"Thanks for spending time with us")
+    messages.success(request, "Thanks for spending time with us")
     return redirect('/')
 
 
@@ -138,33 +161,41 @@ def mylogout(request):
 def forgot(request):
     template_name = "accounts/forgot.html"
     args = {}
-    return render(request,template_name,args)
+    return render(request, template_name, args)
 
 # faq page, showing faq page to users
+
+
 def faq(request):
     template_name = "accounts/faq.html"
     args = {}
-    return render(request,template_name,args)
+    return render(request, template_name, args)
 
 # support page, showing support page to users
+
+
 def support(request):
     template_name = "accounts/contact.html"
     args = {}
-    return render(request,template_name,args)
+    return render(request, template_name, args)
 
 # dashboard page, dashboard page to users
+
+
 def dashboard(request):
     template_name = "accounts/dashboard.html"
     args = {}
-    return render(request,template_name,args)
+    return render(request, template_name, args)
 
 # profil page, profil page to users
+
+
 def add_services(request):
     if request.user.is_authenticated:
         template_name = "accounts/profil.html"
         categories = GiggerCategory.objects.all()
-        args = {'categories':categories}
-        return render(request,template_name,args)
+        args = {'categories': categories}
+        return render(request, template_name, args)
     else:
         return redirect("/accounts/login/")
 
@@ -182,8 +213,8 @@ def create_gigger(request):
     user.save()
     # send mail to user here
     data = {
-    'success':True,
-    'message':"Gigger created"}
+        'success': True,
+        'message': "Gigger created"}
     dump = json.dumps(data)
     return HttpResponse(dump, content_type='application/json')
 
@@ -201,8 +232,7 @@ def create_shipper(request):
     user.save()
     # send mail to user here
     data = {
-    'success':True,
-    'message':"Shipper created"}
+        'success': True,
+        'message': "Shipper created"}
     dump = json.dumps(data)
     return HttpResponse(dump, content_type='application/json')
-
