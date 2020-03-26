@@ -48,3 +48,4 @@ class Shipper(CustomUser):
     class Meta:
         verbose_name = "Shipper"
 
+
