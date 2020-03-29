@@ -30,7 +30,7 @@ class ServiceAdmin(admin.ModelAdmin):
 
 # Register your models here.
 # admin.site.register(Job)
-admin.site.register(Category)
+# admin.site.register(Category)
 admin.site.register(ServiceFile)
 admin.site.register(Service,ServiceAdmin)
 # admin.site.register(Resume,ResumeAdmin)

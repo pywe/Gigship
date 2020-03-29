@@ -64,7 +64,9 @@ function search(data) {
                 slidesToScroll: 1,
                 autoplay: true,
                 autoplaySpeed: 3000,
-                adaptiveHeight: true
+                adaptiveHeight: true,
+                pauseOnFocus:true,
+                variableWidth:false
             });
             // hide loader
             $("#global-loader").removeClass('show');
