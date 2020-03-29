@@ -4,9 +4,9 @@ from django.contrib.auth.admin import UserAdmin
 
 
 class CustomUserAdmin(UserAdmin):
-    model = CustomUser
+  model = CustomUser
 
-    fieldsets = UserAdmin.fieldsets + (
+  fieldsets = UserAdmin.fieldsets + (
       ('Extra Fields', {'fields': ('user_img','user_type')}),
     )
 

@@ -32,7 +32,8 @@ def index(request):
 def mygigs(request):
     if request.user.is_authenticated:
         links = {'Gigger': 'accounts/mygigs.html',
-                 'Shipper': 'accounts/mygigs.html', 'Admin': 'accounts/mygigs.html'}
+                 'Shipper': 'accounts/mygigs.html', 
+                 'Admin': 'accounts/mygigs.html'}
         try:
             template_name = "accounts/mygigs.html"
         except:
