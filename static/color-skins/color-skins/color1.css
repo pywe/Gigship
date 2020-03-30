@@ -5,6 +5,9 @@ a:hover {
 .bg-background2:before {
 	background: linear-gradient(to right, rgba(52, 6, 156, 0.95) 10%, rgba(107, 70, 2, 0.8) 100%);
 }
+.bg-background1:before {
+	background: linear-gradient(to right, rgba(52, 6, 156, 0.95) 10%, rgba(107, 70, 2, 0.8) 100%);
+}
 .pattern:before {
 	background: linear-gradient(to right, rgba(52, 6, 156, 0.95) 10%, rgba(107, 70, 2, 0.8) 100%);
 }
@@ -867,6 +870,9 @@ form.convFormDynamic button.submit:hover {
 	background: #3e12a0  !important;
 }
 .bg-background:before {
+	background: linear-gradient(to right, rgba(52, 6, 156, 0.95) 10%, rgba(107, 70, 2, 0.8) 100%);
+}
+.bg-background1:before {
 	background: linear-gradient(to right, rgba(52, 6, 156, 0.95) 10%, rgba(107, 70, 2, 0.8) 100%);
 }
 .bg-background2:before {

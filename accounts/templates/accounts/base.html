@@ -138,6 +138,7 @@
                     <li><a href="/admin">Administration</a></li>
                     {% endif %}
                     {% if user.is_authenticated %}
+                    <li><a href="/chat">Chat Direct</a></li>
                     {% if user.user_type == "Gigger" %}
                         <li><a href="/accounts/add-gigs/">Add Gigs</a></li>
                     {% endif %}

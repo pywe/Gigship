@@ -164,6 +164,11 @@ def forgot(request):
     args = {}
     return render(request, template_name, args)
 
+def chat(request):
+    template_name = "accounts/chat.html"
+    args = {}
+    return render(request, template_name, args)
+
 # faq page, showing faq page to users
 
 

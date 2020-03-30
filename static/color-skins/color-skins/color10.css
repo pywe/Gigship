@@ -2,11 +2,15 @@ a:hover {
 	color: #1650e2;
 	text-decoration: none;
 }
-.bg-background2:before {
-	background: linear-gradient(to right, rgba(22, 80, 226, 0.95) 0%, rgba(126, 81, 236, 0.95) 100%);
+.bg-background1:before {
+	background: linear-gradient(to right, rgba(141, 139, 255, 0.95),rgb(255, 255, 255) 100%);
 }
+.bg-background2:before {
+	background: linear-gradient(to right, rgba(141, 139, 255, 0.95),rgb(255, 255, 255) 0% 100%);
+}
+
 .pattern:before {
-	background: linear-gradient(to right, rgba(22, 80, 226, 0.95) 0%, rgba(126, 81, 236, 0.95) 100%);
+	background: linear-gradient(to right, rgba(141, 139, 255, 0.95),rgb(255, 255, 255) 100%);
 }
 .owl-controls .owl-page.active, .owl-controls .owl-page.active:hover {
 	border-color: #e34216;
@@ -106,7 +110,7 @@ a.bg-secondary:hover, a.bg-secondary:focus, button.bg-secondary:hover, button.bg
 	background-color: #1650e2;
 }
 .bg-gradient-primary {
-	background: linear-gradient(to right, rgba(22, 80, 226, 0.95) 0%, rgba(126, 81, 236, 0.95) 100%);
+	background: linear-gradient(to right, rgba(141, 139, 255, 0.95),rgb(255, 255, 255) 100%);
 }
 .bg-primary {
 	background-color: #1650e2 !important;
@@ -243,7 +247,7 @@ a.text-dark:hover, a.text-dark:focus {
 	color: #1650e2;
 }
 .header {
-	background: linear-gradient(to right, rgba(22, 80, 226, 0.95) 0%, rgba(126, 81, 236, 0.95) 100%);
+	background: linear-gradient(to right, rgba(141, 139, 255, 0.95),rgb(255, 255, 255) 100%);
 }
 .header-bg {
 	background: #eef2f9;
@@ -543,7 +547,7 @@ a.chip:hover {
 	color: #1650e2 !important;
 }
 .item-all-cat .category-type .item-all-card img {
-	background: linear-gradient(to right, rgba(22, 80, 226, 0.95) 0%, rgba(126, 81, 236, 0.95) 100%);
+	background: linear-gradient(to right, rgba(141, 139, 255, 0.95),rgb(255, 255, 255) 100%);
 	;
 }
 .item-all-cat .item-all-card {
@@ -869,25 +873,28 @@ form.convFormDynamic button.submit:hover {
 	background: #1650e2 !important;
 }
 .bg-background:before {
-	background: linear-gradient(to right, rgba(22, 80, 226, 0.95) 0%, rgba(126, 81, 236, 0.95) 100%);
+	background: linear-gradient(to right, rgba(141, 139, 255, 0.95),rgb(255, 255, 255) 100%);
+}
+.bg-background1:before {
+	background: linear-gradient(to right, rgba(141, 139, 255, 0.95),rgb(255, 255, 255) 100%);
 }
 .bg-background2:before {
-	background: linear-gradient(to right, rgba(22, 80, 226, 0.95) 0%, rgba(126, 81, 236, 0.95) 100%);
+	background: linear-gradient(to right, rgba(141, 139, 255, 0.95),rgb(255, 255, 255) 100%);
 }
 .bg-background-color:before {
-	background: linear-gradient(to right, rgba(22, 80, 226, 0.95) 0%, rgba(126, 81, 236, 0.95) 100%);
+	background: linear-gradient(to right, rgba(141, 139, 255, 0.95),rgb(255, 255, 255) 100%);
 }
 .bg-background3:before {
-	background: linear-gradient(to right, rgba(22, 80, 226, 0.95) 0%, rgba(126, 81, 236, 0.95) 100%);
+	background: linear-gradient(to right, rgba(141, 139, 255, 0.95),rgb(255, 255, 255) 100%);
 }
 .bg-background-5:before {
-	background: linear-gradient(to right, rgba(22, 80, 226, 0.95) 0%, rgba(126, 81, 236, 0.95) 100%);
+	background: linear-gradient(to right, rgba(141, 139, 255, 0.95),rgb(255, 255, 255) 100%);
 }
 .bg-background-6:before {
-	background: linear-gradient(to right, rgba(22, 80, 226, 0.95) 0%, rgba(126, 81, 236, 0.95) 100%);
+	background: linear-gradient(to right, rgba(141, 139, 255, 0.95),rgb(255, 255, 255) 100%);
 }
 .slider-header .item:before {
-	background: linear-gradient(to right, rgba(22, 80, 226, 0.95) 0%, rgba(126, 81, 236, 0.95) 100%);
+	background: linear-gradient(to right, rgba(141, 139, 255, 0.95),rgb(255, 255, 255) 100%);
 }
 .select2-container--default.select2-container--focus .select2-selection--multiple {
 	box-shadow: 0 0 0 2px rgb(22, 80, 226, 0.25);
@@ -919,10 +926,10 @@ form.convFormDynamic button.submit:hover {
 	box-shadow: 0 0 0 2px rgb(22, 80, 226, 0.25);
 }
 .item-card:hover .item-card-desc:before {
-	background: linear-gradient(to right, rgba(22, 80, 226, 0.95) 0%, rgba(126, 81, 236, 0.95) 100%);
+	background: linear-gradient(to right, rgba(141, 139, 255, 0.95),rgb(255, 255, 255) 100%);
 }
 .item-card7-imgs:hover a {
-	background: linear-gradient(to right, rgba(22, 80, 226, 0.95) 0%, rgba(126, 81, 236, 0.95) 100%);
+	background: linear-gradient(to right, rgba(141, 139, 255, 0.95),rgb(255, 255, 255) 100%);
 }
 .item-card2-img:hover a {
 	background: transparent;
@@ -1009,7 +1016,7 @@ a.bg-secondary:hover, a.bg-secondary:focus, button.bg-secondary:hover, button.bg
 	background: rgba(40, 35, 47, 0.5);
 }
 .item-card:hover .item-card-desc:before {
-	background: linear-gradient(to right, rgba(22, 80, 226, 0.95) 0%, rgba(126, 81, 236, 0.95) 100%);
+	background: linear-gradient(to right, rgba(141, 139, 255, 0.95),rgb(255, 255, 255) 100%);
 }
 .btn-orange {
 	color: #fff;
@@ -1100,7 +1107,7 @@ a.bg-secondary:hover, a.bg-secondary:focus, button.bg-secondary:hover, button.bg
 	color: #1650e2;
 }
 .construction-image:before {
-	background: linear-gradient(to right, rgba(22, 80, 226, 0.95) 0%, rgba(126, 81, 236, 0.95) 100%);
+	background: linear-gradient(to right, rgba(141, 139, 255, 0.95),rgb(255, 255, 255) 100%);
 }
 @media (max-width:991px) {
 	.horizontalMenu>.horizontalMenu-list>li>a.active {
