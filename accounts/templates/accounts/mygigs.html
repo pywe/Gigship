@@ -92,72 +92,80 @@
                                 <div class=" mb-0">
                                     <div class="">
                                         <div class="p-5 bg-white item2-gl-nav d-flex">
-                                            <h6 class="mb-0 mt-3">Showing <b>1 to 10</b> of Total Number of Entries</h6>
+                                            <!-- <h6 class="mb-0 mt-3">Showing <b>1 to 10</b> of Total Number of Entries</h6>
                                             <ul class="nav item2-gl-menu mt-1 ml-auto">
 
-                                            </ul>
+                                            </ul> -->
                                             <div class="d-flex">
                                                 <label class="mr-2 mt-2 mb-sm-1">Sort By:</label>
                                                 <select name="item" class="form-control select2-no-search w-70">
-                                                    <option value="1">Relavant</option>
-                                                    <option value="2">Newest First</option>
-                                                    <option value="3">Highest Paid</option>
-                                                    <option value="4">Loweest Paid</option>
+                                                    <option value="1">Price</option>
+                                                    <option value="2">Date Added</option>
+                                                    <option value="3">Popularity</option>
+                                                    <!-- <option value="4">Rating</option> -->
                                                     <option value="5">High Ratings</option>
-                                                    <option value="6">Popular</option>
+                                                    <!-- <option value="6">Popular</option> -->
                                                 </select>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
+                                {% for service in services %}
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="tab-11">
                                         <div class="card overflow-hidden br-0 overflow-hidden">
                                             <div class="d-md-flex">
+                                                {% for image in service.files.all %}
+                                                {% if forloop.first %}
+                                                {% if image.file_type == "image" %}
                                                 <div class="p-0 m-0 item-card9-img">
                                                     <div class="item-card9-imgs">
-                                                        <div class="scrolling-wrapper">
+                                                        <div>
                                                             <div class="img">
-                                                                <img src="/static/services/bnw.png" alt="img">
-                                                            </div>
-                                                            <div class="img">
-                                                                <img src="/static/services/logo_color.png" alt="img">
-                                                            </div>
-                                                            <div class="img">
-                                                                <img src="/static/images/products/products/ed1.jpg"
-                                                                    alt="img">
+                                                                <img src="{{image.servicefile.url}}" alt="img">
                                                             </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                                {% else %}
+                                                <div class="p-0 m-0 item-card9-img">
+                                                        <div class="item-card9-imgs">
+                                                            <div>
+                                                                <div class="img">
+                                                                    <video controls>
+                                                                        <source src="{{image.servicefile.url}}">      
+                                                                    </video>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                {% endif %}
+                                                {% endif %}
+                                                {% endfor %}
                                                 <div
                                                     class="card overflow-hidden  border-0 box-shadow-0 border-left br-0 mb-0">
                                                     <div class="card-body pt-0 pt-md-5">
                                                         <div class="item-card9">
                                                             <a href="#" class="text-dark">
-                                                                <h4 class="font-weight-semibold mt-1">Services</h4>
+                                                                <h4 class="font-weight-semibold mt-1">{{service.service}}</h4>
                                                             </a>
                                                             <div class="mt-2 mb-2">
                                                                 <a href="#" class="mr-4"><span>
-                                                                        Starting Prirce GHC:150</span></a>
+                                                                        Starting at GHC:{{service.start_price}}</span></a>
                                                             </div>
-                                                            <p class="mb-0 leading-tight">On the other hand, we denounce
-                                                                with righteous indignation and dislike men who are so
-                                                                beguiled and demoralized by the charms of pleasure of
-                                                                the moment</p>
+                                                            <p class="mb-0 leading-tight">{{service.service_detail}}</p>
                                                         </div>
                                                     </div>
                                                     <div class="card-footer pt-3 pb-3">
                                                         <div class="item-card9-footer d-flex">
-                                                            <div
-                                                                class="d-flex align-items-center mb-3 mb-md-0 mt-auto posted">
-
+                                                            <div class="d-flex align-items-center mb-3 mb-md-0 mt-auto posted">
+                                                                <p>Contains basic,standard and premium plans. You can edit them anytime</p>
                                                             </div>
                                                             <div class="ml-auto mr-0">
-                                                                <a href="ad-posts.html"
+                                                                <a href="/edit-service/{{service.id}}/"
                                                                     class="btn btn-info btn-sm text-white"
                                                                     data-toggle="tooltip"
-                                                                    data-original-title="Edit Post"><i
+                                                                    data-original-title="Edit Gig"><i
                                                                         class="fa fa-pencil"></i></a>
                                                                 <a class="btn btn-danger btn-sm text-white"
                                                                     data-toggle="tooltip"
@@ -174,6 +182,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                {% endfor %}
                             </div>
                         </div>
                     </div>
@@ -187,5 +196,8 @@
 <script src="https://pharst.pywe.org/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 <script type="text/javascript" src="/static/js/search.js"></script>
+<script>
+
+</script>
 <!--User Dashboard-->
 {% endblock content %}

@@ -38,8 +38,8 @@ def mygigs(request):
             template_name = "accounts/mygigs.html"
         except:
             template_name = "accounts/mygigs.html"
-        service = Gig.objects.filter(gig=request.user)
-        args = {'service': service}
+        services = Gig.objects.filter(gigger=request.user)
+        args = {'services': services}
         return render(request, template_name, args)
     else:
         return redirect("/accounts/login/")
