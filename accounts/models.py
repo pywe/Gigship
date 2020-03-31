@@ -67,5 +67,6 @@ class Message(models.Model):
 
 class MessageFile(models.Model):
     message = models.ForeignKey(Message,null=True, blank = True, on_delete = models.SET_NULL,related_name="files")
+    name = models.CharField(max_length=50,null=True,blank=True)
     message_file = models.FileField(null=True,upload_to="static/messages/")
     date_created = models.DateTimeField(null=True,blank=True,auto_now_add=True)
