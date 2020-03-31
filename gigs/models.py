@@ -66,6 +66,7 @@ class Job(models.Model):
 
 
 
+
 class Gig(models.Model):
     service = models.CharField(max_length=50,null=True)
     start_price = models.FloatField(default=0.0)
@@ -94,6 +95,14 @@ class GigFile(models.Model):
         verbose_name = "Gig File"
 
 
+# add extra features to gig
+class Extra(models.Model):
+    gig = models.ForeignKey(Gig,null=True,on_delete=models.SET_NULL,related_name="extras")
+    name = models.CharField(max_length=50,null=True)
+    additional_time = models.IntegerField(default=0,help_text="will this feature increase delivery time?")
+    price = models.FloatField(default=0.0)
+
+
 class Order(models.Model):
     order_no = models.CharField(max_length=30,null=True)
     gigs = models.ManyToManyField(Gig,related_name="gigs")
@@ -106,10 +115,12 @@ class Order(models.Model):
     completed = models.BooleanField(default=False)
     date_completed = models.DateTimeField(null=True)
     order_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True,on_delete=models.SET_NULL)
-
+    extras = models.ManyToManyField(Extra)
 
     def __str__(self):
         return self.order_no
+
+
 
 
 class Customization(models.Model):
