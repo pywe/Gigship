@@ -65,8 +65,6 @@ class Job(models.Model):
     date_added = models.DateField(null=True,auto_now_add=True)
 
 
-
-
 class Gig(models.Model):
     service = models.CharField(max_length=50,null=True)
     start_price = models.FloatField(default=0.0)
@@ -75,6 +73,7 @@ class Gig(models.Model):
     service_detail = models.TextField(null=True)
     rating = models.FloatField(default=0.0)
     gigger = models.ForeignKey(settings.AUTH_USER_MODEL,null=True,on_delete=models.SET_NULL)
+    
 
     class Meta:
         verbose_name = "Gig"
@@ -90,9 +89,19 @@ class Gig(models.Model):
 class GigFile(models.Model):
     service = models.ForeignKey(Gig,null=True,on_delete=models.SET_NULL,related_name="files")
     servicefile = models.FileField(null=True,upload_to="static/services/")
+    file_type = models.CharField(max_length=10,null=True,help_text="image,video,gif")
 
     class Meta:
         verbose_name = "Gig File"
+
+
+
+class GigPlan(models.Model):
+    gig = models.ForeignKey(Gig,null=True,on_delete=models.SET_NULL,related_name="plans")
+    name = models.CharField(max_length=10,null=True,help_text="Basic,Standard,Premium")
+    delivery_time = models.IntegerField(default=1,help_text="Number of days")
+    revision = models.IntegerField(default=1,help_text="How many times will you review?")
+    
 
 
 # add extra features to gig
@@ -101,6 +110,7 @@ class Extra(models.Model):
     name = models.CharField(max_length=50,null=True)
     additional_time = models.IntegerField(default=0,help_text="will this feature increase delivery time?")
     price = models.FloatField(default=0.0)
+    quantity = models.IntegerField(default=1)
 
 
 class Order(models.Model):
@@ -119,8 +129,6 @@ class Order(models.Model):
 
     def __str__(self):
         return self.order_no
-
-
 
 
 class Customization(models.Model):
