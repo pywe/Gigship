@@ -98,6 +98,9 @@ function contructFiles(files){
 
 function constructCard(object) {
     var service = object.service
+    var id = object.id
+    var rating = object.rating
+    var rating_no = object.rating_number 
     var start_price = object.start_price
     var comment = object.detail
     var files = object.files
@@ -121,26 +124,14 @@ function constructCard(object) {
         <div class="card-body">
             <div class="item-card7-desc">
                 <div class="item-card7-text">
-                    <a href="jobs.html" class="text-dark"><h4 class="font-weight-semibold">${service}</h4></a>
+                    <a href="/gigs/order/${id}/" class="text-dark"><h4 class="font-weight-semibold">${service}</h4></a>
                 </div>
-                <p class="mb-0">${comment}</p>
+                <p class="mb-0"><a href="/gigs/order/${id}/">${comment}</a></p>
             </div>
         </div>
         <div class="card-body">
-            <a href="mr-4" class="icons">Starting Price: GHC ${start_price}</a>
-            <a class="mr-4 float-right"><i class="fa fa-star text-warning"> </i>Rating(250)</a>
-        </div>
-        <div class="card-body">
-            <div class="d-flex align-items-center pt-2 mt-auto">
-                <img src="/static/images/users/male/7.jpg" class="avatar brround avatar-md mr-3" alt="avatar-img">
-                <div>
-                    <a href="profile.html" class="text-default">Tanner Mallari</a>
-                    <small class="d-block text-muted">Verified User</small>
-                </div>
-                <div class="ml-auto text-muted">
-                    <a class="btn btn-warning text-white">Hire</a>
-                </div>
-            </div>
+            <a href="/gigs/order/${id}/" class="icons">Starting at GHC ${start_price}</a>
+            <a href="/gigs/order/${id}/" class="mr-4 float-right"><i class="fa fa-star text-warning"></i>${rating} Rating(${rating_no})</a>
         </div>
     </div>
 </div>`

@@ -8,4 +8,6 @@ urlpatterns = [
     url(r'^gigs/search-gigs/$', views.search_api,name="search-gigs"),
     url(r'^gigs/service-files/(?P<id>[-\w]+)/$', views.add_service_files,name="services-files"),
     url(r'^gigs/search-gigs/$', views.search_api,name="search-gigs"),
+    url(r'^gigs/order/(?P<id>[-\w]+)/$', views.order,name="order"),
+    url(r'^gigs/create-order/$', views.create_order,name="create-order"),
     ]

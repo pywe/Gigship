@@ -7,7 +7,7 @@ from django.template.loader import render_to_string
 from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login, logout
-from gigs.models import Service
+from gigs.models import Gig
 
 
 # Create your views here.
@@ -38,7 +38,7 @@ def mygigs(request):
             template_name = "accounts/mygigs.html"
         except:
             template_name = "accounts/mygigs.html"
-        service = Service.objects.filter(gig=request.user)
+        service = Gig.objects.filter(gig=request.user)
         args = {'service': service}
         return render(request, template_name, args)
     else:
@@ -242,3 +242,5 @@ def create_shipper(request):
         'message': "Shipper created"}
     dump = json.dumps(data)
     return HttpResponse(dump, content_type='application/json')
+
+

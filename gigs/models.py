@@ -65,29 +65,62 @@ class Job(models.Model):
     date_added = models.DateField(null=True,auto_now_add=True)
 
 
-class Service(models.Model):
+
+class Gig(models.Model):
     service = models.CharField(max_length=50,null=True)
     start_price = models.FloatField(default=0.0)
     categories = models.ManyToManyField(GiggerCategory)
     experience = models.IntegerField(default=0)
     service_detail = models.TextField(null=True)
     rating = models.FloatField(default=0.0)
-    gig = models.ForeignKey(settings.AUTH_USER_MODEL,null=True,on_delete=models.SET_NULL)
+    gigger = models.ForeignKey(settings.AUTH_USER_MODEL,null=True,on_delete=models.SET_NULL)
 
     class Meta:
         verbose_name = "Gig"
 
     def __str__(self):
-        if self.gig:
-            return "{} by {} starting at GHC{}".format(self.service,self.gig.username,self.start_price)
+        if self.gigger:
+            return "{} by {} starting at GHC{}".format(self.service,self.gigger.username,self.start_price)
         else:
             return "{} starting at GHC{}".format(self.service,self.start_price)
 
 
 # Third class model
-class ServiceFile(models.Model):
-    service = models.ForeignKey(Service,null=True,on_delete=models.SET_NULL,related_name="files")
+class GigFile(models.Model):
+    service = models.ForeignKey(Gig,null=True,on_delete=models.SET_NULL,related_name="files")
     servicefile = models.FileField(null=True,upload_to="static/services/")
 
     class Meta:
         verbose_name = "Gig File"
+
+
+class Order(models.Model):
+    order_no = models.CharField(max_length=30,null=True)
+    gigs = models.ManyToManyField(Gig,related_name="gigs")
+    total_price = models.FloatField(default=0.0)
+    VAT = models.FloatField(default=0.0)
+    commission = models.FloatField(default=0.0)
+    date_created = models.DateTimeField(null=True,auto_now_add=True)
+    status = models.CharField(max_length=20,null=True)
+    date_to_complete = models.DateTimeField(null=True)
+    completed = models.BooleanField(default=False)
+    date_completed = models.DateTimeField(null=True)
+    order_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True,on_delete=models.SET_NULL)
+
+
+    def __str__(self):
+        return self.order_no
+
+
+class Customization(models.Model):
+    order = models.ForeignKey(Order,null=True,on_delete=models.SET_NULL,related_name="customizations")
+    total_price = models.FloatField(default=0.0)
+    VAT = models.FloatField(default=0.0)
+    commission = models.FloatField(default=0.0)
+
+
+class Rating(models.Model):
+    gig = models.ForeignKey(Gig,null=True,on_delete=models.SET_NULL,related_name="ratings")
+    rating = models.FloatField(default=1)
+    review = models.TextField(null=True)
+    rated_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True,on_delete=models.SET_NULL)

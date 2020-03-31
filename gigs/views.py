@@ -6,6 +6,13 @@ from .models import *
 from django.contrib import messages
 
 
+
+def order(request,id):
+    template_name = "accounts/order.html"
+    # get all necessary order details to displayed to the user
+    args = {}
+    return render(request,template_name,args)
+
 # Create your views here.
 # This view is used to create new resume through api call
 @csrf_exempt
@@ -185,20 +192,30 @@ def getItembyCategory(name,array):
         if i.category == name:
             return i
 
+def cal_rating(ratings):
+    length = len(ratings)
+    total = 0.0
+    if length > 0:
+        for i in ratings:
+            total += i
+        return total/length
+    else:
+        return 0
+
 
 @csrf_exempt
 def search_api(request):
     json_data = json.loads(str(request.body, encoding='utf-8'))
     q = json_data['q']
     cat = json_data['category']
-    services = Service.objects.all()
+    services = Gig.objects.all()
     service_names = [i.service for i in services]
     service_cats = []
     for each in services:
         for c in each.categories.all():
             service_cats.append(c.name)
     if len(service_names)>0:
-        result_names = [i for i in service_names if ratio_match(i,q) >= 0.7]
+        result_names = [i for i in service_names if ratio_match(i,q) >= 0.5]
     else:
         result_names = []
     if len(service_cats)>0:
@@ -216,28 +233,87 @@ def search_api(request):
             items = services.filter(category=i)
             for item in items:
                 obj = {}
+                obj['id'] = item.id
                 obj['service'] = item.service
                 obj['start_price'] = item.start_price
-                obj['gig'] = item.gig.username
+                obj['gigger'] = item.gigger.username
                 obj['detail'] = item.service_detail
                 obj['experience'] = item.experience
                 files=[]
                 for f in item.files.all():
                     files.append(f.servicefile.url)
                 obj['files']=files
+                ratings = [r.rating for r in item.ratings.all()]
+                average = cal_rating(ratings)
+                no_rating = len(ratings)
+                obj['rating']=average
+                obj['rating_number']=no_rating
                 objects.append(obj)
         else:
             obj = {}
+            obj['id'] = item.id
             obj['service'] = item.service
             obj['start_price'] = item.start_price
-            obj['gig'] = item.gig.username
+            obj['gigger'] = item.gigger.username
             obj['detail'] = item.service_detail
             obj['experience'] = item.experience
             files=[]
             for f in item.files.all():
                 files.append(f.servicefile.url)
             obj['files']=files
+            ratings = [r.rating for r in item.ratings.all()]
+            average = cal_rating(ratings)
+            no_rating = len(ratings)
+            obj['rating']=average
+            obj['rating_number']=no_rating
             objects.append(obj)
     data = {'success':True,'objects':objects}
+    dump = json.dumps(data)
+    return HttpResponse(dump, content_type='application/json')
+
+
+def gen_order_no(number):
+    if number > 0:
+        no = str(number)
+    else:
+        no = str(1)
+    return "#"+no.rjust(10, '0')
+
+
+@csrf_exempt
+def create_order(request):
+    json_data = json.loads(str(request.body, encoding='utf-8'))
+    body = {}
+    for key,val in json_data.items():
+        body[key]=val
+    try:
+        user = CustomUser.objects.get(username=body['user'])
+        gig = Gig.objects.get(id=int(body['gig']))
+    except Exception as e:
+        data = {'success':False,'message':str(e)}
+    else:
+        no_orders = len(Order.objects.all())
+        order = Order()
+        order.order_no = gen_order_no(no_orders)
+        order.order_by = user
+        order.save()
+        order.gigs.add(gig)
+        order.save()
+        
+        try:
+            custom = body['custom']
+        except:
+            data={"success":True,"message":"Order created"}
+            # TODO:notify the gigger
+        else:
+            custom_order = Customization()
+            custom.total_price = custom['price']
+            custom.VAT = custom['vat']
+            custom.commission = custom['commission']
+            custom_order.save()
+            custom_order.order = order
+            custom_order.save()
+            data={"success":True,"message":"Custom order created"}
+            # TODO:notify the gigger
     dump = json.dumps(data)
     return HttpResponse(dump, content_type='application/json')

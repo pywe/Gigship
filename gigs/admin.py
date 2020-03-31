@@ -14,8 +14,8 @@ class ExprienceInline(admin.TabularInline):
     model = Experience
     extra = 1
 
-class ServiceFileInline(admin.TabularInline):
-    model = ServiceFile
+class GigFileInline(admin.TabularInline):
+    model = GigFile
     extra = 1
 
 class ResumeAdmin(admin.ModelAdmin):
@@ -23,14 +23,16 @@ class ResumeAdmin(admin.ModelAdmin):
     inlines = [ EducationInline,ExprienceInline,FileInline ]
 
 
-class ServiceAdmin(admin.ModelAdmin):
-    model = Service
-    inlines = [ ServiceFileInline,]
+class GigAdmin(admin.ModelAdmin):
+    # list_display = ['id',]
+    model = Gig
+    inlines = [ GigFileInline,]
 
 
 # Register your models here.
 # admin.site.register(Job)
 # admin.site.register(Category)
-admin.site.register(ServiceFile)
-admin.site.register(Service,ServiceAdmin)
+admin.site.register(Order)
+admin.site.register(GigFile)
+admin.site.register(Gig,GigAdmin)
 # admin.site.register(Resume,ResumeAdmin)
