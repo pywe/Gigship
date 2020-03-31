@@ -64,20 +64,68 @@
                     <h2 id="step-title-4" class="step-title">Secure your account.</h2>
                     <h2 id="step-title-5" class="step-title">You're all set. Ready?</h2>
                 </div>
-                <form>
+                <form id="plan">
                 <div id="signup-panel-1" class="process-panel-wrap is-active">
                     <div class="columns">
+                        {% for plan in gig.plans.all %}
                         <div class="column is-4">
                             <div class="account-type">
+                                {% if plan.name == "Basic" %}
                                 <img src="/static/order/assets/img/illustrations/signup/company.svg" alt="">
-                                <h3>Basic</h3>
-                                <p>This package offers minimum requirements</p>
-                                <a class="button is-fullwidth is-rounded process-button" data-step="step-dot-2">
+                                {% elif plan.name == "Standard" %}
+                                <img src="/static/order/assets/img/illustrations/signup/public.svg" alt="">
+                                {% else %}
+                                <img src="/static/order/assets/img/illustrations/signup/personal.svg" alt="">
+                                {% endif %}
+                                <h3>{{plan.name}}</h3>
+                                <p>{{plan.description}}</p>
+                                <!--Basic Dropdown-->
+            
+                            <div class="dropdown is-spaced is-accent dropdown-trigger">
+                                    <div>
+                                        <div class="button">
+                                            <i data-feather="more-horizontal"></i>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-menu" role="menu">
+                                        <div class="dropdown-content">
+                                            <a href="#" class="dropdown-item">
+                                                <div class="media">
+                                                    <i data-feather="life-buoy"></i>
+                                                    <div class="media-content">
+                                                        <h3>Delivery Time</h3>
+                                                        <small>{{plan.delivery_time}} Day(s)</small>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a class="dropdown-item">
+                                                <div class="media">
+                                                    <i data-feather="headphones"></i>
+                                                    <div class="media-content">
+                                                        <h3>Revision</h3>
+                                                        <small>{{plan.revision}}</small>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <hr class="dropdown-divider">
+                                            <a href="#" class="dropdown-item">
+                                                <div class="media">
+                                                    <i data-feather="smile"></i>
+                                                    <div class="media-content">
+                                                        <h3>Price</h3>
+                                                        <small>GHC {{plan.price}}</small>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a onclick="collectPlan('{{plan.id}}')" class="button is-fullwidth is-rounded process-button" data-step="step-dot-2">
                                     Continue
                                 </a>
                             </div>
                         </div>
-                        <div class="column is-4">
+                        <!-- <div class="column is-4">
                             <div class="account-type">
                                 <img src="/static/order/assets/img/illustrations/signup/public.svg" alt="">
                                 <h3>Standard</h3>
@@ -86,8 +134,8 @@
                                     Continue
                                 </a>
                             </div>
-                        </div>
-                        <div class="column is-4">
+                        </div> -->
+                        <!-- <div class="column is-4">
                             <div class="account-type">
                                 <img src="/static/order/assets/img/illustrations/signup/personal.svg" alt="">
                                 <h3>Premium</h3>
@@ -96,13 +144,57 @@
                                     Continue
                                 </a>
                             </div>
-                        </div>
+                        </div> -->
+                    {% endfor %}
                     </div>
                 </div>
             </form>
-            <form>
+            <form id="orderDetails">
                 <div id="signup-panel-2" class="process-panel-wrap is-narrow">
-                    <div class="form-panel">
+                    {% for extra in gig.extras.all %}
+                    <div class="card" style="padding:10px;">
+                            <div class="columns">
+                                <div class="column is-2">
+                                    <div class="basic-checkbox">
+                                        <input class="styled-checkbox" id="styled-checkbox-{{extra.id}}" type="checkbox">
+                                        <label for="styled-checkbox-{{extra.id}}"></label>
+                                    </div>
+                                </div>
+                                <div class="column is-6">
+                                    <b>{{extra.name}}</b>
+                                </div>
+        
+                                <div class="column is-4"> 
+                                    <p>GHC {{extra.price}}</p>   
+                                </div>
+                            </div>
+                            <div class="columns">
+                                <div class="column is-8"> 
+                                    <p>{{extra.description}}</p>   
+                                </div>
+                                <div class="column is-4"> 
+                                    <p>+ {{extra.additional_time}} Day(s)</p>   
+                                </div>
+                            </div>
+                    </div>
+                    {% endfor %}
+                    <!-- <div class="card" style="padding:10px;">
+                        <div class="columns">
+                            <div class="column is-4">
+                                <div class="basic-checkbox">
+                                    <input class="styled-checkbox" id="styled-checkbox-2" type="checkbox" checked>
+                                    <label for="styled-checkbox-2"></label>
+                                </div>
+                            </div>
+                            <div class="column is-2">
+                                <p>Extra titleption</p>
+                            </div>
+                            <div class="column is-6"> 
+                                <p>Here is the description for this particular extra feature</p>   
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- <div class="form-panel">
                         <div class="field">
                             <label>First Name</label>
                             <div class="control">
@@ -121,7 +213,7 @@
                                 <input type="text" class="input" placeholder="Enter your email address">
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 
                     <div class="buttons">
                         <a class="button is-rounded process-button" data-step="step-dot-1">Back</a>
@@ -231,5 +323,11 @@
     
     <!-- Page and UI related js -->
     <script src="/static/order/assets/js/signup.js"></script></body>
+    <script>
+        function collectPlan(id){
+            // Use the plan appropriately
+            console.log(id)
+        }
+    </script>
 
 </html>

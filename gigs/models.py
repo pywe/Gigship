@@ -99,8 +99,10 @@ class GigFile(models.Model):
 class GigPlan(models.Model):
     gig = models.ForeignKey(Gig,null=True,on_delete=models.SET_NULL,related_name="plans")
     name = models.CharField(max_length=10,null=True,help_text="Basic,Standard,Premium")
+    description = models.TextField(null=True)
     delivery_time = models.IntegerField(default=1,help_text="Number of days")
     revision = models.IntegerField(default=1,help_text="How many times will you review?")
+    price = models.FloatField(default=0.0)
     
 
 
@@ -108,6 +110,7 @@ class GigPlan(models.Model):
 class Extra(models.Model):
     gig = models.ForeignKey(Gig,null=True,on_delete=models.SET_NULL,related_name="extras")
     name = models.CharField(max_length=50,null=True)
+    description = models.TextField(null=True)
     additional_time = models.IntegerField(default=0,help_text="will this feature increase delivery time?")
     price = models.FloatField(default=0.0)
     quantity = models.IntegerField(default=1)
