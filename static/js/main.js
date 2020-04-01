@@ -157,12 +157,14 @@ window.specials = ['first']
 
                                 if(i === (json_resp['services'].length)-1){
                                     final = true
+                                    toast('Please wait...',10000);
                                     uploadFile(file,window.location.origin+'/gigs/service-files/'+service['serviceId']+'/',final);
-                                    toast('Please wait...',3000);
+                                    
                                 }else{
                                     final = false
+                                    toast('Please wait...',10000);
                                     uploadFile(file,window.location.origin+'/gigs/service-files/'+service['serviceId']+'/',final);
-                                    toast('Please wait...',3000);
+                                    
                                 }
 
                                 }
@@ -253,6 +255,8 @@ const uploadFile = (files,url,final) => {
             // window.location.reload(true);
             }, 2000);
         }
+      }else if(request.readyState === 4){
+        window.location.href = "/accounts/mygigs/"
       }
     };
     if(files.length > 0){
