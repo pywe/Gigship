@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 
@@ -476,4 +477,454 @@
     </script>
 </body>
 
+=======
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+
+    <title> Gigship | Order Process</title>
+    <link rel="icon" type="image/png" href="/static/images/brand/favicon.png" />
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:600,700,800,900" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
+    <!-- Core CSS -->
+    <link rel="stylesheet" href="/static/order/assets/css/bulma.css">
+    <link rel="stylesheet" href="/static/order/assets/css/app.css">
+    <link rel="stylesheet" href="/static/order/assets/css/core.css">
+</head>
+
+<body>
+
+    <!-- Pageloader -->
+    <!-- <div class="pageloader"></div>
+    <div class="infraloader is-active"></div> -->
+    <div class="signup-wrapper">
+
+        <div class="fake-nav">
+            <a href="/" class="logo">
+                <img src="/static/images/brand/logo-gigship.png" width="112" height="100" alt="">
+            </a>
+        </div>
+
+        <div class="process-bar-wrap">
+            <div class="process-bar">
+                <div class="progress-wrap">
+                    <div class="track"></div>
+                    <div class="bar"></div>
+                    <div id="step-dot-1" class="dot is-first is-active is-current" data-step="0">
+                        <i data-feather="smile"></i>
+                    </div>
+                    <div id="step-dot-2" class="dot is-second" data-step="25">
+                        <i data-feather="user"></i>
+                    </div>
+                    <div id="step-dot-3" class="dot is-third" data-step="50">
+                        <i data-feather="lock"></i>
+                    </div>
+                    <div id="step-dot-4" class="dot is-fourth" data-step="75">
+                        <i data-feather="image"></i>
+                    </div>
+                    <div id="step-dot-5" class="dot is-fifth" data-step="100">
+                        <i data-feather="flag"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="outer-panel">
+            <div class="outer-panel-inner">
+                <div class="process-title">
+                    <h2 id="step-title-1" class="step-title is-active"><br>Make your choices</h2>
+                    <h2 id="step-title-2" class="step-title"><br>Order details</h2>
+                    <h2 id="step-title-3" class="step-title"><br>Secure your account.</h2>
+                    <h2 id="step-title-4" class="step-title">Payment</h2>
+                    <h2 id="step-title-5" class="step-title">You're all set. Ready?</h2>
+                </div>
+                <form id="plan">
+                <div id="signup-panel-1" class="process-panel-wrap is-active">
+                    <div class="columns">
+                        {% for plan in gig.plans.all %}
+                        <div class="column is-4">
+                            <div class="account-type">
+                                {% if plan.name == "Basic" %}
+                                <img src="/static/order/assets/img/illustrations/signup/payment.svg" alt="">
+                                {% elif plan.name == "Standard" %}
+                                <img src="/static/order/assets/img/illustrations/signup/payment1.svg" alt="">
+                                {% else %}
+                                <img src="/static/order/assets/img/illustrations/signup/payment2.svg" alt="">
+                                {% endif %}
+                                <h3>{{plan.name}}</h3>
+                                <p>{{plan.description}}</p>
+                                <small>GHC {{plan.price}}</small>
+                                <!--Basic Dropdown-->
+                            <div class="dropdown is-spaced is-accent dropdown-trigger">
+                                    <div>
+                                        <div class="button">
+                                            <i data-feather="more-horizontal"></i>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-menu" role="menu">
+                                        <div class="dropdown-content">
+                                            <a href="#" class="dropdown-item">
+                                                <div class="media">
+                                                    <i data-feather="life-buoy"></i>
+                                                    <div class="media-content">
+                                                        <h3>Delivery Time</h3>
+                                                        <small>{{plan.delivery_time}} Day(s)</small>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <a class="dropdown-item">
+                                                <div class="media">
+                                                    <i data-feather="headphones"></i>
+                                                    <div class="media-content">
+                                                        <h3>Revision</h3>
+                                                        <small>{{plan.revision}}</small>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                            <hr class="dropdown-divider">
+                                            <a href="#" class="dropdown-item">
+                                                <div class="media">
+                                                    <i data-feather="smile"></i>
+                                                    <div class="media-content">
+                                                        <h3>Price</h3>
+                                                        <small>GHC {{plan.price}}</small>
+                                                    </div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <a onclick="collectPlan('{{plan.name}}')" class="button is-fullwidth is-rounded process-button" data-step="step-dot-2">
+                                    Continue
+                                </a>
+                            </div>
+                        </div>
+                        <!-- <div class="column is-4">
+                            <div class="account-type">
+                                <img src="/static/order/assets/img/illustrations/signup/public.svg" alt="">
+                                <h3>Standard</h3>
+                                <p>Most popular offer, with standard requirements fulfillment</p>
+                                <a class="button is-fullwidth is-rounded process-button" data-step="step-dot-2">
+                                    Continue
+                                </a>
+                            </div>
+                        </div> -->
+                        <!-- <div class="column is-4">
+                            <div class="account-type">
+                                <img src="/static/order/assets/img/illustrations/signup/personal.svg" alt="">
+                                <h3>Premium</h3>
+                                <p>You want the best? Choose this package</p>
+                                <a class="button is-fullwidth is-rounded process-button" data-step="step-dot-2">
+                                    Continue
+                                </a>
+                            </div>
+                        </div> -->
+                    <script>
+                        var id = "{{plan.id}}"
+                        var name = "{{plan.name}}"
+                        var price = "{{plan.price}}"
+                        var description = "{{plan.description}}"
+                        var delivery_time = "{{plan.delivery_time}}"
+                        var obj = {id:id,name:name,
+                            price:price,
+                            description:description,
+                            delivery_time:delivery_time
+                        }
+                        localStorage.setItem(name,JSON.stringify(obj))
+                    </script>
+                    {% endfor %}
+                    </div>
+                </div>
+            </form>
+            <form id="orderDetails">
+                <div id="signup-panel-2" class="process-panel-wrap is-narrow">
+                    <div class="form-panel">
+                            <div class="columns">
+                                    <div class="column is-6">
+                                            {% for file in gig.files.all %}
+                                            {% if forloop.first %}
+                                            {% if file.file_type == "image" %}
+                                            <div class="img">
+                                                <img src="{{file.servicefile.url}}" alt="img">
+                                            </div>
+                                            {% else %}
+                                            <div class="img">
+                                                <video controls>
+                                                    <source src="{{file.servicefile.url}}">
+                                                </video>
+                                            </div>
+                                            {% endif %}
+                                            {% endif %}
+                                            {% endfor %}
+                                            <p id="objplan"></p>
+                                    </div>
+                                    <div class="column is-6">
+                                        <b>{{gig.service}}</b>
+                                        <p id="price"></p>
+                                        <p id="delivery_time"></p>
+                                    </div>
+                            </div>
+                    {% for extra in gig.extras.all %}
+                    <div class="card" style="padding:10px;background-color:#e3f1ff;">
+                            <div class="columns">
+                                <div class="column is-2">
+                                    <div class="basic-checkbox">
+                                        <input class="styled-checkbox" id="styled-checkbox-{{extra.id}}" type="checkbox" onchange="letsCheck('styled-checkbox-{{extra.id}}','{{extra.id}}')">
+                                        <label for="styled-checkbox-{{extra.id}}"></label>
+                                    </div>
+                                </div>
+                                <div class="column is-6">
+                                    <b>{{extra.name}}</b>
+                                </div>
+
+                                <div class="column is-4">
+                                    <p>GHC {{extra.price}}</p>
+                                </div>
+                            </div>
+                            <div class="columns">
+                                <div class="column is-8">
+                                    <p>{{extra.description}}</p>
+                                </div>
+                                <div class="column is-4">
+                                    <p>+ {{extra.additional_time}} Day(s)</p>
+                                </div>
+                            </div>
+                    </div>
+                    <script>
+                        var name = "{{extra.name}}";
+                        var price = "{{extra.price}}"
+                        var dt = "{{extra.additional_time}}"
+                        var id = "{{extra.id}}"
+                        var xtra = {
+                            name:name,
+                            price:price,
+                            dt:dt
+                        }
+                        localStorage.setItem("extra"+id,JSON.stringify(xtra))
+                    </script>
+                    {% endfor %}
+                    </div>
+                    <!-- <div class="card" style="padding:10px;">
+                        <div class="columns">
+                            <div class="column is-4">
+                                <div class="basic-checkbox">
+                                    <input class="styled-checkbox" id="styled-checkbox-2" type="checkbox" checked>
+                                    <label for="styled-checkbox-2"></label>
+                                </div>
+                            </div>
+                            <div class="column is-2">
+                                <p>Extra titleption</p>
+                            </div>
+                            <div class="column is-6">
+                                <p>Here is the description for this particular extra feature</p>
+                            </div>
+                        </div>
+                    </div> -->
+                    <!-- <div class="form-panel">
+                        <div class="field">
+                            <label>First Name</label>
+                            <div class="control">
+                                <input type="text" class="input" placeholder="Enter your first name">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Last Name</label>
+                            <div class="control">
+                                <input type="text" class="input" placeholder="Enter your last name">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Email</label>
+                            <div class="control">
+                                <input type="text" class="input" placeholder="Enter your email address">
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <div class="buttons">
+                        <a class="button is-rounded process-button" data-step="step-dot-1">Back</a>
+                        <a class="button is-rounded process-button is-next" data-step="step-dot-3">Next</a>
+                    </div>
+                </div>
+            </form>
+            <form>
+                 <div id="signup-panel-3" class="process-panel-wrap is-narrow">
+                    <div class="form-panel">
+                        <div class="field">
+                            <label>Password</label>
+                            <div class="control">
+                                <input type="password" class="input" placeholder="Choose a password">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Repeat Password</label>
+                            <div class="control">
+                                <input type="password" class="input" placeholder="Repeat your password">
+                            </div>
+                        </div>
+                        <div class="field">
+                            <label>Phone Number</label>
+                            <div class="control">
+                                <input type="text" class="input" placeholder="Enter your phone number">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="buttons">
+                        <a class="button is-rounded process-button" data-step="step-dot-2">Back</a>
+                        <a class="button is-rounded process-button is-next" data-step="step-dot-4">Next</a>
+                    </div>
+                </div>
+            </form>
+            <form>
+                <div id="signup-panel-4" class="process-panel-wrap is-narrow">
+                    <div class="form-panel">
+                        <div class="photo-upload">
+                            <div class="preview">
+                                <a class="upload-button">
+                                    <i data-feather="plus"></i>
+                                </a>
+                                <img id="upload-preview" src="https://via.placeholder.com/150x150"
+                                    data-demo-src="/static/order/assets/img/avatars/avatar-w.png" alt="">
+                                <form id="profile-pic-dz" class="dropzone is-hidden" action="/"></form>
+                            </div>
+                            <div class="limitation">
+                                <small>Only images with a size lower than 3MB are allowed.</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="buttons">
+                        <a class="button is-rounded process-button" data-step="step-dot-3">Back</a>
+                        <a class="button is-rounded process-button is-next" data-step="step-dot-5">Next</a>
+                    </div>
+                </div>
+            </form>
+
+                <div id="signup-panel-5" class="process-panel-wrap is-narrow">
+                    <div class="form-panel">
+                        <img class="success-image" src="/static/order/assets/img/illustrations/signup/mailbox.svg" alt="">
+                        <div class="success-text">
+                            <h3>Congratz, you successfully created your account.</h3>
+                            <p> We just sent you a confirmation email. PLease confirm your account within 24 hours.</p>
+                            <a id="signup-finish" class="button is-fullwidth is-rounded">Let Me In</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+        <!--Edit Credit card Modal-->
+        <div id="crop-modal" class="modal mdl-modal is-small crop-modal is-animated">
+            <div class="modal-background"></div>
+            <div class="modal-content">
+                <div class="modal-card">
+                    <header class="modal-card-head">
+                        <div class="modal-card-title">
+                            <span>Crop your picture</span>
+                        </div>
+                        <button class="mdl-modal-close" aria-label="close">
+                            <i data-feather="x"></i>
+                        </button>
+                    </header>
+                    <div class="modal-card-body">
+                        <div id="cropper-wrapper" class="cropper-wrapper">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Concatenated js plugins and jQuery -->
+    <script src="/static/order/assets/js/app.js"></script>
+
+    <!-- Core js -->
+    <script src="/static/order/assets/data/tipuedrop_content.js"></script>
+    <script src="/static/order/assets/js/global.js"></script>
+    <script src="/static/order/assets/js/main.js"></script>
+
+    <!-- Page and UI related js -->
+    <script src="/static/order/assets/js/signup.js"></script></body>
+    <script>
+        var currentGig = "{{gig.id}}"
+        var gig = {}
+        gig[currentGig]=1
+        localStorage.setItem("currentGig",JSON.stringify(gig))
+        var cart = {
+            gigs:[],plan:{},extras:[],total:0,delivery_time:0
+        }
+
+        function collectPlan(myname){
+            // Use the plan appropriately
+            var obj = JSON.parse(localStorage.getItem(myname))
+            cart.plan = obj
+            var gig = JSON.parse(localStorage.getItem('currentGig'))
+            cart.gigs.push(gig)
+            // save cart for now
+            localStorage.setItem('cart',JSON.stringify(cart))
+            calcCart()
+
+
+        }
+        function calcCart(){
+            var mycart = JSON.parse(localStorage.getItem('cart'));
+            var obj = mycart.plan
+            var price = "Cost: GHC "+obj.price
+            var dt = "Delivery time: "+ obj.delivery_time + " Day(s)"
+            var plan ="Chosen Plan: <b>"+obj.name+"</b>"
+            $("#objplan").html(plan)
+            $("#price").text(price)
+            $("#delivery_time").text(dt)
+            mycart.total = obj.price
+            mycart.delivery_time = obj.delivery_time
+            // use cart for what we want now
+            localStorage.setItem('cart',JSON.stringify(mycart))
+        }
+        function letsCheck(id,myid){
+            var mycart = JSON.parse(localStorage.getItem('cart'));
+            var obj = mycart.plan
+            var ischecked= $("#"+id).is(':checked');
+            if(ischecked){
+                mycart.extras.push(myid);
+                // now let's do some recalculation of the cart here
+                var myxtra = JSON.parse(localStorage.getItem('extra'+myid));
+                var new_total = parseFloat(mycart.total) + parseFloat(myxtra.price)
+                var new_dt = parseFloat(mycart.delivery_time) + parseFloat(myxtra.dt)
+                var price = "Cost: GHC "+(new_total)
+                var dt = "Delivery time: "+ (new_dt) + " Day(s)"
+                $("#price").text(price)
+                $("#delivery_time").text(dt)
+                mycart.total = new_total;
+                mycart.delivery_time = new_dt
+
+            }else{
+                mycart.extras = jQuery.grep(mycart.extras, function(value) {
+                return value != myid;
+                });
+                var myxtra = JSON.parse(localStorage.getItem('extra'+myid));
+                var new_total = parseFloat(mycart.total) - parseFloat(myxtra.price)
+                var new_dt = parseFloat(mycart.delivery_time) - parseFloat(myxtra.dt)
+                var price = "Cost: GHC "+(new_total)
+                var dt = "Delivery time: "+ (new_dt) + " Day(s)"
+                $("#price").text(price)
+                $("#delivery_time").text(dt)
+                mycart.total = new_total;
+                mycart.delivery_time = new_dt
+
+            }
+            localStorage.setItem('cart',JSON.stringify(mycart))
+        }
+    </script>
+
+>>>>>>> d0abb781032ece1958e84c811ed531a84d44ece6
 </html>
