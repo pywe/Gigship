@@ -173,7 +173,7 @@ def create_services(request):
 
 def file_check(name):
     images = ['.jpg','.jpeg','.png','.svg','webp']
-    if name.split(".")[0] in images:
+    if name.split(".")[-1] in images:
         return "image"
     else:
         return "video"
