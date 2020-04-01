@@ -122,13 +122,16 @@ class Order(models.Model):
     total_price = models.FloatField(default=0.0)
     VAT = models.FloatField(default=0.0)
     commission = models.FloatField(default=0.0)
+    order_price = models.FloatField(default=0.0)
     date_created = models.DateTimeField(null=True,auto_now_add=True)
     status = models.CharField(max_length=20,null=True)
+    delivery_time = models.IntegerField(default=0)
     date_to_complete = models.DateTimeField(null=True)
     completed = models.BooleanField(default=False)
     date_completed = models.DateTimeField(null=True)
     order_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True,on_delete=models.SET_NULL)
     extras = models.ManyToManyField(Extra)
+    plan = models.ForeignKey(GigPlan,null=True,on_delete=models.SET_NULL)
 
     def __str__(self):
         return self.order_no
