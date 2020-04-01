@@ -143,7 +143,7 @@ def create_services(request):
         plan.name = "Standard"
         plan.delivery_time = 4
         plan.revision = 3
-        plan.price = start_price + 50
+        plan.price = start_price + (start_price/4)
         plan.description = "Reduce delivery time and more revisions"
         plan.save()
         plan.gig = myservice
@@ -153,7 +153,7 @@ def create_services(request):
         plan.name = "Premium"
         plan.delivery_time = 2
         plan.revision = 5
-        plan.price = start_price + 100
+        plan.price = start_price + (start_price/2)
         plan.description = "The best value for your money"
         plan.save()
         plan.gig = myservice
@@ -172,8 +172,10 @@ def create_services(request):
 
 
 def file_check(name):
-    images = ['.jpg','.jpeg','.png','.svg','webp']
-    if name.split(".")[-1] in images:
+    
+    images = ['jpg','jpeg','png','svg','webp']
+    name_list = name.split(".")
+    if name_list[-1] in images:
         return "image"
     else:
         return "video"
