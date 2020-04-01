@@ -332,38 +332,71 @@ def gen_order_no(number):
 
 @csrf_exempt
 def create_order(request):
+    """
+    {"gigs":[{"41":1}],
+    "plan":{"id":"2","name":"Standard","price":"125.0",
+    "description":"Reduce delivery time and more revisions","delivery_time":"5"},
+    "extras":["1"],"total":175,"delivery_time":3}
+    """
     json_data = json.loads(str(request.body, encoding='utf-8'))
     body = {}
     for key,val in json_data.items():
         body[key]=val
+    
+    user = CustomUser.objects.get(username=body['user'])
+    no_orders = len(Order.objects.all())
+    order = Order()
+    order.order_no = gen_order_no(no_orders)
+    order.order_by = user
+    order.delivery_time = body['delivery_time']
+    order.save()
+    for g in body['gigs']:   
+        for key,val in g.items():
+            try:
+                gig = Gig.objects.get(id=int(key))
+            except Exception as e:
+                data = {'success':False,'message':str(e)}
+            else:
+                order.gigs.add(gig)
+                order.save()
+    # let's work on prices now
+    subtotal = 0
+    c_plan = body['plan']
+    plan = GigPlan.objects.get(id=int(c_plan['id']))
+    order.plan = plan
+    order.save()
+    subtotal += plan.price
+    for extra in body['extras']:
+        gig_extra = Extra.objects.get(id=int(extra))
+        order.extras.add(gig_extra)
+        order.save()
+        total += gig_extra.price
+    order.order_price = subtotal
+    order.save()
+    VAT = 0.0
+    commission = 0.0
+    total = VAT + commission + subtotal
+    order.total_price = total
+    order.save()
+    # is there any tax or commission?
+    info = {"order_no":order.order_no,
+    "total_price":order.total_price,
+    "VAT":order.VAT,
+    "sub_total":order.order_price}
     try:
-        user = CustomUser.objects.get(username=body['user'])
-        gig = Gig.objects.get(id=int(body['gig']))
-    except Exception as e:
-        data = {'success':False,'message':str(e)}
+        custom = body['custom']
+    except:
+        data={"success":True,"message":"Order created"}
+        # TODO:notify the gigger
     else:
-        no_orders = len(Order.objects.all())
-        order = Order()
-        order.order_no = gen_order_no(no_orders)
-        order.order_by = user
-        order.save()
-        order.gigs.add(gig)
-        order.save()
-        
-        try:
-            custom = body['custom']
-        except:
-            data={"success":True,"message":"Order created"}
-            # TODO:notify the gigger
-        else:
-            custom_order = Customization()
-            custom.total_price = custom['price']
-            custom.VAT = custom['vat']
-            custom.commission = custom['commission']
-            custom_order.save()
-            custom_order.order = order
-            custom_order.save()
-            data={"success":True,"message":"Custom order created"}
-            # TODO:notify the gigger
+        custom_order = Customization()
+        custom.total_price = custom['price']
+        custom.VAT = custom['vat']
+        custom.commission = custom['commission']
+        custom_order.save()
+        custom_order.order = order
+        custom_order.save()
+        data={"success":True,"message":"Custom order created"}
+        # TODO:notify the gigger
     dump = json.dumps(data)
     return HttpResponse(dump, content_type='application/json')

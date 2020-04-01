@@ -37,19 +37,22 @@ function exists(ele) {
     } else if (stepValue == '33.33') {
       $('#signup-panel-2, #step-title-2').addClass('is-active');
     } else if (stepValue == '66.66') {
-      // make order here, get transaction if for payment
-      if (typeof someObject == 'undefined') $.loadScript('https://test.theteller.net/checkout/resource/api/inline/theteller_inline.js', function(){
-        //Stuff to do after someScript has loaded
-        console.log("let's opay now")
-        document.getElementById("await-payment").style.display = "none"
-        // $("#await-payment").attr('visible',false)
-      });
+     
       $('#signup-panel-3, #step-title-3').addClass('is-active');
     }
     //  else if (stepValue == '75') {
     //   $('#signup-panel-4, #step-title-4').addClass('is-active');
     //   } 
     else if (stepValue == '100') {
+       // make order here, get transaction id for payment
+       var mycart = JSON.parse(localStorage.getItem('cart'));
+       console.log(mycart)
+       if (typeof someObject == 'undefined') $.loadScript('https://test.theteller.net/checkout/resource/api/inline/theteller_inline.js', function(){
+         //Stuff to do after someScript has loaded
+         console.log("let's opay now")
+         document.getElementById("await-payment").style.display = "none"
+       });
+    //step should show after order creation is successful  
       $('#signup-panel-4, #step-title-4').addClass('is-active');
     }
   });
