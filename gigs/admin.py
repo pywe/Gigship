@@ -12,11 +12,19 @@ class FileInline(admin.TabularInline):
 
 class ExprienceInline(admin.TabularInline):
     model = Experience
-    extra = 1
+    extra = 0
 
 class GigFileInline(admin.TabularInline):
     model = GigFile
-    extra = 1
+    extra = 0
+
+class GigPlanInline(admin.TabularInline):
+    model = GigPlan
+    extra = 0
+
+class GigExtraInline(admin.TabularInline):
+    model = Extra
+    extra = 0
 
 class ResumeAdmin(admin.ModelAdmin):
     model = Resume
@@ -26,7 +34,7 @@ class ResumeAdmin(admin.ModelAdmin):
 class GigAdmin(admin.ModelAdmin):
     # list_display = ['id',]
     model = Gig
-    inlines = [ GigFileInline,]
+    inlines = [ GigFileInline,GigPlanInline,GigExtraInline]
 
 
 # Register your models here.

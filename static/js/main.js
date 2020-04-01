@@ -157,12 +157,14 @@ window.specials = ['first']
 
                                 if(i === (json_resp['services'].length)-1){
                                     final = true
+                                    toast('Please wait...',10000);
                                     uploadFile(file,window.location.origin+'/gigs/service-files/'+service['serviceId']+'/',final);
-                                    toast('Please wait...',3000);
+                                    
                                 }else{
                                     final = false
+                                    toast('Please wait...',10000);
                                     uploadFile(file,window.location.origin+'/gigs/service-files/'+service['serviceId']+'/',final);
-                                    toast('Please wait...',3000);
+                                    
                                 }
 
                                 }
@@ -249,16 +251,22 @@ const uploadFile = (files,url,final) => {
         // this is how we know the files have been uploaded
         if(final){
             setTimeout(function () {
-            window.location.reload(true);
-            }, 3000);
+            window.location.href = "/accounts/mygigs/"
+            // window.location.reload(true);
+            }, 2000);
         }
+      }else if(request.readyState === 4){
+        window.location.href = "/accounts/mygigs/"
       }
     };
-
+    if(files.length > 0){
     for (let i = 0; i < files.length; i++) {
       formData.append(files[i].name, files[i])
     }
     request.send(formData);
+}else{
+    window.location.href = "/accounts/mygigs/"
+}
   };
 
 

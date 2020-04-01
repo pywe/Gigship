@@ -11,7 +11,10 @@ def order(request,id):
     template_name = "accounts/order.html"
     # get all necessary order details to displayed to the user
     args = {}
+    gig = Gig.objects.get(id=int(id))
+    args['gig']=gig
     return render(request,template_name,args)
+
 
 # Create your views here.
 # This view is used to create new resume through api call
@@ -104,14 +107,15 @@ def create_services(request):
         user = None
     for s in services:
         service = s['service']
-        start_price = s['start_price']
+        start_price = int(s['start_price'])
         category = s['category']
         experience = s['experience']
         service_detail = s['service_detail']
         servicefile = s['file']
-        myservice = Service()
+        myservice = Gig()
         myservice.service = service
         myservice.start_price = start_price
+        myservice.save()
         try:
             real_cat = GiggerCategory.objects.get(name=category)
         except:
@@ -122,8 +126,39 @@ def create_services(request):
         myservice.service_detail = service_detail
         myservice.save()
         if user:
-            myservice.gig = user
+            myservice.gigger = user
         myservice.save()
+        # Let's create a basic plan for this gig
+        plan = GigPlan()
+        plan.name = "Basic"
+        plan.delivery_time = 7
+        plan.revision = 1
+        plan.price = start_price
+        plan.description = "Covers basic requirements for this gig"
+        plan.save()
+        plan.gig = myservice
+        plan.save()
+         # Let's create a standard plan for this gig
+        plan = GigPlan()
+        plan.name = "Standard"
+        plan.delivery_time = 4
+        plan.revision = 3
+        plan.price = start_price + (start_price/4)
+        plan.description = "Reduce delivery time and more revisions"
+        plan.save()
+        plan.gig = myservice
+        plan.save()
+         # Let's create a premium plan for this gig
+        plan = GigPlan()
+        plan.name = "Premium"
+        plan.delivery_time = 2
+        plan.revision = 5
+        plan.price = start_price + (start_price/2)
+        plan.description = "The best value for your money"
+        plan.save()
+        plan.gig = myservice
+        plan.save()
+        
         obj = {}
         obj['fileId']=servicefile
         obj['serviceId']= myservice.id
@@ -135,6 +170,17 @@ def create_services(request):
     dump = json.dumps(data)
     return HttpResponse(dump, content_type='application/json')
 
+
+def file_check(name):
+    
+    images = ['jpg','jpeg','png','svg','webp']
+    name_list = name.split(".")
+    if name_list[-1] in images:
+        return "image"
+    else:
+        return "video"
+
+
 @csrf_exempt
 def add_service_files(request,id):
     try:
@@ -142,14 +188,17 @@ def add_service_files(request,id):
     except Exception as e:
         print(e)
     try:
-        service = Service.objects.get(id=int(id))
+        service = Gig.objects.get(id=int(id))
     except Exception as e:
         print(e)
     for key,val in files.items():
         try:
-            sf = ServiceFile()
+            sf = GigFile()
             sf.servicefile = val
             sf.service = service
+            sf.save()
+            filename = val.name
+            sf.file_type = file_check(filename)
             sf.save()
         except Exception as e:
             pass
