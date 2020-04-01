@@ -34,19 +34,23 @@ function exists(ele) {
     if (stepValue == '0') {
       $('#signup-panel-1, #step-title-1').addClass('is-active');
       // localStorage.setItem('stepValue',"25")
-    } else if (stepValue == '25') {
+    } else if (stepValue == '33.33') {
       $('#signup-panel-2, #step-title-2').addClass('is-active');
-    } else if (stepValue == '50') {
+    } else if (stepValue == '66.66') {
       // make order here, get transaction if for payment
       if (typeof someObject == 'undefined') $.loadScript('https://test.theteller.net/checkout/resource/api/inline/theteller_inline.js', function(){
         //Stuff to do after someScript has loaded
         console.log("let's opay now")
+        document.getElementById("await-payment").style.display = "none"
+        // $("#await-payment").attr('visible',false)
       });
       $('#signup-panel-3, #step-title-3').addClass('is-active');
-    } else if (stepValue == '75') {
+    }
+    //  else if (stepValue == '75') {
+    //   $('#signup-panel-4, #step-title-4').addClass('is-active');
+    //   } 
+    else if (stepValue == '100') {
       $('#signup-panel-4, #step-title-4').addClass('is-active');
-    } else if (stepValue == '100') {
-      $('#signup-panel-5, #step-title-5').addClass('is-active');
     }
   });
   $('.process-button').on('click', function () {
