@@ -24,13 +24,13 @@
     <!-- <div class="pageloader"></div>
     <div class="infraloader is-active"></div> -->
     <div class="signup-wrapper">
-        
+
         <div class="fake-nav">
             <a href="/" class="logo">
                 <img src="/static/images/brand/logo-gigship.png" width="112" height="100" alt="">
             </a>
         </div>
-        
+
         <div class="process-bar-wrap">
             <div class="process-bar">
                 <div class="progress-wrap">
@@ -54,7 +54,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="outer-panel">
             <div class="outer-panel-inner">
                 <div class="process-title">
@@ -171,12 +171,12 @@
                                             {% if forloop.first %}
                                             {% if file.file_type == "image" %}
                                             <div class="img">
-                                                <img src="/{{file.servicefile.url}}" alt="img">
+                                                <img src="{{file.servicefile.url}}" alt="img">
                                             </div>
                                             {% else %}
                                             <div class="img">
                                                 <video controls>
-                                                    <source src="/{{file.servicefile.url}}">      
+                                                    <source src="{{file.servicefile.url}}">
                                                 </video>
                                             </div>
                                             {% endif %}
@@ -202,17 +202,17 @@
                                 <div class="column is-6">
                                     <b>{{extra.name}}</b>
                                 </div>
-        
-                                <div class="column is-4"> 
-                                    <p>GHC {{extra.price}}</p>   
+
+                                <div class="column is-4">
+                                    <p>GHC {{extra.price}}</p>
                                 </div>
                             </div>
                             <div class="columns">
-                                <div class="column is-8"> 
-                                    <p>{{extra.description}}</p>   
+                                <div class="column is-8">
+                                    <p>{{extra.description}}</p>
                                 </div>
-                                <div class="column is-4"> 
-                                    <p>+ {{extra.additional_time}} Day(s)</p>   
+                                <div class="column is-4">
+                                    <p>+ {{extra.additional_time}} Day(s)</p>
                                 </div>
                             </div>
                     </div>
@@ -241,8 +241,8 @@
                             <div class="column is-2">
                                 <p>Extra titleption</p>
                             </div>
-                            <div class="column is-6"> 
-                                <p>Here is the description for this particular extra feature</p>   
+                            <div class="column is-6">
+                                <p>Here is the description for this particular extra feature</p>
                             </div>
                         </div>
                     </div> -->
@@ -266,7 +266,7 @@
                             </div>
                         </div>
                     </div> -->
-                
+
                     <div class="buttons">
                         <a class="button is-rounded process-button" data-step="step-dot-1">Back</a>
                         <a class="button is-rounded process-button is-next" data-step="step-dot-3">Next</a>
@@ -290,14 +290,14 @@
                             </div>
                         </div>
                     </div>
-                
+
                     <div class="buttons">
                         <a class="button is-rounded process-button" data-step="step-dot-2">Back</a>
                         <a class="button is-rounded process-button is-next" data-step="step-dot-4">Next</a>
                     </div>
                 </div>
             </form>
-            <form> 
+            <form>
                 <div id="signup-panel-4" class="process-panel-wrap is-narrow">
                     <div class="form-panel">
                         <div class="field">
@@ -319,7 +319,7 @@
                             </div>
                         </div>
                     </div>
-                
+
                     <div class="buttons">
                         <a class="button is-rounded process-button" data-step="step-dot-3">Back</a>
                         <a class="button is-rounded process-button is-next" data-step="step-dot-5">Next</a>
@@ -339,9 +339,9 @@
                 </div>
             </div>
         </div>
-        
-        
-        
+
+
+
         <!--Edit Credit card Modal-->
         <div id="crop-modal" class="modal mdl-modal is-small crop-modal is-animated">
             <div class="modal-background"></div>
@@ -357,7 +357,7 @@
                     </header>
                     <div class="modal-card-body">
                         <div id="cropper-wrapper" class="cropper-wrapper">
-        
+
                         </div>
                     </div>
                 </div>
@@ -367,12 +367,12 @@
 
     <!-- Concatenated js plugins and jQuery -->
     <script src="/static/order/assets/js/app.js"></script>
-    
+
     <!-- Core js -->
     <script src="/static/order/assets/data/tipuedrop_content.js"></script>
     <script src="/static/order/assets/js/global.js"></script>
     <script src="/static/order/assets/js/main.js"></script>
-    
+
     <!-- Page and UI related js -->
     <script src="/static/order/assets/js/signup.js"></script></body>
     <script>
@@ -393,8 +393,8 @@
             // save cart for now
             localStorage.setItem('cart',JSON.stringify(cart))
             calcCart()
-            
-            
+
+
         }
         function calcCart(){
             var mycart = JSON.parse(localStorage.getItem('cart'));
@@ -414,7 +414,7 @@
             var mycart = JSON.parse(localStorage.getItem('cart'));
             var obj = mycart.plan
             var ischecked= $("#"+id).is(':checked');
-            if(ischecked){    
+            if(ischecked){
                 mycart.extras.push(myid);
                 // now let's do some recalculation of the cart here
                 var myxtra = JSON.parse(localStorage.getItem('extra'+myid));
