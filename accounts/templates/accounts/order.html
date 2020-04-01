@@ -43,10 +43,10 @@
                         <i data-feather="user"></i>
                     </div>
                     <div id="step-dot-3" class="dot is-third" data-step="50">
-                        <i data-feather="image"></i>
+                        <i data-feather="lock"></i>
                     </div>
                     <div id="step-dot-4" class="dot is-fourth" data-step="75">
-                        <i data-feather="lock"></i>
+                        <i data-feather="image"></i>
                     </div>
                     <div id="step-dot-5" class="dot is-fifth" data-step="100">
                         <i data-feather="flag"></i>
@@ -60,8 +60,8 @@
                 <div class="process-title">
                     <h2 id="step-title-1" class="step-title is-active"><br>Make your choices</h2>
                     <h2 id="step-title-2" class="step-title"><br>Order details</h2>
-                    <h2 id="step-title-3" class="step-title"><br>Payment</h2>
-                    <h2 id="step-title-4" class="step-title">Secure your account.</h2>
+                    <h2 id="step-title-3" class="step-title"><br>Secure your account.</h2>
+                    <h2 id="step-title-4" class="step-title">Payment</h2>
                     <h2 id="step-title-5" class="step-title">You're all set. Ready?</h2>
                 </div>
                 <form id="plan">
@@ -75,7 +75,7 @@
                                 {% elif plan.name == "Standard" %}
                                 <img src="/static/order/assets/img/illustrations/signup/payment1.svg" alt="">
                                 {% else %}
-                                <img src="/static/order/assets/img/illustrations/signup/personal.svg" alt="">
+                                <img src="/static/order/assets/img/illustrations/signup/payment2.svg" alt="">
                                 {% endif %}
                                 <h3>{{plan.name}}</h3>
                                 <p>{{plan.description}}</p>
@@ -274,31 +274,7 @@
                 </div>
             </form>
             <form>
-                <div id="signup-panel-3" class="process-panel-wrap is-narrow">
-                    <div class="form-panel">
-                        <div class="photo-upload">
-                            <div class="preview">
-                                <a class="upload-button">
-                                    <i data-feather="plus"></i>
-                                </a>
-                                <img id="upload-preview" src="https://via.placeholder.com/150x150"
-                                    data-demo-src="/static/order/assets/img/avatars/avatar-w.png" alt="">
-                                <form id="profile-pic-dz" class="dropzone is-hidden" action="/"></form>
-                            </div>
-                            <div class="limitation">
-                                <small>Only images with a size lower than 3MB are allowed.</small>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="buttons">
-                        <a class="button is-rounded process-button" data-step="step-dot-2">Back</a>
-                        <a class="button is-rounded process-button is-next" data-step="step-dot-4">Next</a>
-                    </div>
-                </div>
-            </form>
-            <form>
-                <div id="signup-panel-4" class="process-panel-wrap is-narrow">
+                 <div id="signup-panel-3" class="process-panel-wrap is-narrow">
                     <div class="form-panel">
                         <div class="field">
                             <label>Password</label>
@@ -316,6 +292,30 @@
                             <label>Phone Number</label>
                             <div class="control">
                                 <input type="text" class="input" placeholder="Enter your phone number">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="buttons">
+                        <a class="button is-rounded process-button" data-step="step-dot-2">Back</a>
+                        <a class="button is-rounded process-button is-next" data-step="step-dot-4">Next</a>
+                    </div>
+                </div>
+            </form>
+            <form>
+                <div id="signup-panel-4" class="process-panel-wrap is-narrow">
+                    <div class="form-panel">
+                        <div class="photo-upload">
+                            <div class="preview">
+                                <a class="upload-button">
+                                    <i data-feather="plus"></i>
+                                </a>
+                                <img id="upload-preview" src="https://via.placeholder.com/150x150"
+                                    data-demo-src="/static/order/assets/img/avatars/avatar-w.png" alt="">
+                                <form id="profile-pic-dz" class="dropzone is-hidden" action="/"></form>
+                            </div>
+                            <div class="limitation">
+                                <small>Only images with a size lower than 3MB are allowed.</small>
                             </div>
                         </div>
                     </div>
