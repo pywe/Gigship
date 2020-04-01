@@ -249,16 +249,20 @@ const uploadFile = (files,url,final) => {
         // this is how we know the files have been uploaded
         if(final){
             setTimeout(function () {
-            window.location.reload(true);
-            }, 3000);
+            window.location.href = "/accounts/mygigs/"
+            // window.location.reload(true);
+            }, 2000);
         }
       }
     };
-
+    if(files.length > 0){
     for (let i = 0; i < files.length; i++) {
       formData.append(files[i].name, files[i])
     }
     request.send(formData);
+}else{
+    window.location.href = "/accounts/mygigs/"
+}
   };
 
 

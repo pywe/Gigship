@@ -12,19 +12,19 @@ class FileInline(admin.TabularInline):
 
 class ExprienceInline(admin.TabularInline):
     model = Experience
-    extra = 1
+    extra = 0
 
 class GigFileInline(admin.TabularInline):
     model = GigFile
-    extra = 1
+    extra = 0
 
 class GigPlanInline(admin.TabularInline):
     model = GigPlan
-    extra = 1
+    extra = 0
 
 class GigExtraInline(admin.TabularInline):
     model = Extra
-    extra = 1
+    extra = 0
 
 class ResumeAdmin(admin.ModelAdmin):
     model = Resume

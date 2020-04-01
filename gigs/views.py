@@ -107,7 +107,7 @@ def create_services(request):
         user = None
     for s in services:
         service = s['service']
-        start_price = s['start_price']
+        start_price = int(s['start_price'])
         category = s['category']
         experience = s['experience']
         service_detail = s['service_detail']
@@ -115,6 +115,7 @@ def create_services(request):
         myservice = Gig()
         myservice.service = service
         myservice.start_price = start_price
+        myservice.save()
         try:
             real_cat = GiggerCategory.objects.get(name=category)
         except:
@@ -132,6 +133,9 @@ def create_services(request):
         plan.name = "Basic"
         plan.delivery_time = 7
         plan.revision = 1
+        plan.price = start_price
+        plan.description = "Covers basic requirements for this gig"
+        plan.save()
         plan.gig = myservice
         plan.save()
          # Let's create a standard plan for this gig
@@ -139,6 +143,9 @@ def create_services(request):
         plan.name = "Standard"
         plan.delivery_time = 4
         plan.revision = 3
+        plan.price = start_price + 50
+        plan.description = "Reduce delivery time and more revisions"
+        plan.save()
         plan.gig = myservice
         plan.save()
          # Let's create a premium plan for this gig
@@ -146,6 +153,9 @@ def create_services(request):
         plan.name = "Premium"
         plan.delivery_time = 2
         plan.revision = 5
+        plan.price = start_price + 100
+        plan.description = "The best value for your money"
+        plan.save()
         plan.gig = myservice
         plan.save()
         
@@ -162,7 +172,7 @@ def create_services(request):
 
 
 def file_check(name):
-    images = ['.jpg','.jpeg','.png','.svg']
+    images = ['.jpg','.jpeg','.png','.svg','webp']
     if name.split(".")[0] in images:
         return "image"
     else:
