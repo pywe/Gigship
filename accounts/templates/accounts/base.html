@@ -380,6 +380,10 @@
 
     <!-- Custom Js-->
     <script src="/static/js/custom.js"></script>
+    <script>
+    var user = "{{user.username}}"
+    localStorage.setItem("user",user)
+    </script>
     {% if messages %}
     <script>
         $("#messageModal").modal('show');

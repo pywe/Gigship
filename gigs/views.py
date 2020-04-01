@@ -258,8 +258,14 @@ def search_api(request):
     json_data = json.loads(str(request.body, encoding='utf-8'))
     q = json_data['q']
     cat = json_data['category']
-    services = Gig.objects.all()
-    service_names = [i.service for i in services]
+    try:
+        user = CustomUser.objects.get(username=json_data['user'])
+    except:
+        services = Gig.objects.all()
+        service_names = [i.service for i in services if i.gigger != user]
+    else:
+        services = Gig.objects.all()
+        service_names = [i.service for i in services]
     service_cats = []
     for each in services:
         for c in each.categories.all():
@@ -386,8 +392,8 @@ def create_order(request):
     try:
         custom = body['custom']
     except:
-        data={"success":True,"message":"Order created"}
-        # TODO:notify the gigger
+        data={"success":True,"message":"Order created","data":info}
+        # TODO:notify the giggera
     else:
         custom_order = Customization()
         custom.total_price = custom['price']
@@ -396,7 +402,7 @@ def create_order(request):
         custom_order.save()
         custom_order.order = order
         custom_order.save()
-        data={"success":True,"message":"Custom order created"}
+        data={"success":True,"message":"Custom order created","data":info}
         # TODO:notify the gigger
     dump = json.dumps(data)
     return HttpResponse(dump, content_type='application/json')
