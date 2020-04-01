@@ -158,9 +158,11 @@ $('#search-btn').on("click", function (event) {
     // we save what the user searched for
     var query = $("#query").val()
     var category = ""
+    var user = localStorage.getItem("user")
     const search = {
         q: query,
-        category: category
+        category: category,
+        user:user
     }
     localStorage.setItem('query', JSON.stringify(search))
     execute_search()
