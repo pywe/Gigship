@@ -58,9 +58,9 @@
         <div class="outer-panel">
             <div class="outer-panel-inner">
                 <div class="process-title">
-                    <h2 id="step-title-1" class="step-title is-active">Make your choices</h2>
-                    <h2 id="step-title-2" class="step-title">Order details</h2>
-                    <h2 id="step-title-3" class="step-title">Payment</h2>
+                    <h2 id="step-title-1" class="step-title is-active"><br>Make your choices</h2>
+                    <h2 id="step-title-2" class="step-title"><br>Order details</h2>
+                    <h2 id="step-title-3" class="step-title"><br>Payment</h2>
                     <h2 id="step-title-4" class="step-title">Secure your account.</h2>
                     <h2 id="step-title-5" class="step-title">You're all set. Ready?</h2>
                 </div>
@@ -120,7 +120,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <a onclick="collectPlan('{{plan.id}}')" class="button is-fullwidth is-rounded process-button" data-step="step-dot-2">
+                                <a onclick="collectPlan('{{plan.name}}')" class="button is-fullwidth is-rounded process-button" data-step="step-dot-2">
                                     Continue
                                 </a>
                             </div>
@@ -145,18 +145,57 @@
                                 </a>
                             </div>
                         </div> -->
+                    <script>
+                        var id = "{{plan.id}}"
+                        var name = "{{plan.name}}"
+                        var price = "{{plan.price}}"
+                        var description = "{{plan.description}}"
+                        var delivery_time = "{{plan.delivery_time}}"
+                        var obj = {id:id,name:name,
+                            price:price,
+                            description:description,
+                            delivery_time:delivery_time
+                        }
+                        localStorage.setItem(name,JSON.stringify(obj))
+                    </script>
                     {% endfor %}
                     </div>
                 </div>
             </form>
             <form id="orderDetails">
                 <div id="signup-panel-2" class="process-panel-wrap is-narrow">
+                    <div class="form-panel">
+                            <div class="columns">
+                                    <div class="column is-6">
+                                            {% for file in gig.files.all %}
+                                            {% if forloop.first %}
+                                            {% if file.file_type == "image" %}
+                                            <div class="img">
+                                                <img src="/{{file.servicefile.url}}" alt="img">
+                                            </div>
+                                            {% else %}
+                                            <div class="img">
+                                                <video controls>
+                                                    <source src="/{{file.servicefile.url}}">      
+                                                </video>
+                                            </div>
+                                            {% endif %}
+                                            {% endif %}
+                                            {% endfor %}
+                                            <p id="objplan"></p>
+                                    </div>
+                                    <div class="column is-6">
+                                        <b>{{gig.service}}</b>
+                                        <p id="price"></p>
+                                        <p id="delivery_time"></p>
+                                    </div>
+                            </div>
                     {% for extra in gig.extras.all %}
-                    <div class="card" style="padding:10px;">
+                    <div class="card" style="padding:10px;background-color:#e3f1ff;">
                             <div class="columns">
                                 <div class="column is-2">
                                     <div class="basic-checkbox">
-                                        <input class="styled-checkbox" id="styled-checkbox-{{extra.id}}" type="checkbox">
+                                        <input class="styled-checkbox" id="styled-checkbox-{{extra.id}}" type="checkbox" onchange="letsCheck('styled-checkbox-{{extra.id}}','{{extra.id}}')">
                                         <label for="styled-checkbox-{{extra.id}}"></label>
                                     </div>
                                 </div>
@@ -177,7 +216,20 @@
                                 </div>
                             </div>
                     </div>
+                    <script>
+                        var name = "{{extra.name}}";
+                        var price = "{{extra.price}}"
+                        var dt = "{{extra.additional_time}}"
+                        var id = "{{extra.id}}"
+                        var xtra = {
+                            name:name,
+                            price:price,
+                            dt:dt
+                        }
+                        localStorage.setItem("extra"+id,JSON.stringify(xtra))
+                    </script>
                     {% endfor %}
+                    </div>
                     <!-- <div class="card" style="padding:10px;">
                         <div class="columns">
                             <div class="column is-4">
@@ -324,9 +376,73 @@
     <!-- Page and UI related js -->
     <script src="/static/order/assets/js/signup.js"></script></body>
     <script>
-        function collectPlan(id){
+        var currentGig = "{{gig.id}}"
+        var gig = {}
+        gig[currentGig]=1
+        localStorage.setItem("currentGig",JSON.stringify(gig))
+        var cart = {
+            gigs:[],plan:{},extras:[],total:0,delivery_time:0
+        }
+
+        function collectPlan(myname){
             // Use the plan appropriately
-            console.log(id)
+            var obj = JSON.parse(localStorage.getItem(myname))
+            cart.plan = obj
+            var gig = JSON.parse(localStorage.getItem('currentGig'))
+            cart.gigs.push(gig)
+            // save cart for now
+            localStorage.setItem('cart',JSON.stringify(cart))
+            calcCart()
+            
+            
+        }
+        function calcCart(){
+            var mycart = JSON.parse(localStorage.getItem('cart'));
+            var obj = mycart.plan
+            var price = "Cost: GHC "+obj.price
+            var dt = "Delivery time: "+ obj.delivery_time + " Day(s)"
+            var plan ="Chosen Plan: <b>"+obj.name+"</b>"
+            $("#objplan").html(plan)
+            $("#price").text(price)
+            $("#delivery_time").text(dt)
+            mycart.total = obj.price
+            mycart.delivery_time = obj.delivery_time
+            // use cart for what we want now
+            localStorage.setItem('cart',JSON.stringify(mycart))
+        }
+        function letsCheck(id,myid){
+            var mycart = JSON.parse(localStorage.getItem('cart'));
+            var obj = mycart.plan
+            var ischecked= $("#"+id).is(':checked');
+            if(ischecked){    
+                mycart.extras.push(myid);
+                // now let's do some recalculation of the cart here
+                var myxtra = JSON.parse(localStorage.getItem('extra'+myid));
+                var new_total = parseFloat(mycart.total) + parseFloat(myxtra.price)
+                var new_dt = parseFloat(mycart.delivery_time) + parseFloat(myxtra.dt)
+                var price = "Cost: GHC "+(new_total)
+                var dt = "Delivery time: "+ (new_dt) + " Day(s)"
+                $("#price").text(price)
+                $("#delivery_time").text(dt)
+                mycart.total = new_total;
+                mycart.delivery_time = new_dt
+
+            }else{
+                mycart.extras = jQuery.grep(mycart.extras, function(value) {
+                return value != myid;
+                });
+                var myxtra = JSON.parse(localStorage.getItem('extra'+myid));
+                var new_total = parseFloat(mycart.total) - parseFloat(myxtra.price)
+                var new_dt = parseFloat(mycart.delivery_time) - parseFloat(myxtra.dt)
+                var price = "Cost: GHC "+(new_total)
+                var dt = "Delivery time: "+ (new_dt) + " Day(s)"
+                $("#price").text(price)
+                $("#delivery_time").text(dt)
+                mycart.total = new_total;
+                mycart.delivery_time = new_dt
+
+            }
+            localStorage.setItem('cart',JSON.stringify(mycart))
         }
     </script>
 
