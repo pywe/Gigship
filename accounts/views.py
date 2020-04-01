@@ -206,7 +206,7 @@ def add_services(request):
         return redirect("/accounts/login/")
 
 
-import requests as r
+import requests as r_switch
 def payment(request,id):
     if request.method == "GET":
         # status = request.GET['status']
