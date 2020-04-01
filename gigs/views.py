@@ -262,10 +262,10 @@ def search_api(request):
         user = CustomUser.objects.get(username=json_data['user'])
     except:
         services = Gig.objects.all()
-        service_names = [i.service for i in services if i.gigger != user]
+        service_names = [i.service for i in services]   
     else:
         services = Gig.objects.all()
-        service_names = [i.service for i in services]
+        service_names = [i.service for i in services if i.gigger != user]
     service_cats = []
     for each in services:
         for c in each.categories.all():
