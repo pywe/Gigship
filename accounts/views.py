@@ -206,6 +206,43 @@ def add_services(request):
         return redirect("/accounts/login/")
 
 
+import requests as r
+def payment(request,id):
+    if request.method == "GET":
+        # status = request.GET['status']
+        transid = request.GET['transaction_id']
+        # print(transid)
+        #reason = request.GET['reason']
+        # code = request.GET['code']
+        url = "https://test.theteller.net/v1.1/users/transactions/{}/status/".format(transid)
+        header = {'Merchant-Id':"TTM-00000278"}
+        response = r.get(url,headers=header)
+        json_data = json.loads(response.text)
+        print(response.text)
+        """Check if transaction was succesful first"""
+        # amount = json_data['amount']
+        # source = json_data['subscriber_number']
+        # network = json_data['r_switch']
+        # status = json_data['status']
+        #reason = json_data['reason']
+        #transaction = Transaction()
+        # transaction.amount = amount
+        # transaction.transid = transid
+        # transaction.source = source
+        # transaction.network = network
+        # transaction.user = request.user
+        #transaction.response = reason
+        # if status == "approved":
+        #     transaction.status = True
+        #     user_credit = Credit.objects.get(user=request.user)
+        #     user_credit.last_transid = transid
+        #     user_credit.current_bal += amount
+        # user_credit.save()
+        # transaction.save()
+
+        return redirect('/accounts/my-orders/')
+
+
 @csrf_exempt
 def create_gigger(request):
     json_data = json.loads(str(request.body, encoding='utf-8'))

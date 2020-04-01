@@ -13,6 +13,7 @@ def order(request,id):
     args = {}
     gig = Gig.objects.get(id=int(id))
     args['gig']=gig
+    args['zanzama']="ODEwN2ZiZjA5MWRhZGVhYWU2YWFmOWJhMGFkMjhlNjQ="
     return render(request,template_name,args)
 
 

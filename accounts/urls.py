@@ -15,8 +15,9 @@ urlpatterns = [
     url(r'^accounts/create-employer/$', views.create_shipper,name="create-employer"),
     url(r'^accounts/dashboard/$', views.dashboard,name="dashboard"),
     url(r'^accounts/mygigs/$', views.mygigs,name="mygigs"),
-    url(r'^accounts/myorders/$', views.myorders,name="myorders"),
+    url(r'^accounts/my-orders/$', views.myorders,name="myorders"),
     url(r'^accounts/add-gigs/$', views.add_services,name="add-gigs"),
     url(r'^accounts/services/$', views.services,name="services"),
     url(r'^accounts/settings/$', views.mysettings,name="settings"),
+    url(r'^payments/pay/(?P<id>[-\w]+)/', views.payment,name="payment"),
     ]
