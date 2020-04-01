@@ -66,22 +66,12 @@
                 </div>
                 <form id="plan">
                 <div id="signup-panel-1" class="process-panel-wrap is-active">
+                    
                     <div class="columns">
                         {% for plan in gig.plans.all %}
                         <div class="column is-4">
-                            <div class="account-type">
-                                {% if plan.name == "Basic" %}
-                                <img src="/static/order/assets/img/illustrations/signup/payment.svg" alt="">
-                                {% elif plan.name == "Standard" %}
-                                <img src="/static/order/assets/img/illustrations/signup/payment1.svg" alt="">
-                                {% else %}
-                                <img src="/static/order/assets/img/illustrations/signup/payment2.svg" alt="">
-                                {% endif %}
-                                <h3>{{plan.name}}</h3>
-                                <p>{{plan.description}}</p>
-                                <small>GHC {{plan.price}}</small>
-                                <!--Basic Dropdown-->
-                            <div class="dropdown is-spaced is-accent dropdown-trigger">
+                              <!--Basic Dropdown-->
+                              <div class="dropdown is-spaced is-accent dropdown-trigger">
                                     <div>
                                         <div class="button">
                                             <i data-feather="more-horizontal"></i>
@@ -120,6 +110,18 @@
                                         </div>
                                     </div>
                                 </div>
+                            <div class="account-type">
+                                {% if plan.name == "Basic" %}
+                                <img src="/static/order/assets/img/illustrations/signup/payment.svg" alt="">
+                                {% elif plan.name == "Standard" %}
+                                <img src="/static/order/assets/img/illustrations/signup/payment1.svg" alt="">
+                                {% else %}
+                                <img src="/static/order/assets/img/illustrations/signup/payment2.svg" alt="">
+                                {% endif %}
+                                <h3>{{plan.name}}</h3>
+                                <p>{{plan.description}}</p>
+                                <small>GHC {{plan.price}}</small>
+                              
                                 <a onclick="collectPlan('{{plan.name}}')" class="button is-fullwidth is-rounded process-button" data-step="step-dot-2">
                                     Continue
                                 </a>
