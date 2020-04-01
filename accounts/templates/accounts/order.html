@@ -12,6 +12,8 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/fontisto@v3.0.4/css/fontisto/fontisto-brands.min.css" rel="stylesheet">
+
     <!-- Core CSS -->
     <link rel="stylesheet" href="/static/order/assets/css/bulma.css">
     <link rel="stylesheet" href="/static/order/assets/css/app.css">
@@ -39,16 +41,16 @@
                     <div id="step-dot-1" class="dot is-first is-active is-current" data-step="0">
                         <i data-feather="smile"></i>
                     </div>
-                    <div id="step-dot-2" class="dot is-second" data-step="25">
+                    <div id="step-dot-2" class="dot is-second" data-step="33.33">
                         <i data-feather="user"></i>
                     </div>
-                    <div id="step-dot-3" class="dot is-third" data-step="50">
+                    <div id="step-dot-3" class="dot is-third" data-step="66.66">
                         <i data-feather="image"></i>
                     </div>
-                    <div id="step-dot-4" class="dot is-fourth" data-step="75">
+                    <!-- <div id="step-dot-4" class="dot is-fourth" data-step="75">
                         <i data-feather="lock"></i>
-                    </div>
-                    <div id="step-dot-5" class="dot is-fifth" data-step="100">
+                    </div> -->
+                    <div id="step-dot-4" class="dot is-fourth" data-step="100">
                         <i data-feather="flag"></i>
                     </div>
                 </div>
@@ -60,9 +62,9 @@
                 <div class="process-title">
                     <h2 id="step-title-1" class="step-title is-active"><br>Make your choices</h2>
                     <h2 id="step-title-2" class="step-title"><br>Order details</h2>
-                    <h2 id="step-title-3" class="step-title"><br>Payment</h2>
-                    <h2 id="step-title-4" class="step-title">Secure your account.</h2>
-                    <h2 id="step-title-5" class="step-title">You're all set. Ready?</h2>
+                    <h2 id="step-title-3" class="step-title"><br>Order Summary</h2>
+                    <!-- <h2 id="step-title-4" class="step-title">Secure your account.</h2> -->
+                    <h2 id="step-title-4" class="step-title">Payment</h2>
                 </div>
                 <form id="plan">
                 <div id="signup-panel-1" class="process-panel-wrap is-active">
@@ -231,8 +233,7 @@
                         localStorage.setItem("extra"+id,JSON.stringify(xtra))
                     </script>
                     {% endfor %}
-                    <p><strong>Note:</strong> You cannot go back after clicking continue from here.
-                    So please make sure you are okay with all the choices and prices.</p>
+                    
                     </div>
 
                     <!-- <div class="card" style="padding:10px;">
@@ -274,46 +275,12 @@
 
                     <div class="buttons">
                         <a class="button is-rounded process-button" data-step="step-dot-1">Back</a>
-                        <a class="button is-rounded process-button is-next" data-step="step-dot-3">Next</a>
+                        <a onclick="summary()" class="button is-rounded process-button is-next" data-step="step-dot-3">Next</a>
                     </div>
                 </div>
             </form>
-            <form>
-                <div id="signup-panel-3" class="process-panel-wrap is-narrow">
-                    <div class="form-panel" id="letspay">
-                        <a id='payment' class="ttlr_inline"
-                            data-APIKey="{{zanzama}}"
-                            data-transid="100000000001"
-                            data-amount="5"
-                            data-customer_email="{{user.email}}"
-                            data-currency="GHS"
-                            data-redirect_url="https://gigship.pywe.org/payments/pay/{{gig.id}}/"
-                            data-pay_button_text="Make Payment"
-                            data-custom_description="Payment for Order"
-                            data-payment_method="both">
-                         </a>
-                        <!-- <div class="photo-upload"> -->
-                            <!-- <div class="preview">
-                                <a class="upload-button">
-                                    <i data-feather="plus"></i>
-                                </a>
-                                <img id="upload-preview" src="https://via.placeholder.com/150x150"
-                                    data-demo-src="/static/order/assets/img/avatars/avatar-w.png" alt="">
-                                <form id="profile-pic-dz" class="dropzone is-hidden" action="/"></form>
-                            </div>
-                            <div class="limitation">
-                                <small>Only images with a size lower than 3MB are allowed.</small>
-                            </div> -->
-                        <!-- </div> -->
-                    </div>
-
-                    <div class="buttons">
-                        <!-- <a class="button is-rounded process-button" data-step="step-dot-2">Back</a> -->
-                        <a class="button is-rounded process-button is-next" data-step="step-dot-4">Next</a>
-                    </div>
-                </div>
-            </form>
-            <form>
+            
+            <!-- <form>
                 <div id="signup-panel-4" class="process-panel-wrap is-narrow">
                     <div class="form-panel">
                         <div class="field">
@@ -341,18 +308,96 @@
                         <a class="button is-rounded process-button is-next" data-step="step-dot-5">Next</a>
                     </div>
                 </div>
-            </form>
+            </form> -->
 
-                <div id="signup-panel-5" class="process-panel-wrap is-narrow">
+                <div id="signup-panel-3" class="process-panel-wrap is-narrow">
                     <div class="form-panel">
                         <img class="success-image" src="/static/order/assets/img/illustrations/signup/mailbox.svg" alt="">
-                        <div class="success-text">
-                            <h3>Congratz, you successfully created your account.</h3>
-                            <p> We just sent you a confirmation email. PLease confirm your account within 24 hours.</p>
-                            <a id="signup-finish" class="button is-fullwidth is-rounded">Let Me In</a>
+                        <!-- <div class="view-wrapper">-->
+                        <div class="shop-wrapper"> 
+                        <div class="cart-container">
+                        <div class="cart-content">
+                        <div class="columns">
+                        <div class="column is-12">
+                                <div class="cart-summary">
+                                    <div class="summary-header">
+                                        <h3>Order Summary</h3>
+                                    </div>
+                                    <!--card-->
+                                    <div class="summary-card">
+                                        <div class="order-line">
+                                            <span>Subtotal</span>
+                                            <span id="sub-total">193.00</span>
+                                        </div>
+                                        <!-- <div class="order-line">
+                                            <span>Shipping</span>
+                                            <span class="is-text">Not calculated</span>
+                                        </div> -->
+                                        <div class="order-line">
+                                            <span>Taxes</span>
+                                            <span id="tax">8.92</span>
+                                        </div>
+                                        <div class="order-line">
+                                            <span class="is-total">Total</span>
+                                            <span id="total" class="is-total">201.92</span class="is-total">
+                                        </div>
+                                    </div>
+                                    <div class="success-text">
+                                            <h3>Quick Note</h3>
+                                            <p> <strong>You cannot go back after clicking "Let Me Pay" from here.
+                                                So please make sure you are okay with all the choices and prices.</strong></p>
+                                            <a class="button is-rounded process-button is-next" data-step="step-dot-4">Let Me Pay</a>
+                                                <!-- <a id="signup-finish" class="button is-fullwidth is-rounded">Let Me In</a> -->
+                                        </div>
+                                                                        <!--card-->
+                                    <!-- <div class="summary-card">
+                                    </div> -->
+                                </div>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            </div>
+                            <!-- </div>  -->
+        
+                    </div>
+                    <!-- <div class="buttons">
+                        <a class="button is-rounded process-button" data-step="step-dot-2">Back</a>
+                        <a class="button is-rounded process-button is-next" data-step="step-dot-4">Next</a>
+                    </div> -->
+                </div>
+
+                <form>
+                    <div id="signup-panel-4" class="process-panel-wrap is-narrow">
+                        <div class="form-panel" id="letspay">
+                            <a id="await-payment" class="button is-rounded is-loading">Rounded</a>
+                            <a id='payment' class="ttlr_inline"
+                                data-APIKey="{{zanzama}}"
+                                data-transid="100000000001"
+                                data-amount="5"
+                                data-customer_email="{{user.email}}"
+                                data-currency="GHS"
+                                data-redirect_url="https://gigship.pywe.org/payments/pay/{{gig.id}}/"
+                                data-pay_button_text="Make Payment"
+                                data-custom_description="Payment for Order"
+                                data-payment_method="both">
+                                </a>
+                            <!-- <div class="photo-upload"> -->
+                                <!-- <div class="preview">
+                                    <a class="upload-button">
+                                        <i data-feather="plus"></i>
+                                    </a>
+                                    <img id="upload-preview" src="https://via.placeholder.com/150x150"
+                                        data-demo-src="/static/order/assets/img/avatars/avatar-w.png" alt="">
+                                    <form id="profile-pic-dz" class="dropzone is-hidden" action="/"></form>
+                                </div>
+                                <div class="limitation">
+                                    <small>Only images with a size lower than 3MB are allowed.</small>
+                                </div> -->
+                            <!-- </div> -->
                         </div>
                     </div>
-                </div>
+                    </form>
             </div>
         </div>
 
@@ -405,9 +450,10 @@
         var currentGig = "{{gig.id}}"
         var gig = {}
         gig[currentGig]=1
+        var user = "{{user.username}}"
         localStorage.setItem("currentGig",JSON.stringify(gig))
         var cart = {
-            gigs:[],plan:{},extras:[],total:0,delivery_time:0
+            gigs:[],plan:{},extras:[],total:0,delivery_time:0,user:user
         }
 
         function collectPlan(myname){
@@ -474,6 +520,13 @@
             }
             localStorage.setItem('cart',JSON.stringify(mycart))
 
+        }
+
+        function summary(){
+            var mycart = JSON.parse(localStorage.getItem('cart'));
+            $("#sub-total").text(mycart.total);
+            $("#total").text(mycart.total);
+            $("#tax").text("0.0")
         }
     </script>
 </body>
