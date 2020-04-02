@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from accounts.models import CustomUser
 from .models import *
 from django.contrib import messages
+from datetime import datetime,date, timedelta
 
 
 
@@ -330,10 +331,10 @@ def search_api(request):
 
 def gen_order_no(number):
     if number > 0:
-        no = str(number)
+        no = str(number+1)
     else:
         no = str(1)
-    return "#"+no.rjust(10, '0')
+    return "#"+no.rjust(12, '0')
 
 
 @csrf_exempt
@@ -355,6 +356,9 @@ def create_order(request):
     order.order_no = gen_order_no(no_orders)
     order.order_by = user
     order.delivery_time = body['delivery_time']
+    today = date.today()
+    exp_date = today + timedelta(int(order.delivery_time))
+    order.status = "Pending"
     order.save()
     for g in body['gigs']:   
         for key,val in g.items():
@@ -376,7 +380,7 @@ def create_order(request):
         gig_extra = Extra.objects.get(id=int(extra))
         order.extras.add(gig_extra)
         order.save()
-        total += gig_extra.price
+        subtotal += gig_extra.price
     order.order_price = subtotal
     order.save()
     VAT = 0.0
@@ -388,7 +392,7 @@ def create_order(request):
     info = {"order_no":order.order_no,
     "total_price":order.total_price,
     "VAT":order.VAT,
-    "sub_total":order.order_price}
+    "sub_total":order.order_price,"id":order.id}
     try:
         custom = body['custom']
     except:
