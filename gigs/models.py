@@ -132,6 +132,7 @@ class Order(models.Model):
     order_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True,on_delete=models.SET_NULL)
     extras = models.ManyToManyField(Extra)
     plan = models.ForeignKey(GigPlan,null=True,on_delete=models.SET_NULL)
+    paid = models.BooleanField(default=False)
 
     def __str__(self):
         return self.order_no

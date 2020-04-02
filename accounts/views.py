@@ -8,6 +8,8 @@ from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login, logout
 from gigs.models import Gig
+from datetime import datetime,date, timedelta
+
 
 
 # Create your views here.
@@ -88,28 +90,29 @@ def registration(request):
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
-        account_type = request.POST['account_type']
-        if account_type == "Gigger":
-            user = Gigger()
-            user.user_type = 'Gigger'
-            category1 = request.POST['category1']
-            category2 = request.POST['category2']
-            try:
-                real_1 = GiggerCategory.objects.get(name=category1)
-            except:
-                pass
-            else:
-                user.categories.add(real_1)
-            try:
-                real_2 = GiggerCategory.objects.get(name=category2)
-            except:
-                pass
-            else:
-                user.categories.add(real_2)
-
+        # account_type = request.POST['account_type']
+        # if account_type == "Gigger":
+        #     user = Gigger()
+        #     user.user_type = 'Gigger'
+        user = CustomUser()
+        category1 = request.POST['category1']
+        category2 = request.POST['category2']
+        try:
+            real_1 = GiggerCategory.objects.get(name=category1)
+        except:
+            pass
         else:
-            user = Shipper()
-            user.user_type = 'Shipper'
+            user.categories.add(real_1)
+        try:
+            real_2 = GiggerCategory.objects.get(name=category2)
+        except:
+            pass
+        else:
+            user.categories.add(real_2)
+
+        # else:
+        #     user = Shipper()
+        #     user.user_type = 'Shipper'
         user.username = username
         user.email = email
         user.set_password(password)
@@ -118,6 +121,13 @@ def registration(request):
         except Exception as e:
             messages.error(request, str(e))
             return redirect("/accounts/registration/")
+        # create credit for user
+        today = date.today()
+        exp_date = today + timedelta(30*6)
+        credit = Credit(username=username,current_bal=0.0,exp_date=exp_date)
+        credit.save()
+        user.credit = credit
+        user.save()
         msg = """Hello {}, we are excited to have you on board.
         Here is your link ### to verify your email and officially be accepted on the platform as a/an {}""".format(username, account_type)
         send_mail(
@@ -211,6 +221,8 @@ def payment(request,id):
     if request.method == "GET":
         # status = request.GET['status']
         transid = request.GET['transaction_id']
+        t_id = "#"+str(transid)
+        order = Order.objects.get(order_no=t_id)
         # print(transid)
         #reason = request.GET['reason']
         # code = request.GET['code']
@@ -220,6 +232,8 @@ def payment(request,id):
         json_data = json.loads(response.text)
         print(response.text)
         """Check if transaction was succesful first"""
+        order.paid = True
+        # TODO: notify user
         # amount = json_data['amount']
         # source = json_data['subscriber_number']
         # network = json_data['r_switch']
@@ -239,7 +253,7 @@ def payment(request,id):
         #     user_credit.current_bal += amount
         # user_credit.save()
         # transaction.save()
-
+        messages.success(request, "Test order created")
         return redirect('/accounts/my-orders/')
 
 

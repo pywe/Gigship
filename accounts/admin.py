@@ -12,6 +12,6 @@ class CustomUserAdmin(UserAdmin):
 
 # Register your models here.
 admin.site.register(CustomUser,CustomUserAdmin)
-admin.site.register(Gigger)
+# admin.site.register(Gigger)
 admin.site.register(GiggerCategory)
-admin.site.register(Shipper)
+admin.site.register(Credit)
