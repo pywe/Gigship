@@ -349,8 +349,16 @@ def create_order(request):
     body = {}
     for key,val in json_data.items():
         body[key]=val
-    
-    user = CustomUser.objects.get(username=body['user'])
+    try:
+        user = CustomUser.objects.get(username=body['user'])
+    except:
+        # we cannot do anything here
+        data = {
+            "success":False,
+            "message":"User is not recognised"
+        }
+        dump = json.dumps(data)
+        return HttpResponse(dump, content_type='application/json')
     
     credit = user.credit
     no_orders = len(Order.objects.all())
@@ -396,6 +404,8 @@ def create_order(request):
     total = VAT + commission + subtotal
     order.total_price = total
     order.save()
+    credit.current_bal -= float(total)
+    credit.save()
     # is there any tax or commission?
     info = {"order_no":order.order_no,
     "total_price":order.total_price,

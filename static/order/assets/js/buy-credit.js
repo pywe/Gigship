@@ -22,6 +22,7 @@ $(document).ready(function () {
 
   $('.progress-wrap .dot').on('click', function () {
     var $this = $(this);
+    // console.log($this)
     var stepValue = $this.attr('data-step');
     $this.closest('.progress-wrap').find('.bar').css('width', stepValue + '%');
     $this.siblings('.dot').removeClass('is-current');
@@ -33,7 +34,7 @@ $(document).ready(function () {
 
     if (stepValue == '0') {
       $('#signup-panel-1, #step-title-1').addClass('is-active');
-    } else if (stepValue == '50') {
+    } else if (stepValue == '33.33') {
       $('#signup-panel-2, #step-title-2').addClass('is-active');
       var username = localStorage.getItem("user");
       var amount = $("#amount").val()
@@ -46,7 +47,7 @@ $(document).ready(function () {
       }
       localStorage.setItem("credit",JSON.stringify(credit))
     }
-    else if (stepValue == '100') {
+    else if (stepValue == '66.66') {
       var myobj = JSON.parse(localStorage.getItem("credit"))
       axios.post('/gigship-api/v1/accounts/create-transaction/', myobj)
       .then(function (response) {
@@ -71,9 +72,10 @@ $(document).ready(function () {
       });
       $('#signup-panel-3, #step-title-3').addClass('is-active');
     } 
-    // else if (stepValue == '75') {
-    //   $('#signup-panel-4, #step-title-4').addClass('is-active');
-    // } else if (stepValue == '100') {
+    else if (stepValue == '100') {
+      $('#signup-panel-4, #step-title-4').addClass('is-active');
+    } 
+    // else if (stepValue == '100') {
     //   $('#signup-panel-5, #step-title-5').addClass('is-active');
     // }
   });

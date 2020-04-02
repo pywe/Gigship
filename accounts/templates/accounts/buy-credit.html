@@ -42,13 +42,13 @@
                     <!-- <div id="step-dot-2" class="dot is-second" data-step="50">
                         <i data-feather="user"></i>
                     </div> -->
-                    <!-- <div id="step-dot-3" class="dot is-third" data-step="50">
+                    <div id="step-dot-2" class="dot is-second" data-step="33.33">
                         <i data-feather="image"></i>
-                    </div>-->
-                    <div id="step-dot-2" class="dot is-second" data-step="50">
+                    </div>
+                    <div id="step-dot-3" class="dot is-third" data-step="66.66">
                         <i data-feather="lock"></i>
                     </div> 
-                    <div id="step-dot-3" class="dot is-third" data-step="100">
+                    <div id="step-dot-4" class="dot is-fourth" data-step="100">
                         <i data-feather="flag"></i>
                     </div>
                 </div>
@@ -62,7 +62,8 @@
                     <!-- <h2 id="step-title-2" class="step-title">Tell us more about you.</h2>
                     <h2 id="step-title-3" class="step-title">Upload a profile picture.</h2>-->
                     <h2 id="step-title-2" class="step-title">Are you sure?</h2> 
-                    <h2 id="step-title-3" class="step-title">You're all set. Ready?</h2>
+                    <h2 id="step-title-3" class="step-title">Now, Let's Pay</h2>
+                    <h2 id="step-title-4" class="step-title">You're all set. Ready?</h2>
                 </div>
                 
                 <!-- <div id="signup-panel-1" class="process-panel-wrap is-active">
@@ -128,28 +129,7 @@
                     </div>
                 </div>
                 
-                 <!-- <div id="signup-panel-2" class="process-panel-wrap is-narrow">
-                    <div class="form-panel">
-                        <div class="photo-upload">
-                            <div class="preview">
-                                <a class="upload-button">
-                                    <i data-feather="plus"></i>
-                                </a>
-                                <img id="upload-preview" src="https://via.placeholder.com/150x150"
-                                    data-demo-src="/static/order/assets/img/avatars/avatar-w.png" alt="">
-                                <form id="profile-pic-dz" class="dropzone is-hidden" action="/"></form>
-                            </div>
-                            <div class="limitation">
-                                <small>Only images with a size lower than 3MB are allowed.</small>
-                            </div>
-                        </div>
-                    </div>
-                
-                    <div class="buttons">
-                        <a class="button is-rounded process-button" data-step="step-dot-1">Back</a>
-                        <a class="button is-rounded process-button is-next" data-step="step-dot-3">Next</a>
-                    </div>
-                </div> -->
+                 
                 
                 <div id="signup-panel-2" class="process-panel-wrap is-narrow">
                     <div class="form-panel">
@@ -193,13 +173,23 @@
                                 data-amount="5"
                                 data-customer_email="{{user.email}}"
                                 data-currency="GHS"
-                                data-redirect_url="https://gigship.pywe.org/payments/pay/{{gig.id}}/"
+                                data-redirect_url="https://gigship.pywe.org/payments/pay/"
                                 data-pay_button_text="Buy Credit"
                                 data-custom_description="Payment for Credit"
                                 data-payment_method="both">
                                 </a>
                             <!-- <a id="signup-finish" class="button is-fullwidth is-rounded">Let Me In</a> -->
                         </div>
+                    </div>
+                </div>
+                <div id="signup-panel-4" class="process-panel-wrap is-narrow">
+                    <div class="form-panel">
+                        <p id="done"></p>
+                    </div>
+                
+                    <div class="buttons">
+                        <!-- <a class="button is-rounded process-button" data-step="step-dot-1">Back</a> -->
+                        <a id="done-link" class="button is-rounded process-button is-next" data-step="step-dot-4">Continue</a>
                     </div>
                 </div>
             </div>
@@ -250,6 +240,27 @@
     }
     </script>
     <script src="/static/js/axios.min.js"></script>
-    <script src="/static/order/assets/js/buy-credit.js"></script></body>
+    <script src="/static/order/assets/js/buy-credit.js"></script>
+    {% if messages %}
+    {% for message in messages %}
+    <p hidden>{message}}</p>
+    {% endfor %}
+    {% if messages.tag == "success" %}
+    <script>
+    setTimeout(function () {
+      $("#done-link").trigger('click');
+      $("#done-link").attr('href',localStorage.getItem("reverse"))
+      $("done").text("Transaction successful, click continue to continue");
+    }, 500);
+    $('.bar').css('width', '100' + '%');
+    </script>
+    {% else %}
+    <script>
+     alert("Your transaction was not successful")
+    </script>
+    {% endif %}
+
+    {% endif %}
+</body>
 
 </html>

@@ -217,12 +217,12 @@ def add_services(request):
 
 
 import requests as r
-def payment(request,id):
+def payment(request):
     if request.method == "GET":
         # status = request.GET['status']
         transid = request.GET['transaction_id']
-        t_id = "#"+str(transid)
-        order = Order.objects.get(order_no=t_id)
+        t_id = str(transid)
+        order = Transaction.objects.get(transaction_id=t_id)
         # print(transid)
         #reason = request.GET['reason']
         # code = request.GET['code']
@@ -232,7 +232,22 @@ def payment(request,id):
         json_data = json.loads(response.text)
         print(response.text)
         """Check if transaction was succesful first"""
-        order.paid = True
+        if json_data['status'] == "approved":
+            if order.completed:
+                messages.error(request, "Order Already Confirmed")
+                return redirect('/accounts/top-up/')
+            else:
+                order.complete = True
+                order.save()
+                user = order.by
+                if user.credit:
+                    credit = user.credit
+                    credit.current_bal += float(json_data['amount'])
+                    credit.last_transid = t_id
+                    credit.last_recharge = datetime.now()
+                    credit.save()
+                messages.success(request, "Transaction successful")
+                return redirect('/accounts/top-up/')
         # TODO: notify user
         # amount = json_data['amount']
         # source = json_data['subscriber_number']
@@ -253,8 +268,9 @@ def payment(request,id):
         #     user_credit.current_bal += amount
         # user_credit.save()
         # transaction.save()
-        messages.success(request, "Test order created")
-        return redirect('/accounts/my-orders/')
+        messages.error(request, "{}".format(json_data['reason']))
+        return redirect('/accounts/top-up/')
+
 
 
 @csrf_exempt

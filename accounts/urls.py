@@ -21,5 +21,5 @@ urlpatterns = [
     url(r'^accounts/settings/$', views.mysettings,name="settings"),
     url(r'^accounts/create-transaction/$', views.create_transaction,name="create-transaction"),
     url(r'^accounts/top-up/$', views.buy_credit,name="buy-credit"),
-    url(r'^payments/pay/(?P<id>[-\w]+)/', views.payment,name="payment"),
+    url(r'^payments/pay/', views.payment,name="payment"),
     ]

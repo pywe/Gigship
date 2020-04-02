@@ -71,21 +71,21 @@ function makeOrder(obj) {
          var transid = data.order_no.replace("#","")
          $("#payment").attr('data-amount',data.total_price)
          $("#payment").attr('data-transid',transid)
-         $("#trans-info").text("Your order is being processed, please pay to complete it.")
-         if (typeof someObject == 'undefined') $.loadScript('https://test.theteller.net/checkout/resource/api/inline/theteller_inline.js', function(){
-          //Stuff to do after someScript has loaded
-          console.log("let's opay now")
-          document.getElementById("await-payment").style.display = "none"
-        });
+         $("#trans-info").text("Your order has successfully been placed.")
+         setTimeout(function () {
+          window.location.href="/accounts/my-orders/"
+        }, 1000);
+        //  if (typeof someObject == 'undefined') $.loadScript('https://test.theteller.net/checkout/resource/api/inline/theteller_inline.js', function(){
+        //   //Stuff to do after someScript has loaded
+        //   console.log("let's opay now")
+        //   document.getElementById("await-payment").style.display = "none"
+        // });
      //step should show after order creation is successful
     }else{
       var message = response.data.message;
       $("#trans-info").html(`<p>${message}</p><a class="button is-rounded process-button is-next" href="/accounts/top-up/">Top up</a>`)
-<<<<<<< HEAD
+      localStorage.setItem("reverse",window.location.href);
       document.getElementById("await-payment").style.display = "none"
-=======
-        document.getElementById("await-payment").style.display = "none"
->>>>>>> ac2330c01fa15fda43d31be3d031def3bc308845
     }
        $('#signup-panel-4, #step-title-4').addClass('is-active');
 

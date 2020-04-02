@@ -92,6 +92,7 @@ class Transaction(models.Model):
     transaction_amount = models.FloatField(default=0.0)
     date_created = models.DateTimeField(null=True,blank=True,auto_now_add=True)
     completed = models.BooleanField(default=False)
+    r_switch = models.CharField(max_length=20,null=True)
     by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank = True, on_delete = models.SET_NULL,related_name="transactions")
 
 
