@@ -81,6 +81,7 @@ function makeOrder(obj) {
     }else{
       var message = response.data.message;
       $("#trans-info").html(`<p>${message}</p><a class="button is-rounded process-button is-next" href="/accounts/top-up/">Top up</a>`)
+      document.getElementById("await-payment").style.display = "none"
     }
        $('#signup-panel-4, #step-title-4').addClass('is-active');
 
