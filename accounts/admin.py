@@ -7,7 +7,7 @@ class CustomUserAdmin(UserAdmin):
   model = CustomUser
 
   fieldsets = UserAdmin.fieldsets + (
-      ('Extra Fields', {'fields': ('user_img','user_type')}),
+      ('Extra Fields', {'fields': ('user_img','user_type','credit')}),
     )
 
 # Register your models here.
