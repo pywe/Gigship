@@ -351,6 +351,8 @@ def create_order(request):
         body[key]=val
     
     user = CustomUser.objects.get(username=body['user'])
+    
+    credit = user.credit
     no_orders = len(Order.objects.all())
     order = Order()
     order.order_no = gen_order_no(no_orders)
@@ -359,7 +361,7 @@ def create_order(request):
     today = date.today()
     exp_date = today + timedelta(int(order.delivery_time))
     order.status = "Pending"
-    order.save()
+    # order.save()
     for g in body['gigs']:   
         for key,val in g.items():
             try:
@@ -367,8 +369,14 @@ def create_order(request):
             except Exception as e:
                 data = {'success':False,'message':str(e)}
             else:
-                order.gigs.add(gig)
-                order.save()
+                if credit.current_bal >= float(body['total']):
+                    order.save()
+                    order.gigs.add(gig)
+                    order.save()
+                else:
+                    data = {"success":False,"message":"You do not have enough funds."}
+                    dump = json.dumps(data)
+                    return HttpResponse(dump, content_type='application/json')
     # let's work on prices now
     subtotal = 0
     c_plan = body['plan']

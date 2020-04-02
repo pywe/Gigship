@@ -19,5 +19,7 @@ urlpatterns = [
     url(r'^accounts/add-gigs/$', views.add_services,name="add-gigs"),
     url(r'^accounts/services/$', views.services,name="services"),
     url(r'^accounts/settings/$', views.mysettings,name="settings"),
+    url(r'^accounts/create-transaction/$', views.create_transaction,name="create-transaction"),
+    url(r'^accounts/top-up/$', views.buy_credit,name="buy-credit"),
     url(r'^payments/pay/(?P<id>[-\w]+)/', views.payment,name="payment"),
     ]
