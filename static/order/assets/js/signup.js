@@ -66,6 +66,7 @@ function makeOrder(obj) {
        axios.post('/gigship-api/v1/gigs/create-order/', mycart)
        .then(function (response) {
          console.log(response);
+         if(response.data.success){
          var data = response.data.data;
          var transid = data.order_no.replace("#","")
          $("#payment").attr('data-amount',data.total_price)
@@ -77,8 +78,14 @@ function makeOrder(obj) {
           document.getElementById("await-payment").style.display = "none"
         });
      //step should show after order creation is successful  
+    }else{
+      var message = response.data.message;
+      $("#trans-info").html(`<p>${message}</p><a class="button is-rounded process-button is-next" href="/accounts/top-up/">Top up</a>`)
+    }
        $('#signup-panel-4, #step-title-4').addClass('is-active');
-       })
+
+       
+      })
        .catch(function (error) {
          if (exists(error.response)){
                    console.log(error.response.data)

@@ -295,3 +295,56 @@ def create_shipper(request):
     return HttpResponse(dump, content_type='application/json')
 
 
+def gen_order_no(number):
+    if number > 0:
+        no = str(number+1)
+    else:
+        no = str(1)
+    return no.rjust(12, '0')
+
+
+@csrf_exempt
+def create_transaction(request):
+    json_data = json.loads(str(request.body, encoding='utf-8'))
+    data = {}
+    username = json_data['user']
+    amount = json_data['amount']
+    try:
+        user = CustomUser.objects.get(username=username)
+    except:
+        data['success']=False
+        data['message']="User does not exists"
+    else:
+        all_trans = len(Transaction.objects.all())
+        transaction = Transaction()
+        transaction.transaction_id = gen_order_no(all_trans)
+        transaction.transaction_type = "Top-up"
+        transaction.transaction_amount = float(amount)
+        transaction.save()
+        transaction.by = user
+        transaction.save()
+        obj={
+            "transid":transaction.transaction_id,
+            "amount":transaction.transaction_amount,
+        }
+        data['success']=True
+        data['message']="Transaction successful"
+        data['data']=obj
+    dump = json.dumps(data)
+    return HttpResponse(dump, content_type='application/json')
+
+
+
+def buy_credit(request):
+    if request.user.is_authenticated:
+        template_name = "accounts/buy-credit.html"
+        args = {}
+        args['zanzama']="ODEwN2ZiZjA5MWRhZGVhYWU2YWFmOWJhMGFkMjhlNjQ="
+        return render(request,template_name,args)
+    else:
+        return redirect('/accounts/login/')
+
+
+
+
+
