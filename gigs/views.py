@@ -160,7 +160,7 @@ def create_services(request):
         plan.save()
         plan.gig = myservice
         plan.save()
-        
+
         obj = {}
         obj['fileId']=servicefile
         obj['serviceId']= myservice.id
@@ -174,7 +174,7 @@ def create_services(request):
 
 
 def file_check(name):
-    
+
     images = ['jpg','jpeg','png','svg','webp']
     name_list = name.split(".")
     if name_list[-1] in images:
@@ -263,10 +263,10 @@ def search_api(request):
         user = CustomUser.objects.get(username=json_data['user'])
     except:
         services = Gig.objects.all()
-        service_names = [i.service for i in services]   
+        service_names = [i.service for i in services]
     else:
         services = Gig.objects.all()
-        service_names = [i.service for i in services if i.gigger != user]
+        service_names = [i.service for i in services if i.gigger.username != user.username]
     service_cats = []
     for each in services:
         for c in each.categories.all():
@@ -359,7 +359,7 @@ def create_order(request):
         }
         dump = json.dumps(data)
         return HttpResponse(dump, content_type='application/json')
-    
+
     credit = user.credit
     no_orders = len(Order.objects.all())
     order = Order()
@@ -370,7 +370,7 @@ def create_order(request):
     exp_date = today + timedelta(int(order.delivery_time))
     order.status = "Pending"
     # order.save()
-    for g in body['gigs']:   
+    for g in body['gigs']:
         for key,val in g.items():
             try:
                 gig = Gig.objects.get(id=int(key))
