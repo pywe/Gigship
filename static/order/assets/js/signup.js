@@ -29,7 +29,7 @@ function makeOrder(obj) {
                console.log(error.response.data)
            }
    });
- 
+
  }
   $('.progress-wrap .dot').on('click', function () {
     var $this = $(this);
@@ -53,12 +53,12 @@ function makeOrder(obj) {
     } else if (stepValue == '33.33') {
       $('#signup-panel-2, #step-title-2').addClass('is-active');
     } else if (stepValue == '66.66') {
-     
+
       $('#signup-panel-3, #step-title-3').addClass('is-active');
     }
     //  else if (stepValue == '75') {
     //   $('#signup-panel-4, #step-title-4').addClass('is-active');
-    //   } 
+    //   }
     else if (stepValue == '100') {
        // make order here, get transaction id for payment
        var mycart = JSON.parse(localStorage.getItem('cart'));
@@ -77,15 +77,19 @@ function makeOrder(obj) {
           console.log("let's opay now")
           document.getElementById("await-payment").style.display = "none"
         });
-     //step should show after order creation is successful  
+     //step should show after order creation is successful
     }else{
       var message = response.data.message;
       $("#trans-info").html(`<p>${message}</p><a class="button is-rounded process-button is-next" href="/accounts/top-up/">Top up</a>`)
+<<<<<<< HEAD
       document.getElementById("await-payment").style.display = "none"
+=======
+        document.getElementById("await-payment").style.display = "none"
+>>>>>>> ac2330c01fa15fda43d31be3d031def3bc308845
     }
        $('#signup-panel-4, #step-title-4').addClass('is-active');
 
-       
+
       })
        .catch(function (error) {
          if (exists(error.response)){

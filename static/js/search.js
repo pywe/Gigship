@@ -100,7 +100,7 @@ function constructCard(object) {
     var service = object.service
     var id = object.id
     var rating = object.rating
-    var rating_no = object.rating_number 
+    var rating_no = object.rating_number
     var start_price = object.start_price
     var comment = object.detail
     var files = object.files
