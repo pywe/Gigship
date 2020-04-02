@@ -1,3 +1,4 @@
+import requests as r_switch
 from django.shortcuts import render, redirect, HttpResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
@@ -31,13 +32,7 @@ def index(request):
 
 def mygigs(request):
     if request.user.is_authenticated:
-        links = {'Gigger': 'accounts/mygigs.html',
-                 'Shipper': 'accounts/mygigs.html', 
-                 'Admin': 'accounts/mygigs.html'}
-        try:
-            template_name = "accounts/mygigs.html"
-        except:
-            template_name = "accounts/mygigs.html"
+        template_name = "accounts/mygigs.html"
         services = Gig.objects.filter(gigger=request.user)
         args = {'services': services}
         return render(request, template_name, args)
@@ -164,6 +159,7 @@ def forgot(request):
     args = {}
     return render(request, template_name, args)
 
+
 def chat(request):
     template_name = "accounts/chat.html"
     args = {}
@@ -183,6 +179,16 @@ def faq(request):
 def support(request):
     template_name = "accounts/contact.html"
     args = {}
+    return render(request, template_name, args)
+
+# edit gig page, showing support page to users
+
+
+def edit_gig(request,id):
+    template_name = "accounts/edit-gig.html"
+    args = {}
+    gig = Gig.objects.get(id=int(id))
+    args['gig']= gig
     return render(request, template_name, args)
 
 # dashboard page, dashboard page to users
@@ -206,17 +212,17 @@ def add_services(request):
         return redirect("/accounts/login/")
 
 
-import requests as r_switch
-def payment(request,id):
+def payment(request, id):
     if request.method == "GET":
         # status = request.GET['status']
         transid = request.GET['transaction_id']
         # print(transid)
         #reason = request.GET['reason']
         # code = request.GET['code']
-        url = "https://test.theteller.net/v1.1/users/transactions/{}/status/".format(transid)
-        header = {'Merchant-Id':"TTM-00000278"}
-        response = r.get(url,headers=header)
+        url = "https://test.theteller.net/v1.1/users/transactions/{}/status/".format(
+            transid)
+        header = {'Merchant-Id': "TTM-00000278"}
+        response = r.get(url, headers=header)
         json_data = json.loads(response.text)
         print(response.text)
         """Check if transaction was succesful first"""
@@ -279,5 +285,4 @@ def create_shipper(request):
         'message': "Shipper created"}
     dump = json.dumps(data)
     return HttpResponse(dump, content_type='application/json')
-
 
