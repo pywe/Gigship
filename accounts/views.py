@@ -9,6 +9,8 @@ from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login, logout
 from gigs.models import Gig
+from datetime import datetime,date, timedelta
+
 
 
 # Create your views here.
@@ -83,28 +85,29 @@ def registration(request):
         username = request.POST['username']
         email = request.POST['email']
         password = request.POST['password']
-        account_type = request.POST['account_type']
-        if account_type == "Gigger":
-            user = Gigger()
-            user.user_type = 'Gigger'
-            category1 = request.POST['category1']
-            category2 = request.POST['category2']
-            try:
-                real_1 = GiggerCategory.objects.get(name=category1)
-            except:
-                pass
-            else:
-                user.categories.add(real_1)
-            try:
-                real_2 = GiggerCategory.objects.get(name=category2)
-            except:
-                pass
-            else:
-                user.categories.add(real_2)
-
+        # account_type = request.POST['account_type']
+        # if account_type == "Gigger":
+        #     user = Gigger()
+        #     user.user_type = 'Gigger'
+        user = CustomUser()
+        category1 = request.POST['category1']
+        category2 = request.POST['category2']
+        try:
+            real_1 = GiggerCategory.objects.get(name=category1)
+        except:
+            pass
         else:
-            user = Shipper()
-            user.user_type = 'Shipper'
+            user.categories.add(real_1)
+        try:
+            real_2 = GiggerCategory.objects.get(name=category2)
+        except:
+            pass
+        else:
+            user.categories.add(real_2)
+
+        # else:
+        #     user = Shipper()
+        #     user.user_type = 'Shipper'
         user.username = username
         user.email = email
         user.set_password(password)
@@ -113,6 +116,13 @@ def registration(request):
         except Exception as e:
             messages.error(request, str(e))
             return redirect("/accounts/registration/")
+        # create credit for user
+        today = date.today()
+        exp_date = today + timedelta(30*6)
+        credit = Credit(username=username,current_bal=0.0,exp_date=exp_date)
+        credit.save()
+        user.credit = credit
+        user.save()
         msg = """Hello {}, we are excited to have you on board.
         Here is your link ### to verify your email and officially be accepted on the platform as a/an {}""".format(username, account_type)
         send_mail(
@@ -212,10 +222,17 @@ def add_services(request):
         return redirect("/accounts/login/")
 
 
+<<<<<<< HEAD
 def payment(request, id):
+=======
+import requests as r
+def payment(request):
+>>>>>>> 7547a681ad4bb68f2509c08ddba4083a12d0d645
     if request.method == "GET":
         # status = request.GET['status']
         transid = request.GET['transaction_id']
+        t_id = str(transid)
+        order = Transaction.objects.get(transaction_id=t_id)
         # print(transid)
         #reason = request.GET['reason']
         # code = request.GET['code']
@@ -226,6 +243,23 @@ def payment(request, id):
         json_data = json.loads(response.text)
         print(response.text)
         """Check if transaction was succesful first"""
+        if json_data['status'] == "approved":
+            if order.completed:
+                messages.error(request, "Order Already Confirmed")
+                return redirect('/accounts/top-up/')
+            else:
+                order.complete = True
+                order.save()
+                user = order.by
+                if user.credit:
+                    credit = user.credit
+                    credit.current_bal += float(json_data['amount'])
+                    credit.last_transid = t_id
+                    credit.last_recharge = datetime.now()
+                    credit.save()
+                messages.success(request, "Transaction successful")
+                return redirect('/accounts/top-up/')
+        # TODO: notify user
         # amount = json_data['amount']
         # source = json_data['subscriber_number']
         # network = json_data['r_switch']
@@ -245,8 +279,9 @@ def payment(request, id):
         #     user_credit.current_bal += amount
         # user_credit.save()
         # transaction.save()
+        messages.error(request, "{}".format(json_data['reason']))
+        return redirect('/accounts/top-up/')
 
-        return redirect('/accounts/my-orders/')
 
 
 @csrf_exempt
@@ -286,3 +321,60 @@ def create_shipper(request):
     dump = json.dumps(data)
     return HttpResponse(dump, content_type='application/json')
 
+<<<<<<< HEAD
+=======
+
+def gen_order_no(number):
+    if number > 0:
+        no = str(number+1)
+    else:
+        no = str(1)
+    return no.rjust(12, '0')
+
+
+@csrf_exempt
+def create_transaction(request):
+    json_data = json.loads(str(request.body, encoding='utf-8'))
+    data = {}
+    username = json_data['user']
+    amount = json_data['amount']
+    try:
+        user = CustomUser.objects.get(username=username)
+    except:
+        data['success']=False
+        data['message']="User does not exists"
+    else:
+        all_trans = len(Transaction.objects.all())
+        transaction = Transaction()
+        transaction.transaction_id = gen_order_no(all_trans)
+        transaction.transaction_type = "Top-up"
+        transaction.transaction_amount = float(amount)
+        transaction.save()
+        transaction.by = user
+        transaction.save()
+        obj={
+            "transid":transaction.transaction_id,
+            "amount":transaction.transaction_amount,
+        }
+        data['success']=True
+        data['message']="Transaction successful"
+        data['data']=obj
+    dump = json.dumps(data)
+    return HttpResponse(dump, content_type='application/json')
+
+
+
+def buy_credit(request):
+    if request.user.is_authenticated:
+        template_name = "accounts/buy-credit.html"
+        args = {}
+        args['zanzama']="ODEwN2ZiZjA5MWRhZGVhYWU2YWFmOWJhMGFkMjhlNjQ="
+        return render(request,template_name,args)
+    else:
+        return redirect('/accounts/login/')
+
+
+
+
+
+>>>>>>> 7547a681ad4bb68f2509c08ddba4083a12d0d645

@@ -68,7 +68,7 @@
                 </div>
                 <form id="plan">
                 <div id="signup-panel-1" class="process-panel-wrap is-active">
-                    
+
                     <div class="columns">
                         {% for plan in gig.plans.all %}
                         <div class="column is-4">
@@ -123,7 +123,7 @@
                                 <h3>{{plan.name}}</h3>
                                 <p>{{plan.description}}</p>
                                 <small>GHC {{plan.price}}</small>
-                              
+
                                 <a onclick="collectPlan('{{plan.name}}')" class="button is-fullwidth is-rounded process-button" data-step="step-dot-2">
                                     Continue
                                 </a>
@@ -175,12 +175,12 @@
                                             {% if forloop.first %}
                                             {% if file.file_type == "image" %}
                                             <div class="img">
-                                                <img src="/{{file.servicefile.url}}" alt="img">
+                                                <img src="{{file.servicefile.url}}" alt="img">
                                             </div>
                                             {% else %}
                                             <div class="img">
                                                 <video controls>
-                                                    <source src="/{{file.servicefile.url}}">
+                                                    <source src="{{file.servicefile.url}}">
                                                 </video>
                                             </div>
                                             {% endif %}
@@ -233,7 +233,7 @@
                         localStorage.setItem("extra"+id,JSON.stringify(xtra))
                     </script>
                     {% endfor %}
-                    
+
                     </div>
 
                     <!-- <div class="card" style="padding:10px;">
@@ -279,7 +279,7 @@
                     </div>
                 </div>
             </form>
-            
+
             <!-- <form>
                 <div id="signup-panel-4" class="process-panel-wrap is-narrow">
                     <div class="form-panel">
@@ -314,7 +314,7 @@
                     <div class="form-panel">
                         <img class="success-image" src="/static/order/assets/img/illustrations/signup/mailbox.svg" alt="">
                         <!-- <div class="view-wrapper">-->
-                        <div class="shop-wrapper"> 
+                        <div class="shop-wrapper">
                         <div class="cart-container">
                         <div class="cart-content">
                         <div class="columns">
@@ -346,9 +346,12 @@
                                             <h3>Quick Note</h3>
                                             <p> <strong>You cannot go back after clicking "Let Me Pay" from here.
                                                 So please make sure you are okay with all the choices and prices.</strong></p>
+
                                             <a class="button is-rounded process-button is-next" data-step="step-dot-4">Let Me Pay</a>
-                                                <!-- <a id="signup-finish" class="button is-fullwidth is-rounded">Let Me In</a> -->
-                                        </div>
+
+                                            <!-- <a id="signup-finish" class="button is-fullwidth is-rounded">Let Me In</a> -->
+
+                                    </div>
                                                                         <!--card-->
                                     <!-- <div class="summary-card">
                                     </div> -->
@@ -359,7 +362,7 @@
                             </div>
                             </div>
                             <!-- </div>  -->
-        
+
                     </div>
                     <!-- <div class="buttons">
                         <a class="button is-rounded process-button" data-step="step-dot-2">Back</a>
@@ -370,6 +373,7 @@
                 <form>
                     <div id="signup-panel-4" class="process-panel-wrap is-narrow">
                         <div class="form-panel" id="letspay">
+                            <p id="trans-info"></p>
                             <a id="await-payment" class="button is-rounded is-loading">Rounded</a>
                             <a id='payment' class="ttlr_inline"
                                 data-APIKey="{{zanzama}}"
@@ -400,31 +404,9 @@
                     </form>
             </div>
         </div>
-
-
-
-        <!--Edit Credit card Modal-->
-        <div id="crop-modal" class="modal mdl-modal is-small crop-modal is-animated">
-            <div class="modal-background"></div>
-            <div class="modal-content">
-                <div class="modal-card">
-                    <header class="modal-card-head">
-                        <div class="modal-card-title">
-                            <span>Crop your picture</span>
-                        </div>
-                        <button class="mdl-modal-close" aria-label="close">
-                            <i data-feather="x"></i>
-                        </button>
-                    </header>
-                    <div class="modal-card-body">
-                        <div id="cropper-wrapper" class="cropper-wrapper">
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
     </div>
+
+
 
     <!-- Concatenated js plugins and jQuery -->
     <script src="/static/order/assets/js/app.js"></script>
@@ -435,6 +417,7 @@
     <script src="/static/order/assets/js/main.js"></script>
 
     <!-- Page and UI related js -->
+    <script src="/static/js/axios.min.js"></script>
     <script src="/static/order/assets/js/signup.js"></script>
     <!-- <script type="text/javascript" src="https://test.theteller.net/checkout/resource/api/inline/theteller_inline.js"></script> -->
 

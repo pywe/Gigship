@@ -19,6 +19,18 @@ class GiggerCategory(models.Model):
     def __str__(self):
         return self.name
 
+class Credit(models.Model):
+    username = models.CharField(max_length=200,blank=True,null=True)
+    current_bal = models.FloatField(default=00.0,null=True)
+    last_recharged = models.DateTimeField(blank=True,null=True,auto_now_add=True)
+    exp_date = models.DateTimeField(null=True)
+    last_transid = models.CharField(max_length=12,null=True,blank=True)
+    cumulative_bal = models.FloatField(default=00.0,null=True)
+    
+
+    def __str__(self):
+        return self.username
+
 # First class model
 class CustomUser(AbstractUser):
     # add additional fields in here
@@ -26,6 +38,8 @@ class CustomUser(AbstractUser):
     user_img = models.FileField(null=True,upload_to="static/profiles/")
     is_staff = models.BooleanField(default=False)
     user_type = models.CharField(max_length=20,choices=userTypes, null=True)
+    credit = models.OneToOneField(Credit, null=True, blank=True,on_delete=models.SET_NULL)
+
 
 
 # Second class model
@@ -70,3 +84,18 @@ class MessageFile(models.Model):
     name = models.CharField(max_length=50,null=True,blank=True)
     message_file = models.FileField(null=True,upload_to="static/messages/")
     date_created = models.DateTimeField(null=True,blank=True,auto_now_add=True)
+
+
+class Transaction(models.Model):
+    transaction_id = models.CharField(max_length=12,unique=True)
+    transaction_type = models.CharField(max_length=25,null=True)
+    transaction_amount = models.FloatField(default=0.0)
+    date_created = models.DateTimeField(null=True,blank=True,auto_now_add=True)
+    completed = models.BooleanField(default=False)
+    r_switch = models.CharField(max_length=20,null=True)
+    by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True, blank = True, on_delete = models.SET_NULL,related_name="transactions")
+
+
+
+    def __str__(self):
+        return self.transaction_id

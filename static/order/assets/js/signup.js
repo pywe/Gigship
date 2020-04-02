@@ -6,6 +6,9 @@
 Signup Process JS
 ========================================================================== */
 Dropzone.autoDiscover = false;
+// SETTINGS
+axios.defaults.baseURL = window.location.origin;
+axios.defaults.headers.common['Accept'] = 'application/json';
 $(document).ready(function () {
   "use strict";
 function exists(ele) {
@@ -15,6 +18,19 @@ function exists(ele) {
         return false
     }
 }
+function makeOrder(obj) {
+  var myobj = obj
+   axios.post('/gigship-api/v1/gigs/create-order/', myobj)
+   .then(function (response) {
+     console.log(response);
+   })
+   .catch(function (error) {
+     if (exists(error.response)){
+               console.log(error.response.data)
+           }
+   });
+
+ }
   $('.progress-wrap .dot').on('click', function () {
     var $this = $(this);
     // take this from localStorage to move user their last stage
@@ -37,23 +53,51 @@ function exists(ele) {
     } else if (stepValue == '33.33') {
       $('#signup-panel-2, #step-title-2').addClass('is-active');
     } else if (stepValue == '66.66') {
-     
+
       $('#signup-panel-3, #step-title-3').addClass('is-active');
     }
     //  else if (stepValue == '75') {
     //   $('#signup-panel-4, #step-title-4').addClass('is-active');
-    //   } 
+    //   }
     else if (stepValue == '100') {
        // make order here, get transaction id for payment
        var mycart = JSON.parse(localStorage.getItem('cart'));
-       console.log(mycart)
-       if (typeof someObject == 'undefined') $.loadScript('https://test.theteller.net/checkout/resource/api/inline/theteller_inline.js', function(){
-         //Stuff to do after someScript has loaded
-         console.log("let's opay now")
-         document.getElementById("await-payment").style.display = "none"
+       console.log(mycart);
+       axios.post('/gigship-api/v1/gigs/create-order/', mycart)
+       .then(function (response) {
+         console.log(response);
+         if(response.data.success){
+         var data = response.data.data;
+         var transid = data.order_no.replace("#","")
+         $("#payment").attr('data-amount',data.total_price)
+         $("#payment").attr('data-transid',transid)
+         $("#trans-info").text("Your order has successfully been placed.")
+         setTimeout(function () {
+          window.location.href="/accounts/my-orders/"
+        }, 1000);
+        //  if (typeof someObject == 'undefined') $.loadScript('https://test.theteller.net/checkout/resource/api/inline/theteller_inline.js', function(){
+        //   //Stuff to do after someScript has loaded
+        //   console.log("let's opay now")
+        //   document.getElementById("await-payment").style.display = "none"
+        // });
+     //step should show after order creation is successful
+    }else{
+      var message = response.data.message;
+      $("#trans-info").html(`<p>${message}</p><a class="button is-rounded process-button is-next" href="/accounts/top-up/">Top up</a>`)
+      localStorage.setItem("reverse",window.location.href);
+      document.getElementById("await-payment").style.display = "none"
+    }
+       $('#signup-panel-4, #step-title-4').addClass('is-active');
+
+
+      })
+       .catch(function (error) {
+         if (exists(error.response)){
+                   console.log(error.response.data)
+               }
        });
-    //step should show after order creation is successful  
-      $('#signup-panel-4, #step-title-4').addClass('is-active');
+      //  makeOrder(mycart)
+
     }
   });
   $('.process-button').on('click', function () {

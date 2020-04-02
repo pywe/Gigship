@@ -4,6 +4,7 @@ from django.views.decorators.csrf import csrf_exempt
 from accounts.models import CustomUser
 from .models import *
 from django.contrib import messages
+from datetime import datetime,date, timedelta
 
 
 
@@ -258,8 +259,14 @@ def search_api(request):
     json_data = json.loads(str(request.body, encoding='utf-8'))
     q = json_data['q']
     cat = json_data['category']
-    services = Gig.objects.all()
-    service_names = [i.service for i in services]
+    try:
+        user = CustomUser.objects.get(username=json_data['user'])
+    except:
+        services = Gig.objects.all()
+        service_names = [i.service for i in services]   
+    else:
+        services = Gig.objects.all()
+        service_names = [i.service for i in services if i.gigger != user]
     service_cats = []
     for each in services:
         for c in each.categories.all():
@@ -324,10 +331,10 @@ def search_api(request):
 
 def gen_order_no(number):
     if number > 0:
-        no = str(number)
+        no = str(number+1)
     else:
         no = str(1)
-    return "#"+no.rjust(10, '0')
+    return "#"+no.rjust(12, '0')
 
 
 @csrf_exempt
@@ -342,14 +349,27 @@ def create_order(request):
     body = {}
     for key,val in json_data.items():
         body[key]=val
+    try:
+        user = CustomUser.objects.get(username=body['user'])
+    except:
+        # we cannot do anything here
+        data = {
+            "success":False,
+            "message":"User is not recognised"
+        }
+        dump = json.dumps(data)
+        return HttpResponse(dump, content_type='application/json')
     
-    user = CustomUser.objects.get(username=body['user'])
+    credit = user.credit
     no_orders = len(Order.objects.all())
     order = Order()
     order.order_no = gen_order_no(no_orders)
     order.order_by = user
     order.delivery_time = body['delivery_time']
-    order.save()
+    today = date.today()
+    exp_date = today + timedelta(int(order.delivery_time))
+    order.status = "Pending"
+    # order.save()
     for g in body['gigs']:   
         for key,val in g.items():
             try:
@@ -357,8 +377,14 @@ def create_order(request):
             except Exception as e:
                 data = {'success':False,'message':str(e)}
             else:
-                order.gigs.add(gig)
-                order.save()
+                if credit.current_bal >= float(body['total']):
+                    order.save()
+                    order.gigs.add(gig)
+                    order.save()
+                else:
+                    data = {"success":False,"message":"You do not have enough funds."}
+                    dump = json.dumps(data)
+                    return HttpResponse(dump, content_type='application/json')
     # let's work on prices now
     subtotal = 0
     c_plan = body['plan']
@@ -370,7 +396,7 @@ def create_order(request):
         gig_extra = Extra.objects.get(id=int(extra))
         order.extras.add(gig_extra)
         order.save()
-        total += gig_extra.price
+        subtotal += gig_extra.price
     order.order_price = subtotal
     order.save()
     VAT = 0.0
@@ -378,16 +404,18 @@ def create_order(request):
     total = VAT + commission + subtotal
     order.total_price = total
     order.save()
+    credit.current_bal -= float(total)
+    credit.save()
     # is there any tax or commission?
     info = {"order_no":order.order_no,
     "total_price":order.total_price,
     "VAT":order.VAT,
-    "sub_total":order.order_price}
+    "sub_total":order.order_price,"id":order.id}
     try:
         custom = body['custom']
     except:
-        data={"success":True,"message":"Order created"}
-        # TODO:notify the gigger
+        data={"success":True,"message":"Order created","data":info}
+        # TODO:notify the giggera
     else:
         custom_order = Customization()
         custom.total_price = custom['price']
@@ -396,7 +424,7 @@ def create_order(request):
         custom_order.save()
         custom_order.order = order
         custom_order.save()
-        data={"success":True,"message":"Custom order created"}
+        data={"success":True,"message":"Custom order created","data":info}
         # TODO:notify the gigger
     dump = json.dumps(data)
     return HttpResponse(dump, content_type='application/json')

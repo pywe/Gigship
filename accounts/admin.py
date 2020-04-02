@@ -7,11 +7,12 @@ class CustomUserAdmin(UserAdmin):
   model = CustomUser
 
   fieldsets = UserAdmin.fieldsets + (
-      ('Extra Fields', {'fields': ('user_img','user_type')}),
+      ('Extra Fields', {'fields': ('user_img','user_type','credit')}),
     )
 
 # Register your models here.
 admin.site.register(CustomUser,CustomUserAdmin)
-admin.site.register(Gigger)
+# admin.site.register(Gigger)
 admin.site.register(GiggerCategory)
-admin.site.register(Shipper)
+admin.site.register(Credit)
+admin.site.register(Transaction)
