@@ -35,28 +35,11 @@
                         <div class="tab-content" id="myTabContent">
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="single-page  w-100  p-0">
-                                    <div class="wrapper wrapper2">
-                                        <!-- <div class="p-4 mb-5">
-                                            <h4 class="text-left font-weight-semibold fs-16">Login With</h4>
-                                            <div class="btn-list d-sm-flex">
-                                                <a href="https://www.google.com/gmail/" class="btn btn-primary mb-sm-0"><i class="fa fa-google fa-1x mr-2"></i> Google</a>
-                                                <a href="https://twitter.com/" class="btn btn-secondary mb-sm-0"><i class="fa fa-twitter fa-1x mr-2"></i> Twitter</a>
-                                                <a href="https://www.facebook.com/" class="btn btn-info mb-0"><i class="fa fa-facebook fa-1x mr-2"></i> Facebook</a>
-                                            </div>
-                                        </div> -->
-                                        <!-- <hr class="divider"> -->
+                                    <div class="wrapper wrapper2">                                   
                                         <form method="POST" action="/accounts/login/" id="login" class="card-body" tabindex="500">
                                             <h3 class="pb-2">Login</h3>
                                             {% csrf_token %}
-                                            <!--{% if messages %}-->
-                                            <!--<div>-->
-                                            <!--<ul>-->
-                                            <!--    {% for message in messages %}-->
-                                            <!--    <li style="color:red;">{{ message }}</li>-->
-                                            <!--    {% endfor %}-->
-                                            <!--</ul>-->
-                                            <!--</div>-->
-                                            <!--{% endif %}-->
+                                        
                                             <div class="mail">
                                                 <input type="text" name="username">
                                                 <label>Username</label>
@@ -69,7 +52,7 @@
                                                 <input type="submit" class="btn btn-primary btn-block" value="login">
                                             </div>
                                             <p class="mb-2"><a href="/forgot">Forgot Password</a></p>
-                                            <!-- <p class="text-dark mb-0">Don't have account?<a href="/registration" class="text-primary ml-1">Sign UP</a></p> -->
+                                            
                                         </form>
                                     </div>
                                 </div>
@@ -77,27 +60,9 @@
                             <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <div class="single-page w-100  p-0">
                                     <div class="wrapper wrapper2">
-                                        <!-- <div class="p-4 mb-5">
-                                            <h4 class="text-left font-weight-semibold fs-16">Register With</h4>
-                                            <div class="btn-list d-sm-flex">
-                                                <a href="https://www.google.com/gmail/" class="btn btn-primary mb-sm-0"><i class="fa fa-google fa-1x mr-2"></i> Google</a>
-                                                <a href="https://twitter.com/" class="btn btn-secondary mb-sm-0"><i class="fa fa-twitter fa-1x mr-2"></i> Twitter</a>
-                                                <a href="https://www.facebook.com/" class="btn btn-info mb-0"><i class="fa fa-facebook fa-1x mr-2"></i> Facebook</a>
-                                            </div>
-                                        </div> -->
-                                        <!-- <hr class="divider"> -->
                                         <form method="POST" action="/accounts/registration/" id="Register" class="card-body" tabindex="500">
                                             <h3 class="pb-2">Register</h3>
                                             {% csrf_token %}
-                                            <!--{% if messages %}-->
-                                            <!--<div>-->
-                                            <!--<ul>-->
-                                            <!--    {% for message in messages %}-->
-                                            <!--    <li style="color:blue;">{{ message }}</li>-->
-                                            <!--    {% endfor %}-->
-                                            <!--</ul>-->
-                                            <!--</div>-->
-                                            <!--{% endif %}-->
                                             <div class="name">
                                                 <input type="text" name="username" required="required">
                                                 <label>Username</label>
@@ -129,15 +94,6 @@
                                                     {% for category in categories %}
                                                         <option value="{{category.name}}">{{category.name}}</option>
                                                     {% endfor %}
-                                                    <!--<option value="IT Software">IT Software</option>-->
-                                                    <!--<option value="Music">Music</option>-->
-                                                    <!--<option value="Banking">Banking</option>-->
-                                                    <!--<option value="Finances">Finaces</option>-->
-                                                    <!--<option value="Cooking">Cook/Chef</option>-->
-                                                    <!--<option value="Driving">Driving</option>-->
-                                                    <!--<option value="HR Recruiter">HR Recruiter</option>-->
-                                                    <!--<option value="IT Hardware">IT Hardware</option>-->
-                                                    <!--<option value="Sales">Sales</option>-->
                                                 </optgroup>
 										    </select>
                                         </div>
@@ -148,15 +104,6 @@
                                                     {% for category in categories %}
                                                         <option value="{{category.name}}">{{category.name}}</option>
                                                     {% endfor %}
-                                                    <!--<option value="IT Software">IT Software</option>-->
-                                                    <!--<option value="Music">Music</option>-->
-                                                    <!--<option value="Banking">Banking</option>-->
-                                                    <!--<option value="Finances">Finaces</option>-->
-                                                    <!--<option value="Cooking">Cook/Chef</option>-->
-                                                    <!--<option value="Driving">Driving</option>-->
-                                                    <!--<option value="HR Recruiter">HR Recruiter</option>-->
-                                                    <!--<option value="IT Hardware">IT Hardware</option>-->
-                                                    <!--<option value="Sales">Sales</option>-->
                                                 </optgroup>
 										    </select>
                                         </div>
@@ -164,14 +111,12 @@
                                             <div class="submit">
                                                 <input type="submit" class="btn btn-primary btn-block" value="Register">
                                             </div>
-                                            <!-- <p class="text-dark mb-0">Already have an account?<a href="/login" class="text-primary ml-1">Sign In</a></p> -->
                                         </div>
                                         </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
