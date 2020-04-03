@@ -72,8 +72,45 @@ function search(data) {
             });
             }else{
                 // let's allow the person to create a request
-                var card = `<p>Sorry, No Gigs Found matching your query. 
-                Please try tweaking the search keywords</p>`
+                var card = `            <div class="col-xl-9 col-lg-12 col-md-12">
+                <div class="card mb-0">
+                    <div class="card-header">
+                        <h3 class="card-title">Request Info</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Request</label>
+                                    <input type="text" value="" class="form-control" placeholder="Enter your Request here">
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Category</label>
+                                    <select value="" class="form-control select2-show-search border-bottom-0 w-100 select2-show-search" data-placeholder="Select Request Category">
+												<optgroup label="Categories">
+													<option>--Select Request Category--</option>
+													<option value="1">IT</option>
+													<option value="2">Business</option>
+													<option value="3">Design</option>
+												</optgroup>
+											</select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label">Message</label>
+                                    <textarea rows="5" class="form-control" placeholder="Enter your Request Message here"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Send Request</button>
+                    </div>
+                </div>
+            </div>`
                 $("#found-gigs").append(card)
             }
 
