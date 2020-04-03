@@ -212,6 +212,15 @@ def dashboard(request):
     args = {}
     return render(request, template_name, args)
 
+# dashboard page, dashboard page to users
+
+
+def requestform(request):
+    template_name = "accounts/request-form.html"
+    args = {}
+    return render(request, template_name, args)
+
+
 # profil page, profil page to users
 
 

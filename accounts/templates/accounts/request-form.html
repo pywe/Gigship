@@ -1,0 +1,107 @@
+{% extends "accounts/base.html" %} {% block content %}
+<!--Breadcrumb-->
+<section>
+    <div class="bannerimg cover-image bg-background3" data-image-src="/static/images/banners/banner2.jpg">
+        <div class="header-text mb-0">
+            <div class="container">
+                <div class="text-center text-white">
+                    <h1 class="">Request Form</h1>
+                    <ol class="breadcrumb text-center">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">Request Form</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Breadcrumb-->
+
+<!--User Dashboard-->
+<section class="sptb">
+    <div class="container">
+        <div class="row">
+            <div class="col-xl-3 col-lg-12 col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">My Dashboard</h3>
+                    </div>
+                    <div class="card-body text-center item-user border-bottom">
+                        <div class="profile-pic">
+                            <div class="profile-pic-img">
+                                <span class="bg-success dots" data-toggle="tooltip" data-placement="top" title="online"></span>
+                                {% if user.user_img %}
+                                <img src="{{user.user_img.url}}" class="brround" alt="user">
+
+                                {% else %}
+                                <img src="/static/images/users/male/25.jpg" class="brround" alt="user">
+                                {% endif %}
+                            </div>
+                            <a href="#" class="text-dark">
+                                <h4 class="mt-3 mb-0 font-weight-semibold">{{user.username}}</h4>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="item1-links  mb-0">
+                        <a href="/dashboard" class="active d-flex border-bottom">
+                            <span class="icon1 mr-2"><i class="typcn typcn-edit fs-20"></i></span> Edit Profile
+                        </a>
+                        <a href="/accounts/my-orders" class="d-flex  border-bottom">
+                            <span class="icon1 mr-2"><i class="typcn typcn-shopping-cart fs-20"></i></span> Orders
+                        </a>
+                        <a href="/accounts/my-gigs/" class=" d-flex border-bottom">
+                            <span class="icon1 mr-2"><i class="typcn typcn-briefcase fs-20"></i></span> My Gigs
+                        </a>
+                        <a href="/accounts/settings" class="d-flex border-bottom">
+                            <span class="icon1 mr-2"><i class="typcn typcn-cog-outline fs-20"></i></span> Settings
+                        </a>
+                        <a href="/accounts/logout" class="d-flex">
+                            <span class="icon1 mr-2"><i class="typcn typcn-power-outline fs-20"></i></span> Logout
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-9 col-lg-12 col-md-12">
+                <div class="card mb-0">
+                    <div class="card-header">
+                        <h3 class="card-title">Request Info</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Request</label>
+                                    <input type="text" value="" class="form-control" placeholder="Enter your Request here">
+                                </div>
+                            </div>
+                            <div class="col-sm-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="form-label">Category</label>
+                                    <select value="" class="form-control select2-show-search border-bottom-0 w-100 select2-show-search" data-placeholder="Select Request Category">
+												<optgroup label="Categories">
+													<option>--Select Request Category--</option>
+													<option value="1">IT</option>
+													<option value="2">Business</option>
+													<option value="3">Design</option>
+												</optgroup>
+											</select>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label class="form-label">Message</label>
+                                    <textarea rows="5" class="form-control" placeholder="Enter your Request Message here"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary">Send Request</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--/User Dashboard-->
+{% endblock content %}
