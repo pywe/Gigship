@@ -43,4 +43,4 @@ class GigAdmin(admin.ModelAdmin):
 admin.site.register(Order)
 admin.site.register(GigFile)
 admin.site.register(Gig,GigAdmin)
-# admin.site.register(Resume,ResumeAdmin)
+admin.site.register(Request)

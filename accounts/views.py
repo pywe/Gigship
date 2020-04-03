@@ -13,18 +13,26 @@ from datetime import datetime,date, timedelta
 
 
 
+def get_args(user,page):
+    args = {}
+    args['categories'] = GiggerCategory.objects.all()
+    if page == "my-gigs":
+        args['services']=Gig.objects.filter(gigger=user)
+    if page == "my-order":
+        orders = Order.objects.all()
+        gigs = [i.gigs.all() for i in orders]
+        args['orders'] = [i for i in orders if user in gigs]
+    return args
+
+
+
 # Create your views here.
 # index page, showing homepage to users
 def index(request):
     if request.user.is_authenticated:
-        links = {'Gigger': 'accounts/dashboard.html',
-                 'Shipper': 'accounts/index.html', 'Admin': 'accounts/index.html'}
-        try:
-            template_name = links[request.user.user_type]
-        except:
-            template_name = "accounts/index.html"
+        template_name = "accounts/index.html"
         categories = GiggerCategory.objects.all()
-        args = {'categories': categories}
+        args = get_args(request.user,"home")
         return render(request, template_name, args)
     else:
         return redirect("/accounts/login/")
@@ -36,7 +44,7 @@ def mygigs(request):
     if request.user.is_authenticated:
         template_name = "accounts/mygigs.html"
         services = Gig.objects.filter(gigger=request.user)
-        args = {'services': services}
+        args = get_args(request.user,"my-gigs")
         return render(request, template_name, args)
     else:
         return redirect("/accounts/login/")
@@ -46,7 +54,7 @@ def mygigs(request):
 
 def myorders(request):
     template_name = "accounts/myorders.html"
-    args = {}
+    args = get_args(request.user,"my-orders")
     return render(request, template_name, args)
 
 # settings page, showing settings page to users
@@ -54,7 +62,7 @@ def myorders(request):
 
 def mysettings(request):
     template_name = "accounts/settings.html"
-    args = {}
+    args = get_args(request.user,"settings")
     return render(request, template_name, args)
 
 # how it works page, showing how it works page to users
@@ -62,7 +70,7 @@ def mysettings(request):
 
 def how_it_works(request):
     template_name = "accounts/how-it-works.html"
-    args = {}
+    args = get_args(request.user,"hiw")
     return render(request, template_name, args)
 
 # services page, showing services page to users
@@ -78,8 +86,7 @@ def services(request):
 def registration(request):
     if request.method == "GET":
         template_name = "accounts/registration.html"
-        categories = GiggerCategory.objects.all()
-        args = {'categories': categories}
+        args = get_args(request.user,"registration")
         return render(request, template_name, args)
     else:
         username = request.POST['username']
@@ -143,8 +150,7 @@ def registration(request):
 def mylogin(request):
     if request.method == "GET":
         template_name = "accounts/login.html"
-        categories = GiggerCategory.objects.all()
-        args = {'categories': categories}
+        args = get_args(request.user,"login")
         return render(request, template_name, args)
     # links = {'Gigger': '/accounts/dashboard/', 'Shipper': '/', 'Admin': '/'}
     username = request.POST['username']
@@ -169,13 +175,13 @@ def mylogout(request):
 # forgot password page, showing forgot password page to users
 def forgot(request):
     template_name = "accounts/forgot.html"
-    args = {}
+    args = get_args(request.user,"forgot")
     return render(request, template_name, args)
 
 
 def chat(request):
     template_name = "accounts/chat.html"
-    args = {}
+    args = get_args(request.user,"chat")
     return render(request, template_name, args)
 
 # faq page, showing faq page to users
@@ -183,7 +189,7 @@ def chat(request):
 
 def faq(request):
     template_name = "accounts/faq.html"
-    args = {}
+    args = get_args(request.user,"faq")
     return render(request, template_name, args)
 
 # support page, showing support page to users
@@ -191,7 +197,7 @@ def faq(request):
 
 def support(request):
     template_name = "accounts/contact.html"
-    args = {}
+    args = get_args(request.user,"support")
     return render(request, template_name, args)
 
 # edit gig page, showing support page to users
@@ -199,7 +205,7 @@ def support(request):
 
 def edit_gig(request,id):
     template_name = "accounts/edit-gig.html"
-    args = {}
+    args = get_args(request.user,"edit-gig")
     gig = Gig.objects.get(id=int(id))
     args['gig']= gig
     return render(request, template_name, args)
@@ -209,7 +215,7 @@ def edit_gig(request,id):
 
 def dashboard(request):
     template_name = "accounts/dashboard.html"
-    args = {}
+    args = get_args(request.user,"dashboard")
     return render(request, template_name, args)
 
 # dashboard page, dashboard page to users
@@ -227,8 +233,7 @@ def requestform(request):
 def add_services(request):
     if request.user.is_authenticated:
         template_name = "accounts/profil.html"
-        categories = GiggerCategory.objects.all()
-        args = {'categories': categories}
+        args = get_args(request.user,"add-services")
         return render(request, template_name, args)
     else:
         return redirect("/accounts/login/")

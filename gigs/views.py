@@ -487,6 +487,7 @@ def create_request(request):
             "success":False,
             "message":"User is not recognised"
         }
+        messages.error(request, "Please login to make this request")
         dump = json.dumps(data)
         return HttpResponse(dump, content_type='application/json')
     try:
@@ -494,8 +495,9 @@ def create_request(request):
     except:
         data = {
             "success":False,
-            "message":"User is not recognised"
+            "message":"Please add a category"
         }
+        messages.error(request, "You did not choose any category")
         dump = json.dumps(data)
         return HttpResponse(dump, content_type='application/json')
     req = Request()
@@ -511,5 +513,20 @@ def create_request(request):
         'message':'Request has been sent to giggers'
     }
     # TODO: send mail or notification to users
+    dump = json.dumps(data)
+    messages.success(request, "Your request has been sent to giggers")
+    return HttpResponse(dump, content_type='application/json')
+
+
+@csrf_exempt
+def get_categories(request):
+    all_cats = GiggerCategory.objects.all()
+    objects = []
+    for each in all_cats:
+        objects.append(each.name)
+    data ={
+        "success":True,
+        "objects":objects
+    }
     dump = json.dumps(data)
     return HttpResponse(dump, content_type='application/json')

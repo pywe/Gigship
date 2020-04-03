@@ -378,9 +378,34 @@
 
     <!-- Custom Js-->
     <script src="/static/js/custom.js"></script>
+    <script src="/static/js/axios.min.js"></script>
     <script>
     var user = "{{user.username}}"
-    localStorage.setItem("user",user)
+    localStorage.setItem("user",user);
+    axios.defaults.baseURL = window.location.origin;
+    axios.defaults.headers.common['Accept'] = 'application/json';
+    function exists(ele) {
+    if (ele !== null && ele !== undefined) {
+        return true
+    } else {
+        return false
+    }
+    }
+    function getCats(){
+    axios.post('/gigship-api/v1/gigs/get-categories/')
+    .then(function (response) {
+      console.log(response)
+      if(response.data.success){
+        localStorage.setItem("categories",JSON.stringify(response.data.objects))
+      }
+    })
+    .catch(function (error) {
+      if (exists(error.response)){
+                console.log(error.response.data)
+            }
+    });
+    }
+    getCats()
     </script>
     {% if messages %}
     <script>

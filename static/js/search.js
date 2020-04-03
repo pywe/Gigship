@@ -8,6 +8,20 @@ function exists(ele) {
         return false
     }
 }
+function getCats(){
+    axios.post('/gigship-api/v1/gigs/get-categories/')
+    .then(function (response) {
+      console.log(response)
+      if(response.data.success){
+        localStorage.setItem("categories",JSON.stringify(response.data.objects))
+      }
+    })
+    .catch(function (error) {
+      if (exists(error.response)){
+                console.log(error.response.data)
+            }
+    });
+    }
 function Image(path){
     // var fileInput = document.getElementById(id+"file");
     // var filePath = fileInput.value;
@@ -71,29 +85,36 @@ function search(data) {
                 variableWidth:false
             });
             }else{
+                var cats = JSON.parse(localStorage.getItem("categories"))
+                if(exists(cats)){
+                    var categoriesHtml = constructCats(cats)
+                }else{
+                    getCats()
+                    var cats = JSON.parse(localStorage.getItem("categories"))
+                    var categoriesHtml = constructCats(cats)
+                }
                 // let's allow the person to create a request
-                var card = `            <div class="col-xl-9 col-lg-12 col-md-12">
+                var card = `<form onsubmit="sendRequest('request-form')" id="request-form" method="Dialog" action="#">
+                <div class="col-xl-9 col-lg-12 col-md-12" >
                 <div class="card mb-0">
                     <div class="card-header">
-                        <h3 class="card-title">Request Info</h3>
+                        <h3 class="card-title">Make A Direct Request Here</h3>
                     </div>
                     <div class="card-body">
                         <div class="row">
                             <div class="col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Request</label>
-                                    <input type="text" value="" class="form-control" placeholder="Enter your Request here">
+                                    <input name="request" type="text" value="${data.q}" class="form-control" placeholder="Enter your Request here" required>
                                 </div>
                             </div>
                             <div class="col-sm-6 col-md-6">
                                 <div class="form-group">
                                     <label class="form-label">Category</label>
-                                    <select value="" class="form-control select2-show-search border-bottom-0 w-100 select2-show-search" data-placeholder="Select Request Category">
+                                    <select name="category" value="" class="form-control select2-show-search border-bottom-0 w-100 select2-show-search" data-placeholder="Select Request Category" required>
 												<optgroup label="Categories">
 													<option>--Select Request Category--</option>
-													<option value="1">IT</option>
-													<option value="2">Business</option>
-													<option value="3">Design</option>
+													${categoriesHtml}
 												</optgroup>
 											</select>
                                 </div>
@@ -101,7 +122,7 @@ function search(data) {
                             <div class="col-md-12">
                                 <div class="form-group">
                                     <label class="form-label">Message</label>
-                                    <textarea rows="5" class="form-control" placeholder="Enter your Request Message here"></textarea>
+                                    <textarea name="detail" rows="5" class="form-control" placeholder="I want a gigger that can do ${data.q}, with 5 years experience" required></textarea>
                                 </div>
                             </div>
                         </div>
@@ -110,7 +131,7 @@ function search(data) {
                         <button type="submit" class="btn btn-primary">Send Request</button>
                     </div>
                 </div>
-            </div>`
+            </div></form>`
                 $("#found-gigs").append(card)
             }
 
@@ -215,12 +236,19 @@ $('#search-btn').on("click", function (event) {
     localStorage.setItem('query', JSON.stringify(search))
     execute_search()
 });
-function sendRequest(data){
+function sendRequest(formid){
+    data = {}
+    let myForm = document.getElementById(formid);
+    let formData = new FormData(myForm);
+    for(var pair of formData.entries()){
+        data[pair[0]] = pair[1]    
+    }
+    data["user"]=localStorage.getItem("user")
     axios.post('/gigship-api/v1/gigs/create-request/', data)
     .then(function (response) {
       console.log(response)
       if(response.data.success){
-
+        window.location.reload(true)
       }
     })
     .catch(function (error) {
@@ -229,4 +257,13 @@ function sendRequest(data){
             }
     });
 }
+
+function constructCats(cats){
+    var html = ""
+    for (var i=0; i<cats.length;i++){
+        html += `<option value="${cats[i]}">${cats[i]}</option>`
+    }
+    return html
+}
+
 execute_search()

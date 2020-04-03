@@ -11,4 +11,5 @@ urlpatterns = [
     url(r'^gigs/order/(?P<id>[-\w]+)/$', views.order,name="order"),
     url(r'^gigs/create-order/$', views.create_order,name="create-order"),
     url(r'^gigs/create-request/$', views.create_request,name="create-request"),
+    url(r'^gigs/get-categories/$', views.get_categories,name="get-categories"),
     ]
