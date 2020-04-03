@@ -222,12 +222,7 @@ def add_services(request):
         return redirect("/accounts/login/")
 
 
-<<<<<<< HEAD
 def payment(request, id):
-=======
-import requests as r
-def payment(request):
->>>>>>> 7547a681ad4bb68f2509c08ddba4083a12d0d645
     if request.method == "GET":
         # status = request.GET['status']
         transid = request.GET['transaction_id']
@@ -321,8 +316,6 @@ def create_shipper(request):
     dump = json.dumps(data)
     return HttpResponse(dump, content_type='application/json')
 
-<<<<<<< HEAD
-=======
 
 def gen_order_no(number):
     if number > 0:
@@ -377,4 +370,3 @@ def buy_credit(request):
 
 
 
->>>>>>> 7547a681ad4bb68f2509c08ddba4083a12d0d645
