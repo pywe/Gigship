@@ -8,7 +8,7 @@
     <meta http-equiv="x-ua-compatible" content="ie=edge">
 
     <title> Gigship | Top-up</title>
-    <link rel="icon" type="image/png" href="/static/order/assets/img/favicon.png" />
+    <link rel="icon" type="image/png" href="/static/images/brand/favicon.png" />
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:600,700,800,900" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Roboto:400,500" rel="stylesheet">
@@ -16,6 +16,11 @@
     <link rel="stylesheet" href="/static/order/assets/css/bulma.css">
     <link rel="stylesheet" href="/static/order/assets/css/app.css">
     <link rel="stylesheet" href="/static/order/assets/css/buy-credit.css">
+    <style>
+        .my-error::-webkit-input-placeholder {
+            color: red;
+        }
+    </style>
 </head>
 
 <body>
@@ -24,13 +29,13 @@
     <!-- <div class="pageloader"></div>
     <div class="infraloader is-active"></div> -->
     <div class="signup-wrapper">
-        
+
         <div class="fake-nav">
             <a href="/" class="logo">
                 <img src="/static/images/brand/logo-gigship.png" width="112" height="112" alt="">
             </a>
         </div>
-        
+
         <div class="process-bar-wrap">
             <div class="process-bar">
                 <div class="progress-wrap">
@@ -47,25 +52,25 @@
                     </div>
                     <div id="step-dot-3" class="dot is-third" data-step="66.66">
                         <i data-feather="lock"></i>
-                    </div> 
+                    </div>
                     <div id="step-dot-4" class="dot is-fourth" data-step="100">
                         <i data-feather="flag"></i>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <div class="outer-panel">
             <div class="outer-panel-inner">
                 <div class="process-title">
                     <h2 id="step-title-1" class="step-title is-active">Fill in Details</h2>
                     <!-- <h2 id="step-title-2" class="step-title">Tell us more about you.</h2>
                     <h2 id="step-title-3" class="step-title">Upload a profile picture.</h2>-->
-                    <h2 id="step-title-2" class="step-title">Are you sure?</h2> 
+                    <h2 id="step-title-2" class="step-title">Are you sure?</h2>
                     <h2 id="step-title-3" class="step-title">Now, Let's Pay</h2>
                     <h2 id="step-title-4" class="step-title">You're all set. Ready?</h2>
                 </div>
-                
+
                 <!-- <div id="signup-panel-1" class="process-panel-wrap is-active">
                     <div class="columns">
                         <div class="column is-4">
@@ -100,7 +105,7 @@
                         </div>
                     </div>
                 </div> -->
-                
+
                 <div id="signup-panel-1" class="process-panel-wrap is-active">
                     <div class="form-panel">
                         <div class="field">
@@ -122,15 +127,15 @@
                             </div>
                         </div>
                     </div>
-                
+
                     <div class="buttons">
                         <a class="button is-rounded process-button" data-step="step-dot-1">Back</a>
                         <a class="button is-rounded process-button is-next" data-step="step-dot-2">Next</a>
                     </div>
                 </div>
-                
-                 
-                
+
+
+
                 <div id="signup-panel-2" class="process-panel-wrap is-narrow">
                     <div class="form-panel">
                         <div class="field">
@@ -140,7 +145,7 @@
                             </div>
                         </div>
                         <div class="field">
-                            <label>Repeat Password</label>
+                            <label>Currency</label>
                             <div class="control">
                                 <input value="GHS" type="text" class="input" placeholder="Currency" disabled>
                             </div>
@@ -152,13 +157,13 @@
                             </div>
                         </div>
                     </div>
-                
+
                     <div class="buttons">
                         <a class="button is-rounded process-button" data-step="step-dot-1">Back</a>
-                        <a class="button is-rounded process-button is-next" data-step="step-dot-3">Next</a>
+                        <a id="third-dot" class="button is-rounded process-button is-next" data-step="step-dot-3">Next</a>
                     </div>
-                </div> 
-                
+                </div>
+
                 <div id="signup-panel-3" class="process-panel-wrap is-narrow">
                     <div class="form-panel">
                         <img class="success-image" src="/static/order/assets/img/illustrations/signup/mailbox.svg" alt="">
@@ -186,7 +191,7 @@
                     <div class="form-panel">
                         <p id="done"></p>
                     </div>
-                
+
                     <div class="buttons">
                         <!-- <a class="button is-rounded process-button" data-step="step-dot-1">Back</a> -->
                         <a id="done-link" class="button is-rounded process-button is-next" data-step="step-dot-4">Continue</a>
@@ -194,9 +199,9 @@
                 </div>
             </div>
         </div>
-        
-        
-        
+
+
+
         <!--Edit Credit card Modal-->
         <div id="crop-modal" class="modal mdl-modal is-small crop-modal is-animated">
             <div class="modal-background"></div>
@@ -212,7 +217,7 @@
                     </header>
                     <div class="modal-card-body">
                         <div id="cropper-wrapper" class="cropper-wrapper">
-        
+
                         </div>
                     </div>
                 </div>
@@ -222,12 +227,12 @@
 
     <!-- Concatenated js plugins and jQuery -->
     <script src="/static/order/assets/js/app.js"></script>
-    
+
     <!-- Core js -->
     <script src="/static/order/assets/data/tipuedrop_content.js"></script>
     <script src="/static/order/assets/js/global.js"></script>
     <script src="/static/order/assets/js/main.js"></script>
-    
+
     <!-- Page and UI related js -->
     <script>
       jQuery.loadScript = function (url, callback) {
@@ -244,13 +249,13 @@
     {% if messages %}
     {% for message in messages %}
     <p hidden>{message}}</p>
-    {% endfor %}
-    {% if messages.tag == "success" %}
+
+    {% if message.tags == "success" %}
     <script>
     setTimeout(function () {
       $("#done-link").trigger('click');
       $("#done-link").attr('href',localStorage.getItem("reverse"))
-      $("done").text("Transaction successful, click continue to continue");
+      $("#done").text("Transaction successful, click continue to proceed");
     }, 500);
     $('.bar').css('width', '100' + '%');
     </script>
@@ -259,6 +264,7 @@
      alert("Your transaction was not successful")
     </script>
     {% endif %}
+    {% endfor %}
 
     {% endif %}
 </body>

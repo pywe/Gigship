@@ -1,3 +1,4 @@
+import requests as r_switch
 from django.shortcuts import render, redirect, HttpResponse
 import json
 from django.views.decorators.csrf import csrf_exempt
@@ -33,13 +34,7 @@ def index(request):
 
 def mygigs(request):
     if request.user.is_authenticated:
-        links = {'Gigger': 'accounts/mygigs.html',
-                 'Shipper': 'accounts/mygigs.html', 
-                 'Admin': 'accounts/mygigs.html'}
-        try:
-            template_name = "accounts/mygigs.html"
-        except:
-            template_name = "accounts/mygigs.html"
+        template_name = "accounts/mygigs.html"
         services = Gig.objects.filter(gigger=request.user)
         args = {'services': services}
         return render(request, template_name, args)
@@ -95,6 +90,10 @@ def registration(request):
         #     user = Gigger()
         #     user.user_type = 'Gigger'
         user = CustomUser()
+        user.username = username
+        user.email = email
+        user.set_password(password)
+        user.save()
         category1 = request.POST['category1']
         category2 = request.POST['category2']
         try:
@@ -103,19 +102,18 @@ def registration(request):
             pass
         else:
             user.categories.add(real_1)
+            user.save()
         try:
             real_2 = GiggerCategory.objects.get(name=category2)
         except:
             pass
         else:
             user.categories.add(real_2)
+            user.save()
 
         # else:
         #     user = Shipper()
         #     user.user_type = 'Shipper'
-        user.username = username
-        user.email = email
-        user.set_password(password)
         try:
             user.save()
         except Exception as e:
@@ -129,7 +127,7 @@ def registration(request):
         user.credit = credit
         user.save()
         msg = """Hello {}, we are excited to have you on board.
-        Here is your link ### to verify your email and officially be accepted on the platform as a/an {}""".format(username, account_type)
+        Here is your link ### to verify your email and become an official member of Gigship.""".format(username)
         send_mail(
             'Welcome To Gigship',
             msg,
@@ -137,7 +135,7 @@ def registration(request):
             [email],
             fail_silently=False,
         )
-        messages.success(request, "Account created. Please verify your mail")
+        messages.success(request, "We sent you a mail. You can login now.")
         return redirect("/accounts/registration/")
 
 
@@ -148,15 +146,15 @@ def mylogin(request):
         categories = GiggerCategory.objects.all()
         args = {'categories': categories}
         return render(request, template_name, args)
-    links = {'Gigger': '/accounts/dashboard/', 'Shipper': '/', 'Admin': '/'}
+    # links = {'Gigger': '/accounts/dashboard/', 'Shipper': '/', 'Admin': '/'}
     username = request.POST['username']
     password = request.POST['password']
     user = authenticate(request, username=username, password=password)
     if user is not None:
         login(request, user)
         messages.success(request, "login successful")
-        link = links[user.user_type]
-        return redirect(link)
+        # link = links[user.user_type]
+        return redirect('/accounts/dashboard/')
     else:
         messages.error(request, "Failed. Please check your credentials")
         return redirect("/accounts/login/")
@@ -173,6 +171,7 @@ def forgot(request):
     template_name = "accounts/forgot.html"
     args = {}
     return render(request, template_name, args)
+
 
 def chat(request):
     template_name = "accounts/chat.html"
@@ -193,6 +192,16 @@ def faq(request):
 def support(request):
     template_name = "accounts/contact.html"
     args = {}
+    return render(request, template_name, args)
+
+# edit gig page, showing support page to users
+
+
+def edit_gig(request,id):
+    template_name = "accounts/edit-gig.html"
+    args = {}
+    gig = Gig.objects.get(id=int(id))
+    args['gig']= gig
     return render(request, template_name, args)
 
 # dashboard page, dashboard page to users
@@ -216,6 +225,7 @@ def add_services(request):
         return redirect("/accounts/login/")
 
 
+
 import requests as r
 def payment(request):
     if request.method == "GET":
@@ -226,9 +236,10 @@ def payment(request):
         # print(transid)
         #reason = request.GET['reason']
         # code = request.GET['code']
-        url = "https://test.theteller.net/v1.1/users/transactions/{}/status/".format(transid)
-        header = {'Merchant-Id':"TTM-00000278"}
-        response = r.get(url,headers=header)
+        url = "https://test.theteller.net/v1.1/users/transactions/{}/status/".format(
+            transid)
+        header = {'Merchant-Id': "TTM-00000278"}
+        response = r.get(url, headers=header)
         json_data = json.loads(response.text)
         print(response.text)
         """Check if transaction was succesful first"""
@@ -237,7 +248,7 @@ def payment(request):
                 messages.error(request, "Order Already Confirmed")
                 return redirect('/accounts/top-up/')
             else:
-                order.complete = True
+                order.completed = True
                 order.save()
                 user = order.by
                 if user.credit:
@@ -359,8 +370,4 @@ def buy_credit(request):
         return render(request,template_name,args)
     else:
         return redirect('/accounts/login/')
-
-
-
-
 

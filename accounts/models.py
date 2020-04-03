@@ -19,6 +19,7 @@ class GiggerCategory(models.Model):
     def __str__(self):
         return self.name
 
+
 class Credit(models.Model):
     username = models.CharField(max_length=200,blank=True,null=True)
     current_bal = models.FloatField(default=00.0,null=True)
@@ -26,7 +27,7 @@ class Credit(models.Model):
     exp_date = models.DateTimeField(null=True)
     last_transid = models.CharField(max_length=12,null=True,blank=True)
     cumulative_bal = models.FloatField(default=00.0,null=True)
-    
+
 
     def __str__(self):
         return self.username
@@ -39,6 +40,7 @@ class CustomUser(AbstractUser):
     is_staff = models.BooleanField(default=False)
     user_type = models.CharField(max_length=20,choices=userTypes, null=True)
     credit = models.OneToOneField(Credit, null=True, blank=True,on_delete=models.SET_NULL)
+    categories =models.ManyToManyField(GiggerCategory)
 
 
 

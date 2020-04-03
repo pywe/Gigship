@@ -36,27 +36,9 @@
                             <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
                                 <div class="single-page  w-100  p-0">
                                     <div class="wrapper wrapper2">
-                                        <!-- <div class="p-4 mb-5">
-												<h4 class="text-left font-weight-semibold fs-16">Login With</h4>
-												<div class="btn-list d-sm-flex">
-													<a href="https://www.google.com/gmail/" class="btn btn-primary mb-sm-0"><i class="fa fa-google fa-1x mr-2"></i> Google</a>
-													<a href="https://twitter.com/" class="btn btn-secondary mb-sm-0"><i class="fa fa-twitter fa-1x mr-2"></i> Twitter</a>
-													<a href="https://www.facebook.com/" class="btn btn-info mb-0"><i class="fa fa-facebook fa-1x mr-2"></i> Facebook</a>
-												</div>
-											</div> -->
-                                        <!-- <hr class="divider"> -->
                                         <form method="POST" action="/accounts/registration/" id="Register" class="card-body" tabindex="500">
                                             <h3 class="pb-2">Register</h3>
                                             {% csrf_token %}
-                                            <!--{% if messages %}-->
-                                            <!--<div>-->
-                                            <!--<ul>-->
-                                            <!--    {% for message in messages %}-->
-                                            <!--    <li style="color:blue;">{{ message }}</li>-->
-                                            <!--    {% endfor %}-->
-                                            <!--</ul>-->
-                                            <!--</div>-->
-                                            <!--{% endif %}-->
                                             <div class="name">
                                                 <input type="text" name="username" required="required">
                                                 <label>Username</label>
@@ -70,7 +52,7 @@
                                                 <label>Password</label>
                                             </div>
                                            <div>
-                                        <div class="form-group select2-lg bg-white" hidden="true" id="type1">
+                                        <div class="form-group select2-lg bg-white" id="type1">
                                                 <p style="color:blue;">Choose Two Primary Gig Categories that you have much experience at below</p>
 
                                             <select required="required" id="category1" name="category1" class="form-control select2-show-search  border-bottom-0" data-placeholder="Select Account Type">
@@ -79,19 +61,10 @@
                                                     {% for category in categories %}
                                                         <option value="{{category.name}}">{{category.name}}</option>
                                                     {% endfor %}
-                                                    <!--<option value="IT Software">IT Software</option>-->
-                                                    <!--<option value="Music">Music</option>-->
-                                                    <!--<option value="Banking">Banking</option>-->
-                                                    <!--<option value="Finances">Finaces</option>-->
-                                                    <!--<option value="Cooking">Cook/Chef</option>-->
-                                                    <!--<option value="Driving">Driving</option>-->
-                                                    <!--<option value="HR Recruiter">HR Recruiter</option>-->
-                                                    <!--<option value="IT Hardware">IT Hardware</option>-->
-                                                    <!--<option value="Sales">Sales</option>-->
                                                 </optgroup>
 										    </select>
                                         </div>
-                                        <div class="form-group select2-lg bg-white" hidden="true" id="type2">
+                                        <div class="form-group select2-lg bg-white" id="type2">
                                             <select required="required" id="category2" name="category2" class="form-control select2-show-search  border-bottom-0" data-placeholder="Select Account Type">
                                                 <optgroup label="type2">
                                                     <option disabled selected>Second</option>
@@ -120,7 +93,8 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="tab-pane fade show" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+
+                            <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
                                 <div class="single-page w-100  p-0">
                                     <div class="wrapper wrapper2">
                                         <!-- <div class="p-4 mb-5">
@@ -161,6 +135,7 @@
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
@@ -169,16 +144,5 @@
     </div>
 </section>
 <!--/Register Section-->
-<script>
-    function checkType(){
-        var type = $("#account-type").val()
-        if (type === "Gigger" ){
-            $("#type1").attr('hidden',false)
-            $("#type2").attr('hidden',false)
-        }else{
-             $("#type1").attr('hidden',true)
-             $("#type2").attr('hidden',true)
-        }
-    }
-</script>
+
 {% endblock content %}

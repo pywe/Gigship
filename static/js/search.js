@@ -32,6 +32,7 @@ function Video(path){
 }
 
 function search(data) {
+    data['user'] = localStorage.getItem("users")
     var url = window.location.origin + "/gigs/search-gigs/";
     // const data = {
     //     q:keywords,category:category
@@ -55,11 +56,8 @@ function search(data) {
                 var object = json_resp.objects[i]
                 var card = constructCard(object);
                 $("#found-gigs").append(card)
-            }}else{
-                var card = `<p>Sorry, No Gigs Found matching your query. You could try using categories</p>`
-                $("#found-gigs").append(card)
             }
-            $('.scrolling-wrapper').slick({
+                $('.scrolling-wrapper').slick({
                 slidesToShow: 1,
                 slidesToScroll: 1,
                 autoplay: true,
@@ -68,6 +66,11 @@ function search(data) {
                 pauseOnFocus:true,
                 variableWidth:false
             });
+            }else{
+                var card = `<p>Sorry, No Gigs Found matching your query. Please try tweaking the search keywords</p>`
+                $("#found-gigs").append(card)
+            }
+
             // hide loader
             $("#global-loader").removeClass('show');
             $("#global-loader").addClass('hidden');
@@ -140,7 +143,9 @@ function constructCard(object) {
 
 function execute_search() {
     var search_q = localStorage.getItem('query');
+    var user = localStorage.getItem('user');
     if (exists(search_q)) {
+        search_q['user']=user
         $("#query").val(JSON.parse(search_q).q)
         search(JSON.parse(search_q))
     }
