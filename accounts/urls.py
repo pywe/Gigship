@@ -23,4 +23,5 @@ urlpatterns = [
     url(r'^accounts/create-transaction/$', views.create_transaction,name="create-transaction"),
     url(r'^accounts/top-up/$', views.buy_credit,name="buy-credit"),
     url(r'^payments/pay/', views.payment,name="payment"),
+    url(r'^accounts/request-form/', views.requestform,name="request-form"),
     ]
