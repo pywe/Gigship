@@ -379,9 +379,11 @@ def create_transaction(request):
 def buy_credit(request):
     if request.user.is_authenticated:
         template_name = "accounts/buy-credit.html"
-        args = {}
+        args = get_args(request.user,"buy-credit")
         args['zanzama']="ODEwN2ZiZjA5MWRhZGVhYWU2YWFmOWJhMGFkMjhlNjQ="
         return render(request,template_name,args)
     else:
         return redirect('/accounts/login/')
+
+
 

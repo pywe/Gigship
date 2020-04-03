@@ -1,0 +1,67 @@
+{% extends "accounts/base.html" %}
+{% block content %}
+<!--Breadcrumb-->
+<div>
+    <div class="bannerimg cover-image bg-background3" data-image-src="/static/images/banners/banner2.jpg">
+        <div class="header-text mb-0">
+            <div class="container">
+                <div class="text-center text-white ">
+                    <h1 class="">Accept Request</h1>
+                    <ol class="breadcrumb text-center">
+                        <li class="breadcrumb-item"><a href="/">Home</a></li>
+                        <li class="breadcrumb-item active text-white" aria-current="page">Accept Request</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--/Breadcrumb-->
+<form id="request-form" method="Dialog" action="#">
+    <div class="col-xl-12 col-lg-12 col-md-12" >
+    <div class="card mb-0">
+            <div class="card-body">
+            <p>If you accept this request, you need to create a gig for it.</p>
+            <p>And visit chat direct to suggest the gig to the creator of this request. The name of the creator in the chat will be {{request.created_by.username}}</p>
+        </div>
+    </div>
+    <div class="card mb-0">
+        <div class="card-header">
+            <h3 class="card-title">Here is the request detail</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">Request</label>
+                        <input disabled name="request" type="text" value="{{request.request}}" class="form-control" placeholder="Enter your Request here" required>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-6">
+                    <div class="form-group">
+                        <label class="form-label">Category</label>
+                        <p>{{request.category.name}}</p>
+                        <!-- <select name="category" value="" class="form-control select2-show-search border-bottom-0 w-100 select2-show-search" data-placeholder="Select Request Category" required>
+                            <optgroup label="Categories">
+                                <option>--Select Request Category--</option>
+                                
+                            </optgroup>
+                        </select> -->
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label class="form-label">Message</label>
+                        <textarea name="detail" rows="5" class="form-control" placeholder="I want a gigger" required disabled>{{request.detail}}</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <button type="submit" class="btn btn-danger">Decline</button>
+            <button type="submit" class="btn btn-success pull-right">Accept</button>
+        </div>
+    </div>
+</div></form>
+
+{% endblock content %}
