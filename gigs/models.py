@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import Shipper,GiggerCategory
+from accounts.models import GiggerCategory
 from django.conf import settings
 
 # Create your models here.
@@ -198,5 +198,6 @@ class Quote(models.Model):
 
 
     def __str__(self):
-        return "Quote submitted for {} by {}".format(self.request,self.submitted_by.username)
+        return "Quote submitted for {} by {}".format(self.request,
+        self.submitted_by.username)
 

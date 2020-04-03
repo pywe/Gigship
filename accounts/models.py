@@ -63,6 +63,7 @@ class Shipper(CustomUser):
 
     class Meta:
         verbose_name = "Shipper"
+        
 
 class Message(models.Model):
     content = models.TextField(null=True,blank=True)

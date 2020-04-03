@@ -5,8 +5,20 @@ from accounts.models import CustomUser
 from .models import *
 from django.contrib import messages
 from datetime import datetime,date, timedelta
+from django.core.mail import send_mail
 
 
+
+def get_args(user,page):
+    args = {}
+    args['categories'] = GiggerCategory.objects.all()
+    if page == "my-gigs":
+        args['services']=Gig.objects.filter(gigger=user)
+    if page == "my-order":
+        orders = Order.objects.all()
+        gigs = [i.gigs.all() for i in orders]
+        args['orders'] = [i for i in orders if user in gigs]
+    return args
 
 def order(request,id):
     template_name = "accounts/order.html"
@@ -513,6 +525,23 @@ def create_request(request):
         'message':'Request has been sent to giggers'
     }
     # TODO: send mail or notification to users
+    request_users = [i for i in CustomUser.objects.all() if cat in i.categories.all()]
+    link = "https://gigship.pywe.org/gigs/accept-request/{}/".format(req.id)
+    for each in request_users:
+        msg = """Hello {}, A shipper just request the following service.
+        Service required : {}.
+        Message : {}.
+        Here is the link {} to accept this request.
+        When you click on accept, you will be allowed to create 
+        a new gig, which will enable us notify the request
+        creator to come searching for your gig.""".format(each.username,req.request,req.detail,link)
+        send_mail(
+            'Request for a Gigger',
+            msg,
+            'pythonwithelli@gmail.com',
+            [each.email],
+            fail_silently=False,
+        )
     dump = json.dumps(data)
     messages.success(request, "Your request has been sent to giggers")
     return HttpResponse(dump, content_type='application/json')
@@ -530,3 +559,14 @@ def get_categories(request):
     }
     dump = json.dumps(data)
     return HttpResponse(dump, content_type='application/json')
+
+
+def accept_request(request,id):
+    if request.user.is_authenticated:
+        template_name = "accounts/accept-request.html"
+        args = get_args(request.user,"accept-request")
+        args['request'] = Request.objects.first()
+        # args['request']=Request.objects.get(id=int(id))
+        return render(request,template_name,args)
+    else:
+        return redirect('/accounts/login/')
