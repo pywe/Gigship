@@ -272,7 +272,7 @@ def search_api(request):
         for c in each.categories.all():
             service_cats.append(c.name)
     if len(service_names)>0:
-        result_names = [i for i in service_names if ratio_match(i,q) >= 0.5]
+        result_names = [i for i in service_names if ratio_match(i,q) >= 0.3]
     else:
         result_names = []
     if len(service_cats)>0:
@@ -382,7 +382,8 @@ def create_order(request):
                     order.gigs.add(gig)
                     order.save()
                 else:
-                    data = {"success":False,"message":"You do not have enough funds."}
+                    bal = float(body['total']) - credit.current_bal
+                    data = {"success":False,"message":"You do not have enough funds. You need at least GHC {}".format(str(bal))}
                     dump = json.dumps(data)
                     return HttpResponse(dump, content_type='application/json')
     # let's work on prices now

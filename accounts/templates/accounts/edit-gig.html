@@ -60,27 +60,27 @@
                                 <input value="{{gig.service}}" required="required" name="firstservice" type="text" class="form-control" placeholder="Eg: Logo Design">
                             </div>
                             <div class="row">
-                                <div class="col-sm-6 col-md-6">
+                                <div class="col-sm-12 col-md-12 col-lg-6">
                                     <div class="form-group m-0">
                                         <label class="form-label text-dark">Price</label>
                                         <div class="row gutters-xs">
                                             <div class="col-6">
                                                 <input value="{{gig.start_price}}" required="required" name="firststart_price" type="number" step=".01" min="0.0" class="form-control" placeholder="Starting Price">
                                             </div>
-                                            <div class="col-6">
-                                                <select name="firstcategory" class="form-control select2-show-search  border-bottom-0" data-placeholder="Select Category">
-                                                    <optgroup label="Categories">
-                                                        <option disabled selected>Choose category</option>
-                                                        {% for category in categories %}
-                                                            <option value="{{category.name}}">{{category.name}}</option>
-                                                        {% endfor %}
-                                                    </optgroup>
-                                                </select>
-                                            </div>                                         </div>
+                                            <!--<div class="col-6">-->
+                                            <!--    <select name="firstcategory" class="form-control select2-show-search  border-bottom-0" data-placeholder="Select Category">-->
+                                            <!--        <optgroup label="Categories">-->
+                                            <!--            <option disabled selected>Choose category</option>-->
+                                            <!--            {% for category in categories %}-->
+                                            <!--                <option value="{{category.name}}">{{category.name}}</option>-->
+                                            <!--            {% endfor %}-->
+                                            <!--        </optgroup>-->
+                                            <!--    </select>-->
+                                            <!--</div>                                         </div>-->
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-md-6">
+                                <div class="col-sm-12 col-md-12 col-lg-12">
                                     <div class="form-group">
                                         <label class="form-label text-dark">Year Experience</label>
                                         <div class="row gutters-xs">
@@ -112,7 +112,7 @@
                                             </div>
                                             <div class="col-4">
                                                 <input  name="feature_price" type="number"  step=".01" min="0.0" class="form-control" placeholder="Price">
-                                            </div>                            
+                                            </div>
                                             </div>
                                             <div class="col-lg-6 col-md-12" style="margin-top: 10px; margin-bottom: 20px;">
                                                 <a class="btn btn-light btn-sm" onclick="addService()" href="#/"><i class="fa fa-plus"></i> Add Another Extra Feature</a>
@@ -126,7 +126,7 @@
                                         <label class="form-label text-dark">Plans</label>
                                         <div class="row gutters-xs">
                                             {% for plan in gig.plans.all %}
-                                            <div class="col-4">
+                                            <div class="col-sm-12 col-md-12 col-lg-4">
                                                 <label class="form-label text-dark">{{plan.name}} Plan</label>
                                                 <div style="margin-bottom: 10px;">
                                                     <label class="form-label text-dark">Price</label>
@@ -144,9 +144,9 @@
                                                     <label class="form-label text-dark">Revision</label>
                                                     <input  name="plan-revision-{{plan.id}}" value="{{plan.revision}}" type="number" class="form-control" placeholder="revison time">
                                                 </div>
-                                               
+
                                             </div>
-                                            {% endfor %}                            
+                                            {% endfor %}
                                             </div>
                                         </div>
                                     </div>
