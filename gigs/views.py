@@ -227,9 +227,51 @@ def add_service_files(request,id):
 
 # This function will match two words and check
 # how similar they are by returning the ratio matched
+import re
+
 def ratio_match(user,existing):
     from difflib import SequenceMatcher as sm
     return sm(None,user,existing).ratio()
+
+# Create your views here.
+class Searcher:
+    def __init__(self):
+        pass
+
+    def my_searcher(self,all_from_db,user_prov):
+        my_dict = {}
+        for index,each in enumerate(all_from_db):
+            ratio = self.ratio_match(user_prov,each)
+            if ratio >= .6:
+                #my_dict.clear()
+                my_dict[each]=ratio
+        return my_dict
+
+
+    def ratio_match(self,user,existing):
+        from difflib import SequenceMatcher as sm
+        return sm(None,user,existing).ratio()
+
+    def my_matcher(self, all_msgs,new_msg,bot_ratio=0.5):
+        my_dict = {'0':0}
+        for index,each_msg in enumerate(all_msgs):
+            ratio = self.ratio_match(new_msg,each_msg)
+            if ratio > bot_ratio and ratio > list(my_dict.values())[0]:
+                my_dict.clear()
+                my_dict[each_msg]=ratio
+        return my_dict
+
+
+def pat_search(user,my_list):
+    words = []
+    my = re.compile(r'{}'.format(user),re.IGNORECASE)
+    for i in my_list:
+        a = my.search(i)
+        if a:
+            words.append(i)
+            # print(a.group())
+    words.sort()
+    return words
 
 # This function returns an object after
 # given an attribute of that object
@@ -253,6 +295,26 @@ def cal_rating(ratings):
     else:
         return 0
 
+def build_search_result(item):
+    obj = {}
+    obj['id'] = item.id
+    obj['service'] = item.service
+    obj['start_price'] = item.start_price
+    obj['gigger'] = item.gigger.username
+    obj['detail'] = item.service_detail
+    obj['experience'] = item.experience
+    files=[]
+    for f in item.files.all():
+        files.append(f.servicefile.url)
+    obj['files']=files
+    ratings = [r.rating for r in item.ratings.all()]
+    average = cal_rating(ratings)
+    no_rating = len(ratings)
+    obj['rating']=average
+    obj['rating_number']=no_rating
+    return obj
+
+
 
 @csrf_exempt
 def search_api(request):
@@ -264,19 +326,28 @@ def search_api(request):
     except:
         services = Gig.objects.all()
         service_names = [i.service for i in services]
+        # print("no user")
     else:
+        # print(user)
         services = Gig.objects.all()
         service_names = [i.service for i in services if i.gigger.username != user.username]
     service_cats = []
+    # getting categories of the services
     for each in services:
         for c in each.categories.all():
             service_cats.append(c.name)
-    if len(service_names)>0:
-        result_names = [i for i in service_names if ratio_match(i,q) >= 0.3]
+    if len(service_names) > 0:
+        # let's do a pattern search first 
+        pat_result_names = pat_search(q,service_names)
+        result_names = [i for i in service_names if ratio_match(i,q) >= 0.5]
+        result_names.extend(pat_result_names)
     else:
         result_names = []
-    if len(service_cats)>0:
+    if len(service_cats) > 0:
+        pat_cat_names = pat_search(q,service_cats)
+        # print(pat_cat_names)
         cat_names = [i for i in service_cats if ratio_match(i,cat) >= 0.5]
+        cat_names.extend(pat_cat_names)
     else:
         cat_names = []
     # adding up search word list and category list
@@ -289,40 +360,10 @@ def search_api(request):
         if not item:
             items = services.filter(category=i)
             for item in items:
-                obj = {}
-                obj['id'] = item.id
-                obj['service'] = item.service
-                obj['start_price'] = item.start_price
-                obj['gigger'] = item.gigger.username
-                obj['detail'] = item.service_detail
-                obj['experience'] = item.experience
-                files=[]
-                for f in item.files.all():
-                    files.append(f.servicefile.url)
-                obj['files']=files
-                ratings = [r.rating for r in item.ratings.all()]
-                average = cal_rating(ratings)
-                no_rating = len(ratings)
-                obj['rating']=average
-                obj['rating_number']=no_rating
+                obj = build_search_result(item)
                 objects.append(obj)
         else:
-            obj = {}
-            obj['id'] = item.id
-            obj['service'] = item.service
-            obj['start_price'] = item.start_price
-            obj['gigger'] = item.gigger.username
-            obj['detail'] = item.service_detail
-            obj['experience'] = item.experience
-            files=[]
-            for f in item.files.all():
-                files.append(f.servicefile.url)
-            obj['files']=files
-            ratings = [r.rating for r in item.ratings.all()]
-            average = cal_rating(ratings)
-            no_rating = len(ratings)
-            obj['rating']=average
-            obj['rating_number']=no_rating
+            obj = build_search_result(item)
             objects.append(obj)
     data = {'success':True,'objects':objects}
     dump = json.dumps(data)
@@ -416,7 +457,7 @@ def create_order(request):
         custom = body['custom']
     except:
         data={"success":True,"message":"Order created","data":info}
-        # TODO:notify the giggera
+        # TODO:notify the gigger
     else:
         custom_order = Customization()
         custom.total_price = custom['price']
@@ -427,5 +468,48 @@ def create_order(request):
         custom_order.save()
         data={"success":True,"message":"Custom order created","data":info}
         # TODO:notify the gigger
+    dump = json.dumps(data)
+    return HttpResponse(dump, content_type='application/json')
+
+
+# Create Request if there are no gigs like that
+@csrf_exempt
+def create_request(request):
+    json_data = json.loads(str(request.body, encoding='utf-8'))
+    body = {}
+    for key,val in json_data.items():
+        body[key]=val
+    try:
+        user = CustomUser.objects.get(username=body['user'])
+    except:
+        # we cannot do anything here
+        data = {
+            "success":False,
+            "message":"User is not recognised"
+        }
+        dump = json.dumps(data)
+        return HttpResponse(dump, content_type='application/json')
+    try:
+        cat = GiggerCategory.objects.get(name=body['category'])
+    except:
+        data = {
+            "success":False,
+            "message":"User is not recognised"
+        }
+        dump = json.dumps(data)
+        return HttpResponse(dump, content_type='application/json')
+    req = Request()
+    req.detail = body['detail']
+    req.request = body['request']
+    req.created_by = user
+    req.request_by = user
+    req.save()
+    req.category = cat
+    req.save()
+    data = {
+        'success':True,
+        'message':'Request has been sent to giggers'
+    }
+    # TODO: send mail or notification to users
     dump = json.dumps(data)
     return HttpResponse(dump, content_type='application/json')

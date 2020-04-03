@@ -1,3 +1,6 @@
+
+axios.defaults.baseURL = window.location.origin;
+axios.defaults.headers.common['Accept'] = 'application/json';
 function exists(ele) {
     if (ele !== null && ele !== undefined) {
         return true
@@ -32,7 +35,8 @@ function Video(path){
 }
 
 function search(data) {
-    data['user'] = localStorage.getItem("users")
+    data['user'] = localStorage.getItem("user")
+    console.log(data)
     var url = window.location.origin + "/gigs/search-gigs/";
     // const data = {
     //     q:keywords,category:category
@@ -67,7 +71,9 @@ function search(data) {
                 variableWidth:false
             });
             }else{
-                var card = `<p>Sorry, No Gigs Found matching your query. Please try tweaking the search keywords</p>`
+                // let's allow the person to create a request
+                var card = `<p>Sorry, No Gigs Found matching your query. 
+                Please try tweaking the search keywords</p>`
                 $("#found-gigs").append(card)
             }
 
@@ -172,4 +178,18 @@ $('#search-btn').on("click", function (event) {
     localStorage.setItem('query', JSON.stringify(search))
     execute_search()
 });
+function sendRequest(data){
+    axios.post('/gigship-api/v1/gigs/create-request/', data)
+    .then(function (response) {
+      console.log(response)
+      if(response.data.success){
+
+      }
+    })
+    .catch(function (error) {
+      if (exists(error.response)){
+                console.log(error.response.data)
+            }
+    });
+}
 execute_search()
