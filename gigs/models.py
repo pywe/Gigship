@@ -118,6 +118,7 @@ class Extra(models.Model):
 
 class Order(models.Model):
     order_no = models.CharField(max_length=30,null=True)
+    gig = models.ForeignKey(Gig,null=True,on_delete=models.SET_NULL)
     gigs = models.ManyToManyField(Gig,related_name="gigs")
     total_price = models.FloatField(default=0.0)
     VAT = models.FloatField(default=0.0)
@@ -129,7 +130,8 @@ class Order(models.Model):
     date_to_complete = models.DateTimeField(null=True)
     completed = models.BooleanField(default=False)
     date_completed = models.DateTimeField(null=True)
-    order_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True,on_delete=models.SET_NULL)
+    order_by = models.ForeignKey(settings.AUTH_USER_MODEL,null=True,on_delete=models.SET_NULL,related_name='order_by')
+    order_to = models.ForeignKey(settings.AUTH_USER_MODEL,null=True,on_delete=models.SET_NULL,related_name='order_to')
     extras = models.ManyToManyField(Extra)
     plan = models.ForeignKey(GigPlan,null=True,on_delete=models.SET_NULL)
     paid = models.BooleanField(default=False)

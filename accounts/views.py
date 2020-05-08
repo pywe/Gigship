@@ -179,10 +179,7 @@ def forgot(request):
     return render(request, template_name, args)
 
 
-def chat(request):
-    template_name = "accounts/chat.html"
-    args = get_args(request.user,"chat")
-    return render(request, template_name, args)
+
 
 # faq page, showing faq page to users
 

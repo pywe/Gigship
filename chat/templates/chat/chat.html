@@ -1,0 +1,1079 @@
+{% if user.is_authenticated %}
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8">
+		<title>Gigship | Direct Chats</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
+
+		<!-- Favicons -->
+		<link href="/static/Images/cell.png" rel="icon">
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet" href="/static/doccure/css/bootstrap.min.css">
+
+		<!-- Fontawesome CSS -->
+		<link rel="stylesheet" href="/static/doccure/plugins/fontawesome/css/fontawesome.min.css">
+		<link rel="stylesheet" href="/static/doccure/plugins/fontawesome/css/all.min.css">
+
+		<!-- Main CSS -->
+		<link rel="stylesheet" href="/static/doccure/css/style.css">
+		
+		<!--Dexie-->
+
+		<script src="https://pharst.pywe.org/static/doccure/js/dexie.js"></script>
+
+		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+		<!--[if lt IE 9]>
+			<script src="/static/doccure/js/html5shiv.min.js"></script>
+			<script src="/static/doccure/js/respond.min.js"></script>
+		<![endif]-->
+		<style>
+		  #toaster {
+          visibility: hidden;
+          min-width: 250px;
+          margin-left: -125px;
+          background-color: #333;
+          color: #fff;
+          text-align: center;
+          border-radius: 2px;
+          padding: 16px;
+          position: fixed;
+          z-index: 1;
+          left: 50%;
+          bottom: 30px;
+          font-size: 17px;
+        }
+
+        #toaster.show {
+          visibility: visible;
+          -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+          animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+        .mybold{
+            font-weight: bold;
+        }
+        /* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: white;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 5px;
+  transition: 0.3s ease-in;
+  font-size: 12px;
+  /*width:33.33%;*/
+  width:50%;
+  margin-bottom:0px;
+
+
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding:0px;
+  border-top: none;
+}
+.tabcontent.active{
+    display:block;
+}
+.icon{
+      height:20px;
+      width:20px;
+  }
+  .icon-sm{
+      height:15px;
+      width:15px;
+  }
+    .icon-md{
+      height:25px;
+      width:25px;
+  }
+  .icon-lg{
+      height:30px;
+      width:30px;
+  }
+  .icon-text{
+      font-size:12px;
+      color:black;
+  }
+  .hidden{
+      display: none;
+  }
+  .show{
+      display:block;
+  }
+/*.scrolling-wrapper {*/
+/*  overflow-x: scroll !important;*/
+/*  overflow-y: hidden !important;*/
+/*  white-space: nowrap !important;*/
+
+/*}*/
+/* .scrolling-wrapper .img{*/
+/*    display: inline-block !important;*/
+/*  }*/
+  /*.slick-arrow{*/
+	 /* display:none !important;*/
+  /*}*/
+		</style>
+
+	</head>
+	<body class="chat-page">
+
+
+		<!-- Main Wrapper -->
+		<div class="main-wrapper">
+
+			<!-- Header -->
+			<header class="header">
+				<nav class="navbar navbar-expand-lg header-nav">
+					<div class="navbar-header">
+						<a id="mobile_btn" href="javascript:void(0);">
+							<span class="bar-icon">
+								<span></span>
+								<span></span>
+								<span></span>
+							</span>
+						</a>
+
+						<a href="index-2.html" class="navbar-brand logo">
+                        <img src="/static/images/brand/logo-gigship.png" />
+						    <!-- <h3 style="color:#007bff;font-family:Montserrat;font-weight:bolder;">Gig
+                            <span style="color:red;"> Ship</span>
+                            </h3> -->
+						</a>
+
+					</div>
+
+					<div class="main-menu-wrapper">
+						<div class="menu-header">
+							<a href="/" class="menu-logo">
+								<img src="/static/images/brand/favicon.png" class="img-fluid" alt="Logo">
+							</a>
+							<a id="menu_close" class="menu-close" href="javascript:void(0);">
+								<i class="fas fa-times"></i>
+							</a>
+						</div>
+						<ul class="main-nav">
+							<li>
+								<a href="/">Home</a>
+							</li>
+							<!--<li class="has-submenu">-->
+							<!--	<a href="#">Doctors <i class="fas fa-chevron-down"></i></a>-->
+							<!--	<ul class="submenu">-->
+							<!--		<li><a href="doctor-dashboard.html">Doctor Dashboard</a></li>-->
+							<!--		<li><a href="appointments.html">Appointments</a></li>-->
+							<!--		<li><a href="schedule-timings.html">Schedule Timing</a></li>-->
+							<!--		<li><a href="my-patients.html">Patients List</a></li>-->
+							<!--		<li><a href="patient-profile.html">Patients Profile</a></li>-->
+							<!--		<li><a href="chat-doctor.html">Chat</a></li>-->
+							<!--		<li><a href="invoices.html">Invoices</a></li>-->
+							<!--		<li><a href="doctor-profile-settings.html">Profile Settings</a></li>-->
+							<!--		<li><a href="reviews.html">Reviews</a></li>-->
+							<!--		<li><a href="doctor-register.html">Doctor Register</a></li>-->
+							<!--	</ul>-->
+							<!--</li>	-->
+							<!--<li class="has-submenu active">-->
+							<!--	<a href="#">Patients <i class="fas fa-chevron-down"></i></a>-->
+							<!--	<ul class="submenu">-->
+							<!--		<li><a href="search.html">Search Doctor</a></li>-->
+							<!--		<li><a href="doctor-profile.html">Doctor Profile</a></li>-->
+							<!--		<li><a href="booking.html">Booking</a></li>-->
+							<!--		<li><a href="checkout.html">Checkout</a></li>-->
+							<!--		<li><a href="booking-success.html">Booking Success</a></li>-->
+							<!--		<li><a href="patient-dashboard.html">Patient Dashboard</a></li>-->
+							<!--		<li><a href="favourites.html">Favourites</a></li>-->
+							<!--		<li class="active"><a href="chat.html">Chat</a></li>-->
+							<!--		<li><a href="profile-settings.html">Profile Settings</a></li>-->
+							<!--		<li><a href="change-password.html">Change Password</a></li>-->
+							<!--	</ul>-->
+							<!--</li>	-->
+							<!--<li class="has-submenu">-->
+							<!--	<a href="#">Pages <i class="fas fa-chevron-down"></i></a>-->
+							<!--	<ul class="submenu">-->
+							<!--		<li><a href="voice-call.html">Voice Call</a></li>-->
+							<!--		<li><a href="video-call.html">Video Call</a></li>-->
+							<!--		<li><a href="search.html">Search Doctors</a></li>-->
+							<!--		<li><a href="calendar.html">Calendar</a></li>-->
+							<!--		<li><a href="components.html">Components</a></li>-->
+							<!--		<li class="has-submenu">-->
+							<!--			<a href="invoices.html">Invoices</a>-->
+							<!--			<ul class="submenu">-->
+							<!--				<li><a href="invoices.html">Invoices</a></li>-->
+							<!--				<li><a href="invoice-view.html">Invoice View</a></li>-->
+							<!--			</ul>-->
+							<!--		</li>-->
+							<!--		<li><a href="blank-page.html">Starter Page</a></li>-->
+							<!--		<li><a href="login.html">Login</a></li>-->
+							<!--		<li><a href="register.html">Register</a></li>-->
+							<!--		<li><a href="forgot-password.html">Forgot Password</a></li>-->
+							<!--	</ul>-->
+							<!--</li>-->
+							<!--<li class="has-submenu">-->
+							<!--	<a href="#">Blog <i class="fas fa-chevron-down"></i></a>-->
+							<!--	<ul class="submenu">-->
+							<!--		<li><a href="blog-list.html">Blog List</a></li>-->
+							<!--		<li><a href="blog-grid.html">Blog Grid</a></li>-->
+							<!--		<li><a href="blog-details.html">Blog Details</a></li>-->
+							<!--	</ul>-->
+							<!--</li>-->
+							<li>
+								<a href="/admin" target="_blank">Admin</a>
+							</li>
+						</ul>
+					</div>
+					<ul class="nav header-navbar-rht">
+						<li class="nav-item contact-item">
+							<div class="header-contact-img">
+								<i class="far fa-hospital"></i>
+							</div>
+							<div class="header-contact-detail">
+								<p class="contact-header">Contact</p>
+								<p class="contact-info-header"> +233 20 359 2400</p>
+							</div>
+						</li>
+
+						<!-- User Menu -->
+						<li class="nav-item dropdown has-arrow logged-item">
+							<a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+								<span class="user-img">
+									{% if user.user_img %}
+									<img class="rounded-circle" src="{{user.user_img.url}}" width="31" alt="{{user.username}}">
+									{% else %}
+									<img class="rounded-circle" src="/static/doccure/img/doctors/2.png" width="31" alt="{{user.username}}">
+									{% endif %}
+								</span>
+							</a>
+							<div class="dropdown-menu dropdown-menu-right">
+								<div class="user-header">
+									<div class="avatar avatar-sm">
+										{% if user.user_img %}
+										<img src="{{user.user_img.url}}" alt="User Image" class="avatar-img rounded-circle">
+										{% else %}
+										<img src="/static/doccure/img/doctors/2.png" alt="User Image" class="avatar-img rounded-circle">
+										{% endif %}
+									</div>
+									<div class="user-text">
+										<h6>{{user.username}}</h6>
+										<p class="text-muted mb-0">You</p>
+									</div>
+								</div>
+								<!-- <a class="dropdown-item" href="patient-dashboard.html">Dashboard</a>
+								<a class="dropdown-item" href="profile-settings.html">Profile Settings</a> -->
+								<a class="dropdown-item" href="/accounts/logout/">Logout</a>
+							</div>
+						</li>
+						<!-- /User Menu -->
+
+					</ul>
+				</nav>
+			</header>
+    		<!-- <div class="tab" id="tab"> -->
+              <!-- <button class="tablinks active" id="transactions" onclick="openCity(event, 'first')"><img src="/static/doccure/img/transactions.svg" class="icon-md" /><br><span class="icon-text">Transactions</span></button>
+              <button id="blind-chats" class="tablinks" onclick="openCity(event, 'second')"><img src="/static/doccure/img/heart-to-heart.svg" class="icon-md" /><br><span class="icon-text">Blind chats</span></button> -->
+              <!--<button id="pharms" class="tablinks" onclick="openCity(event, 'third')"><img src="/static/doccure/img/pain.svg" class="icon-lg" /><br><span class="icon-text">Doctors</span></button>-->
+              <!--<button id="agreement" class="tablinks" onclick="openCity(event, 'four')"><i class="fa fa-book"></i></button>-->
+            <!-- </div> -->
+			<!-- /Header -->
+			<!--<div class="scrolling-wrapper">-->
+            <div id="first" class="animated fadeIn">
+			<!-- Page Content -->
+			<div class="content">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-xl-12">
+							<div class="chat-window">
+                                <div class="chat-cont-left">
+                                    <div class="chat-users-list">
+                                        <div class="chat-scroll" id="orders-list">
+											<!--use this list to show all transactions  -->
+											 <!-- <a href="javascript:void(0);" class="media">
+                                                        <div class="media-img-wrap">
+                                                            <div class="avatar avatar-online">
+                                                                <img src="/static/images/svgs/jobs/work.svg" alt="User Image" class="avatar-img rounded-circle">
+                                                            </div>
+                                                        </div>
+                                                        <div class="media-body">
+                                                            <div>
+                                                                <div class="user-name">Gigship</div>
+                                                                <div class="user-last-chat">Make your requests here</div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="last-chat-time block">now</div>
+                                                                <div class="badge badge-success badge-pill">1</div>
+                                                            </div>
+                                                        </div>
+												</a>
+                                                <a href="javascript:void(0);" class="media">
+                                                        <div class="media-img-wrap">
+                                                            <div class="avatar avatar-online">
+                                                                <img src="/static/images/svgs/admin/man.svg" alt="User Image" class="avatar-img rounded-circle">
+                                                            </div>
+                                                        </div>
+                                                        <div class="media-body">
+                                                            <div>
+                                                                <div class="user-name">Josue Adimado</div>
+                                                                <div class="user-last-chat">Hello, how far with my projec?</div>
+                                                            </div>
+                                                            <div>
+                                                                <div class="last-chat-time block">now</div>
+                                                                <div class="badge badge-success badge-pill">1</div>
+                                                            </div>
+                                                        </div>
+													</a> -->
+
+                                        </div>
+                                    </div>
+                                </div>
+
+								<!-- Chat Right -->
+								<!-- Main chat -->
+								<div class="chat-cont-right">
+									<div class="chat-header">
+										<a id="back_user_list" href="javascript:void(0)" class="back-user-list">
+											<i class="material-icons">chevron_left</i>
+										</a>
+										<div class="media">
+											<div class="media-img-wrap">
+												<div id="myimagestatus" class="avatar">
+													<img id="myimage" src="/static/images/svgs/jobs/work.svg" alt="User Image" class="avatar-img rounded-circle">
+												</div>
+											</div>
+											<div class="media-body">
+												<div class="user-name" id="my-user-name"></div>
+												<div class="user-status" id="my-status"></div>
+											</div>
+										</div>
+										<div class="chat-options">
+											<!-- <a href="javascript:void(0)" data-toggle="modal" data-target="#voice_call">
+												<i class="material-icons">local_phone</i>
+											</a>
+											<a href="javascript:void(0)" data-toggle="modal" data-target="#video_call">
+												<i class="material-icons">videocam</i>
+											</a> -->
+											<a href="javascript:void(0)">
+												<i class="material-icons">more_vert</i>
+											</a>
+										</div>
+									</div>
+									<div class="chat-body">
+										<div class="chat-scroll">
+											<ul class="list-unstyled" id="chat-list">
+												<!-- <li class="media sent">
+													<div class="media-body">
+														<div class="msg-box">
+															<div>
+																<p>Hello there, I'm on your project</p>
+																<ul class="chat-msg-info">
+																	<li>
+																		<div class="chat-time">
+																			<span>Yesterday,8:30 AM</span>
+																		</div>
+																	</li>
+																</ul>
+															</div>
+														</div>
+													</div>
+												</li>
+												<li class="media received">
+													<div class="avatar">
+														<img src="/static/images/svgs/jobs/work.svg" alt="User Image" class="avatar-img rounded-circle">
+													</div>
+													<div class="media-body">
+														<div class="msg-box">
+															<div>
+																<p>That's good to hear.</p>
+																<p>Maybe these files might help your imagination</p>
+																<ul class="chat-msg-info">
+																	<li>
+																		<div class="chat-time">
+																			<span>Yesterday,9:00 AM</span>
+																		</div>
+																	</li>
+																</ul>
+															</div>
+														</div>
+														<div class="msg-box">
+															<div>
+																<p>Are you there?</p>
+																<ul class="chat-msg-info">
+																	<li>
+																		<div class="chat-time">
+																			<span>Yesterday,9:40 AM</span>
+																		</div>
+																	</li>
+																</ul>
+															</div>
+														</div>
+														<div class="msg-box">
+															<div>
+																<div class="chat-msg-attachments">
+																	<div class="chat-attachment">
+																		<img src="/static/images/svgs/jobs/hire.svg" alt="Attachment">
+																		<div class="chat-attach-caption">hire.jpg</div>
+																		<a href="#" class="chat-attach-download">
+																			<i class="fas fa-download"></i>
+																		</a>
+																	</div>
+																	<div class="chat-attachment">
+																		<img src="/static/images/svgs/jobs/pay.svg" alt="Attachment">
+																		<div class="chat-attach-caption">pay.jpg</div>
+																		<a href="#" class="chat-attach-download">
+																			<i class="fas fa-download"></i>
+																		</a>
+																	</div>
+																</div>
+																<ul class="chat-msg-info">
+																	<li>
+																		<div class="chat-time">
+																			<span>Yesterday,9:41 AM</span>
+																		</div>
+																	</li>
+																</ul>
+															</div>
+														</div>
+													</div>
+												</li> -->
+												<!-- <li class="media sent">
+													<div class="media-body">
+
+														<div class="msg-box">
+															<div>
+																<p>Where?</p>
+																<ul class="chat-msg-info">
+																	<li>
+																		<div class="chat-time">
+																			<span>8:42 AM</span>
+																		</div>
+																	</li>
+																</ul>
+															</div>
+														</div>
+														<div class="msg-box">
+															<div>
+																<p>OK, my name is Limingqiang. I like singing, playing basketballand so on.</p>
+																<ul class="chat-msg-info">
+																	<li>
+																		<div class="chat-time">
+																			<span>8:42 AM</span>
+																		</div>
+																	</li>
+																</ul>
+															</div>
+														</div>
+														<div class="msg-box">
+															<div>
+																<div class="chat-msg-attachments">
+																	<div class="chat-attachment">
+																		<img src="/static/doccure/img/img-04.jpg" alt="Attachment">
+																		<div class="chat-attach-caption">placeholder.jpg</div>
+																		<a href="#" class="chat-attach-download">
+																			<i class="fas fa-download"></i>
+																		</a>
+																	</div>
+																</div>
+																<ul class="chat-msg-info">
+																	<li>
+																		<div class="chat-time">
+																			<span>8:50 AM</span>
+																		</div>
+																	</li>
+																</ul>
+															</div>
+														</div>
+													</div>
+												</li> -->
+												<!-- <li class="media received">
+													<div class="avatar">
+														<img src="/static/doccure/img/doctors/doctor-thumb-02.jpg" alt="User Image" class="avatar-img rounded-circle">
+													</div>
+													<div class="media-body">
+														<div class="msg-box">
+															<div>
+																<p>You wait for notice.</p>
+																<p>Consectetuorem ipsum dolor sit?</p>
+																<p>Ok?</p>
+																<ul class="chat-msg-info">
+																	<li>
+																		<div class="chat-time">
+																			<span>8:55 PM</span>
+																		</div>
+																	</li>
+																</ul>
+															</div>
+														</div>
+													</div>
+												</li> -->
+												<!-- <li class="chat-date">Today</li> -->
+												<!-- <li class="media received">
+													<div class="avatar">
+														<img src="/static/doccure/img/doctors/doctor-thumb-02.jpg" alt="User Image" class="avatar-img rounded-circle">
+													</div>
+													<div class="media-body">
+														<div class="msg-box">
+															<div>
+																<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,</p>
+																<ul class="chat-msg-info">
+																	<li>
+																		<div class="chat-time">
+																			<span>10:17 AM</span>
+																		</div>
+																	</li>
+																	<li><a href="#">Edit</a></li>
+																</ul>
+															</div>
+														</div>
+													</div>
+												</li> -->
+												<!-- Message from this guy -->
+												<!-- <li class="media sent">
+													<div class="media-body">
+														<div class="msg-box">
+															<div>
+																<p>Lorem ipsum dollar sit Lorem ipsum dollar sitLorem ipsum dollar sitLorem ipsum dollar sitLorem ipsum dollar sitLorem ipsum dollar sitLorem ipsum dollar sitLorem ipsum dollar sitLorem ipsum dollar sitLorem ipsum dollar sitLorem ipsum dollar sitLorem ipsum dollar sitLorem ipsum dollar sitLorem ipsum dollar sitLorem ipsum dollar sitLorem ipsum dollar sitLorem ipsum dollar sit</p>
+																<div class="chat-msg-actions dropdown">
+																	<a href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+																		<i class="fe fe-elipsis-v"></i>
+																	</a>
+																	<div class="dropdown-menu dropdown-menu-right">
+																		<a class="dropdown-item" href="#">Delete</a>
+																	</div>
+																</div>
+																<ul class="chat-msg-info">
+																	<li>
+																		<div class="chat-time">
+																			<span>10:19 AM</span>
+																		</div>
+																	</li>
+																	<li><a href="#">Edit</a></li>
+																</ul>
+															</div>
+														</div>
+													</div>
+												</li> -->
+												<!-- While the other guy types -->
+												<!-- <li class="media received"> -->
+													<!-- The other guy's photo -->
+													<!-- <div class="avatar">
+														<img src="/static/doccure/img/doctors/doctor-thumb-02.jpg" alt="User Image" class="avatar-img rounded-circle">
+													</div> -->
+													<!-- Typing animation -->
+													<!-- <div class="media-body">
+														<div class="msg-box">
+															<div>
+																<div class="msg-typing">
+																	<span></span>
+																	<span></span>
+																	<span></span>
+																</div>
+															</div>
+														</div>
+													</div>
+												</li> -->
+											</ul>
+										</div>
+									</div>
+									 <!--Input area -->
+									 <div class="chat-footer">
+										<div class="input-group">
+											<div class="input-group-prepend">
+												<div class="btn-file btn">
+													<i class="fa fa-paperclip"></i>
+													<input type="file">
+												</div>
+											</div>
+											<input type="text" id="msg-input" class="input-msg-send form-control" placeholder="Type something">
+											<div class="input-group-append">
+												<button type="button" class="btn msg-send-btn"><i class="fab fa-telegram-plane"></i></button>
+											</div>
+										</div>
+									</div>
+								</div>
+								<!-- End of main chat -->
+								<!-- /Chat Right -->
+
+							</div>
+						</div>
+					</div>
+					<!-- /Row -->
+
+				</div>
+
+			</div>
+			<!-- /Page Content -->
+			</div>
+
+			<!-- Footer -->
+			<footer class="footer">
+
+				<!-- Footer Top -->
+				<div class="footer-top">
+					<div class="container-fluid">
+						<div class="row">
+							<div class="col-lg-3 col-md-6">
+
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-about">
+									<div class="footer-logo">
+										<img src="/static/images/brand/logo-gigship.png" alt="logo">
+									</div>
+									<div class="footer-about-content">
+										<p>Africa's No 1 place to find the perfect person for your gig. We are Gigship</p>
+										<div class="social-icon">
+											<ul>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-facebook-f"></i> </a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-twitter"></i> </a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-linkedin-in"></i></a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-instagram"></i></a>
+												</li>
+												<li>
+													<a href="#" target="_blank"><i class="fab fa-dribbble"></i> </a>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+								<!-- /Footer Widget -->
+
+							</div>
+
+							<div class="col-lg-3 col-md-6">
+
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-menu">
+									<h2 class="footer-title">For You</h2>
+									<ul>
+										<li><a href="/"><i class="fas fa-angle-double-right"></i> Search for Drugs</a></li>
+										<!--<li><a href="login.html"><i class="fas fa-angle-double-right"></i> Login</a></li>-->
+										<!--<li><a href="register.html"><i class="fas fa-angle-double-right"></i> Register</a></li>-->
+										<!--<li><a href="booking.html"><i class="fas fa-angle-double-right"></i> Booking</a></li>-->
+										<!--<li><a href="patient-dashboard.html"><i class="fas fa-angle-double-right"></i> Patient Dashboard</a></li>-->
+									</ul>
+								</div>
+								<!-- /Footer Widget -->
+
+							</div>
+
+							<div class="col-lg-3 col-md-6">
+
+								<!-- Footer Widget -->
+								<!--<div class="footer-widget footer-menu">-->
+								<!--	<h2 class="footer-title">For Doctors</h2>-->
+								<!--	<ul>-->
+								<!--		<li><a href="appointments.html"><i class="fas fa-angle-double-right"></i> Appointments</a></li>-->
+								<!--		<li><a href="chat.html"><i class="fas fa-angle-double-right"></i> Chat</a></li>-->
+								<!--		<li><a href="login.html"><i class="fas fa-angle-double-right"></i> Login</a></li>-->
+								<!--		<li><a href="doctor-register.html"><i class="fas fa-angle-double-right"></i> Register</a></li>-->
+								<!--		<li><a href="doctor-dashboard.html"><i class="fas fa-angle-double-right"></i> Doctor Dashboard</a></li>-->
+								<!--	</ul>-->
+								<!--</div>-->
+								<!-- /Footer Widget -->
+
+							</div>
+
+							<div class="col-lg-3 col-md-6">
+
+								<!-- Footer Widget -->
+								<div class="footer-widget footer-contact">
+									<h2 class="footer-title">Contact Us</h2>
+									<div class="footer-contact-info">
+										<div class="footer-address">
+											<span><i class="fas fa-map-marker-alt"></i></span>
+											<p> Valley View University,<br> Accra, Ghana </p>
+										</div>
+										<p>
+											<i class="fas fa-phone-alt"></i>
+											+233 20 359 2400
+										</p>
+										<p class="mb-0">
+											<i class="fas fa-envelope"></i>
+											pythonwithellie@gmail.com
+										</p>
+									</div>
+								</div>
+								<!-- /Footer Widget -->
+
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- /Footer Top -->
+
+				<!-- Footer Bottom -->
+                <div class="footer-bottom">
+					<div class="container-fluid">
+
+						<!-- Copyright -->
+						<div class="copyright">
+							<div class="row">
+								<div class="col-md-6 col-lg-6">
+									<div class="copyright-text">
+										<p class="mb-0">&copy; 2020 Pywe Health Apps. All rights reserved.</p>
+									</div>
+								</div>
+								<div class="col-md-6 col-lg-6">
+
+									<!-- Copyright Menu -->
+									<div class="copyright-menu">
+										<ul class="policy-menu">
+											<li><a href="terms-and-conditions-of-use">Terms and Conditions</a></li>
+											<!--<li><a href="privacy-policy.html">Policy</a></li>-->
+										</ul>
+									</div>
+									<!-- /Copyright Menu -->
+
+								</div>
+							</div>
+						</div>
+						<!-- /Copyright -->
+
+					</div>
+				</div>
+				<!-- /Footer Bottom -->
+
+			</footer>
+			<!-- /Footer -->
+
+		</div>
+		<!-- /Main Wrapper -->
+
+		<!-- Voice Call Modal -->
+		<div class="modal fade call-modal" id="confirm_order">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-body">
+						<!-- Outgoing Call -->
+						<div class="call-box incoming-box">
+							<div class="call-wrapper">
+								<div class="call-inner">
+									<div class="call-user">
+										<img alt="User Image" src="/static/Images/cell.png" height="50px" width="50px" class="call-avatar">
+										<h4>Order Action</h4>
+										<span id="warning-content">Cancel or confirm the order</span>
+									</div>
+									<div class="call-items">
+										<a id="cancel" href="javascript:void(0);" onclick="warn()" class="btn call-item call-end"><i class="material-icons">clear</i></a>
+										<a id="confirm" href="javascript:void(0);" class="btn call-item call-start"><i class="material-icons">check</i></a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Outgoing Call -->
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Voice Call Modal -->
+
+		<!-- Message Modal -->
+		<div class="modal fade call-modal" id="messageModal">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-body">
+						<!-- Outgoing Call -->
+						<div class="call-box incoming-box">
+							<div class="call-wrapper">
+								<div class="call-inner">
+									<div class="call-user">
+										<img alt="User Image" src="/static/Images/cell.png" height="50px" width="50px" class="call-avatar">
+										<h4>Notification</h4>
+										{% for message in messages %}
+                                          {% if message.tags == "success" %}
+                                            <p id='message-content' class="alert alert-success center">{{message}}</p>
+                                          {% elif message.tags == "warning" %}
+                                          <p id='message-content' class="alert alert-warning center">{{message}}</p>
+                                          {% else %}
+                                          <p id='message-content' class="alert alert-danger center">{{message}}</p>
+                                          {% endif %}
+                                        {% endfor %}
+
+                                		<!--<span>Cancel or confirm the order</span>-->
+									</div>
+									<div class="call-items">
+										<!--<a href="javascript:void(0);" class="btn call-item call-end" data-dismiss="modal" aria-label="Close"><i class="material-icons">clear</i></a>-->
+										<a href="#" id="messagecancel" class="btn call-item call-start"  data-dismiss="modal" aria-label="Close"><i class="material-icons">check</i></a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Outgoing Call -->
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Voice Call Modal -->
+
+		<!-- Message Modal -->
+		<div class="modal fade call-modal" id="warningModal">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-body">
+						<!-- Outgoing Call -->
+						<div class="call-box incoming-box">
+							<div class="call-wrapper">
+								<div class="call-inner">
+									<div class="call-user">
+										<img alt="User Image" src="/static/Images/cell.png" height="50px" width="50px" class="call-avatar">
+										<h4>Notification</h4>
+                                		<span>Are you sure you want to cancel the order?</span>
+									</div>
+									<div class="call-items">
+										<a href="javascript:void(0);" class="btn call-item call-end" data-dismiss="modal" aria-label="Close"><i class="material-icons">clear</i></a>
+										<a href="#" onclick="cancelOrder()" class="btn call-item call-start"><i class="material-icons">check</i></a>
+									</div>
+								</div>
+							</div>
+						</div>
+						<!-- Outgoing Call -->
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<!-- /Voice Call Modal -->
+
+		<!-- Video Call Modal -->
+		<div class="modal fade call-modal" id="sign_order">
+			<div class="modal-dialog modal-dialog-centered" role="document">
+				<div class="modal-content">
+					<div class="modal-body">
+
+						<!-- Incoming Call -->
+						<div class="call-box incoming-box">
+							<div class="call-wrapper">
+								<div class="call-inner">
+									<div class="call-user">
+										<img class="call-avatar" src="/static/Images/cell.png" alt="User Image">
+										<h4>Delivery Confirmation</h4>
+										<span>Paste Your Signature in the box and add an optional feeback</span>
+									</div>
+									<form method="POST" action="/orders/confirm-delivery/" id="confirmdelivery" onsubmit="toaster('Please wait...',10000)">
+                                        {% csrf_token %}
+									<div class="info-widget">
+    									<div class="row">
+    										<div class="col-md-12 col-sm-12">
+    											<div class="form-group card-label">
+    												<label>Signature</label>
+    												<input name="signature" class="form-control" type="text" required="required">
+    											</div>
+    										</div>
+    										<div class="col-md-12 col-sm-12">
+    											<div class="form-group card-label">
+    												<label>Feedback</label>
+    												<input name="feedback" class="form-control" type="text">
+    											</div>
+    										</div>
+    									</div>
+									</div>
+									<br>
+									<div class="call-items">
+										<a href="javascript:void(0);" class="btn call-item call-end" data-dismiss="modal" aria-label="Close"><i class="material-icons">clear</i></a>
+										<button type="submit" class="btn call-item call-start"><i class="material-icons">check</i></button>
+									</div>
+									</form>
+								</div>
+							</div>
+						</div>
+						<!-- /Incoming Call -->
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="toaster"></div>
+		<a id="message" data-toggle="modal" data-target="#messageModal" href="#"></a>
+		<!-- Video Call Modal -->
+
+		<!-- jQuery -->
+		<script src="https://pharst.pywe.org/static/doccure/js/jquery.min.js"></script>
+		<script src="https://pharst.pywe.org/static/js/jquery.min.js"></script>
+		<script src="https://www.pywe.org/static/js/jquery.finger.js"></script>
+		<script src="https://pharst.pywe.org/static/doccure/js/moment.min.js"></script>
+
+		<!-- Bootstrap Core JS -->
+		<script src="https://pharst.pywe.org/static/doccure/js/popper.min.js"></script>
+		<script src="https://pharst.pywe.org/static/doccure/js/bootstrap.min.js"></script>
+
+		<!-- Custom JS -->
+		<script src="/static/doccure/js/script.js"></script>
+		<script src="https://pharst.pywe.org/static/js/axios.min.js"></script>
+		<script src="/static/doccure/js/chat.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+<script>
+//settings
+window.chatOpened = false
+window.chatLoaded = false
+if(!exists(localStorage.getItem('count'))){
+localStorage.setItem('count',0)
+
+}
+
+// $(document).ready(function(){
+
+var username = "{{user.username}}"
+var user = "{{user.id}}"
+const settings = {
+	user:user,
+	username:username
+}
+localStorage.setItem('settings',JSON.stringify(settings))
+var iSettings = JSON.parse(localStorage.getItem("settings"))
+        
+jQuery(document).ready(function($) {
+
+  if (window.history && window.history.pushState) {
+
+    $(window).on('popstate', function() {
+
+      var hashLocation = location.hash;
+
+      console.log(hashLocation)
+      var hashSplit = hashLocation.split("#!/");
+      var hashName = hashSplit[1];
+
+      if (hashName !== '') {
+        var hash = window.location.hash;
+        if (hash === '') {
+            // $("#confirm_order").modal('show');
+        //   alert('Back button was pressed.');
+        $("#back_user_list").click()
+	  }
+	}
+});
+}
+});
+
+
+
+$('#back_user_list').click(function(event){
+window.location.hash = ""
+});
+
+document.querySelector('#msg-input').onkeyup = function(e) {
+        window.typing = true;
+        if (e.keyCode === 13) {  // enter, return
+        var myq = document.querySelector('#msg-input').value;
+        if(myq !== ""){
+            var newhtml = myq + "\n"
+            console.log(newhtml)
+            document.querySelector('#msg-input').value = newhtml
+            // document.querySelector('#blind-submit').click();
+        }
+        }
+    };
+
+    $(function ()
+    {
+        $('#msg-input').keyup(function (e){
+            if(e.keyCode == 13){
+                var curr = getCaret(this);
+                var val = $(this).val();
+                var end = val.length;
+
+                $(this).val( val.substr(0, curr) + '\r\n' + val.substr(curr, end));
+            }
+
+        })
+    });
+
+    function getCaret(el) {
+        if (el.selectionStart) {
+            return el.selectionStart;
+        }
+        else if (document.selection) {
+            el.focus();
+
+            var r = document.selection.createRange();
+            if (r == null) {
+                return 0;
+            }
+
+            var re = el.createTextRange(),
+            rc = re.duplicate();
+            re.moveToBookmark(r.getBookmark());
+            rc.setEndPoint('EndToStart', re);
+
+            return rc.text.length;
+        }
+        return 0;
+    }
+
+// document.querySelector('#msg-submit').onclick = function(e) {
+// 	var chat = document.querySelector('#msg-input').value;
+	
+// 	var obj = {content:chat,date_time:moment().calendar()}
+// 	var constChat = constructSentChat(obj);
+// 	pushChat(constChat,"#msg-input","#inner-blind-chat-list");
+// 	// this will automatically keep the chat to the bottom
+// 	$("#blind-chat-scroll").scrollTop($("#blind-chat-scroll")[0].scrollHeight);
+// 	window.scrollTo(0,document.body.scrollHeight);
+// };
+var typing, typingStarted, typingStopped;
+typing = false;
+
+typingStopped = _.debounce((function() {
+  if (!typing) {
+    return;
+  }
+  typing = false;
+  console.log('typing is done so do what ever you need to do to notify it');
+}), 5000);
+
+typingStarted = function() {
+  if (this.typing) {
+    return;
+  }
+  typing = true;
+  console.log('typing has started so do what ever you need to do to notify it');
+};
+
+
+
+</script>
+{% if messages %}
+<script>
+	$(document).ready(function(){
+	$('#message').click();
+	setTimeout(function(){
+		$('#messagecancel').click();
+	},5000);
+	});
+</script>
+{% endif %}
+
+</body>
+</html>
+{% else %}
+<script>
+    window.location.href = "/accounts/login-view/?next=chat"
+</script>
+{% endif %}
