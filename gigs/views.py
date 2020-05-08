@@ -432,7 +432,10 @@ def create_order(request):
             else:
                 if credit.current_bal >= float(body['total']):
                     order.save()
+                    order.gig = gig
                     order.gigs.add(gig)
+                    order.save()
+                    order.order_to = gig.gigger
                     order.save()
                 else:
                     bal = float(body['total']) - credit.current_bal

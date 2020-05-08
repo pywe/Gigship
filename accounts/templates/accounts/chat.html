@@ -18,9 +18,10 @@
 
 		<!-- Main CSS -->
 		<link rel="stylesheet" href="/static/doccure/css/style.css">
+		
 		<!--Dexie-->
 
-		<!--<script src="/static/doccure/js/dexie.js"></script>-->
+		<script src="https://pharst.pywe.org/static/doccure/js/dexie.js"></script>
 
 		<!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!--[if lt IE 9]>
@@ -600,7 +601,7 @@
 													<input type="file">
 												</div>
 											</div>
-											<input type="text" class="input-msg-send form-control" placeholder="Type something">
+											<input type="text" id="msg-input" class="input-msg-send form-control" placeholder="Type something">
 											<div class="input-group-append">
 												<button type="button" class="btn msg-send-btn"><i class="fab fa-telegram-plane"></i></button>
 											</div>
@@ -913,97 +914,41 @@
 		<!-- Video Call Modal -->
 
 		<!-- jQuery -->
-		<script src="/static/doccure/js/jquery.min.js"></script>
-		<script src="/static/js/jquery.min.js"></script>
+		<script src="https://pharst.pywe.org/static/doccure/js/jquery.min.js"></script>
+		<script src="https://pharst.pywe.org/static/js/jquery.min.js"></script>
 		<script src="https://www.pywe.org/static/js/jquery.finger.js"></script>
-		<script src="/static/doccure/js/moment.min.js"></script>
+		<script src="https://pharst.pywe.org/static/doccure/js/moment.min.js"></script>
 
 		<!-- Bootstrap Core JS -->
-		<script src="/static/doccure/js/popper.min.js"></script>
-		<script src="/static/doccure/js/bootstrap.min.js"></script>
+		<script src="https://pharst.pywe.org/static/doccure/js/popper.min.js"></script>
+		<script src="https://pharst.pywe.org/static/doccure/js/bootstrap.min.js"></script>
 
 		<!-- Custom JS -->
 		<script src="/static/doccure/js/script.js"></script>
-		<script src="/static/js/axios.min.js"></script>
-		<script>
-        //settings
-        window.chatOpened = false
-        window.chatLoaded = false
-        if(!exists(localStorage.getItem('count'))){
-        localStorage.setItem('count',0)
+		<script src="https://pharst.pywe.org/static/js/axios.min.js"></script>
+		<script src="/static/doccure/js/chat.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.9.1/underscore-min.js"></script>
+<script>
+//settings
+window.chatOpened = false
+window.chatLoaded = false
+if(!exists(localStorage.getItem('count'))){
+localStorage.setItem('count',0)
 
-        }
+}
 
-		$(document).ready(function(){
+// $(document).ready(function(){
 
-		var username = "{{user.username}}"
-		// var careName = "{{user.care_name}}"
-		// var agent = "{{user.care_agent}}"
-        //   if(agent === "True"){
-        //       var care_agent = true
-        //       var switchOn = false
-        //   }else{
-        //       var care_agent = false
-        //       var switchOn = true
-        //   }
-
-		// var iSettings = JSON.parse(localStorage.getItem("settings"))
-        //     if(!exists(iSettings)){
-        //     const settings = {
-		//     username:username,
-		//     careName:careName,
-		//     switchOn:switchOn,
-		//     careAgent:care_agent,
-		//     myCare:""
-		// }
-        //         localStorage.setItem("settings",JSON.stringify(settings))
-        //     }
-        // save settings
-
-        localStorage.setItem("status",true)
-        //update my status
-        // updateStatus();
-        // let's get all orders
-		// getOrdersShortInfo(username);
-        // let's get local chats if any: getCareAgent will get us localChats first
-        var iSettings = JSON.parse(localStorage.getItem("settings"))
-        if(exists(iSettings)){
-            var careAgent = iSettings.careAgent
-        }
-        // Get message for user
-        // getCareAgent()
-	    setInterval(function(){
-	        updateStatus();
-	      //getting chat for any agent
-	      var iSettings = JSON.parse(localStorage.getItem("settings"))
-            if(exists(iSettings)){
-                var careAgent = iSettings.careAgent
-            }
-            // getCareAgent()
-
-	    }, 10000);//every 10 seconds
-		});
-        function cancelOrder(){
-            $("#confirm_order").modal('hide');
-               toaster("Cancelling, please wait...",4000)
-               let data = {order_no:window.toCancel,username:"{{user.username}}"}
-               var url = "https://pharst.pywe.org/pharstapi/v1/orders/cancel-order/"
-        const http = new XMLHttpRequest();
-                http.open('POST', url);
-                http.setRequestHeader('Content-type', 'application/json');
-                // http.setRequestHeader('Authentication','id_token');
-                http.send(JSON.stringify(data));
-                http.onload = function() {
-            var resp = http.responseText;
-            // console.log(resp)
-            var json_resp = JSON.parse(resp);
-            toaster(json_resp['message'],4000)
-            if(json_resp['success']){
-                window.location.href = "/chat-transactions"
-            }
-                }
-           }
-         jQuery(document).ready(function($) {
+var username = "{{user.username}}"
+var user = "{{user.id}}"
+const settings = {
+	user:user,
+	username:username
+}
+localStorage.setItem('settings',JSON.stringify(settings))
+var iSettings = JSON.parse(localStorage.getItem("settings"))
+        
+jQuery(document).ready(function($) {
 
   if (window.history && window.history.pushState) {
 
@@ -1021,68 +966,26 @@
             // $("#confirm_order").modal('show');
         //   alert('Back button was pressed.');
         $("#back_user_list").click()
-
-      }
-
-        }
-    });
-
-
-  }
-
+	  }
+	}
+});
+}
 });
 
-function showTabs(){
-    $("#tab").removeClass('hidden')
-    $("#tab").addClass('show')
-    window.chatOpened = false
-    console.log(window.chatOpened)
-}
+
 
 $('#back_user_list').click(function(event){
-        showTabs()
-        window.location.hash = ""
-        // console.log(event.target)
-
-
-});
-// $('#second').click(function(){
-// getCareAgents()
-// });
-// window.onload = function Load(){
-window.tabs = ['#transactions','#blind-chats','#pharms']
-
-
-// }
-
-
-function openCity(evt, cityName) {
-//  evt.preventDefault()
 window.location.hash = ""
-// if(cityName === "second"){
-//     // chat has been opened
-//     window.chatOpened = false
-// }
-  var i, tabcontent, tablinks;
-  tabcontent = document.getElementsByClassName("tabcontent");
-  for (i = 0; i < tabcontent.length; i++) {
-    tabcontent[i].style.display = "none";
-  }
-  tablinks = document.getElementsByClassName("tablinks");
-  for (i = 0; i < tablinks.length; i++) {
-    tablinks[i].className = tablinks[i].className.replace(" active", "");
-  }
-  document.getElementById(cityName).style.display = "block";
-  evt.currentTarget.className += " active";
-}
-document.querySelector('#blind-input').onkeyup = function(e) {
+});
+
+document.querySelector('#msg-input').onkeyup = function(e) {
         window.typing = true;
         if (e.keyCode === 13) {  // enter, return
-        var myq = document.querySelector('#blind-input').value;
+        var myq = document.querySelector('#msg-input').value;
         if(myq !== ""){
             var newhtml = myq + "\n"
             console.log(newhtml)
-            document.querySelector('#blind-input').value = newhtml
+            document.querySelector('#msg-input').value = newhtml
             // document.querySelector('#blind-submit').click();
         }
         }
@@ -1090,7 +993,7 @@ document.querySelector('#blind-input').onkeyup = function(e) {
 
     $(function ()
     {
-        $('#blind-input').keyup(function (e){
+        $('#msg-input').keyup(function (e){
             if(e.keyCode == 13){
                 var curr = getCaret(this);
                 var val = $(this).val();
@@ -1124,32 +1027,54 @@ document.querySelector('#blind-input').onkeyup = function(e) {
         return 0;
     }
 
-document.querySelector('#blind-submit').onclick = function(e) {
-        var chat = document.querySelector('#blind-input').value;
-        // TODO: check if myCare name exists, if not relaod to get it
-        var obj = {content:chat,date_time:moment().calendar()}
-        var constChat = constructSentChat(obj);
-        pushChat(constChat,"#blind-input","#inner-blind-chat-list");
-        // this will automatically keep the chat to the bottom
-        $("#blind-chat-scroll").scrollTop($("#blind-chat-scroll")[0].scrollHeight);
-        window.scrollTo(0,document.body.scrollHeight);
+// document.querySelector('#msg-submit').onclick = function(e) {
+// 	var chat = document.querySelector('#msg-input').value;
+	
+// 	var obj = {content:chat,date_time:moment().calendar()}
+// 	var constChat = constructSentChat(obj);
+// 	pushChat(constChat,"#msg-input","#inner-blind-chat-list");
+// 	// this will automatically keep the chat to the bottom
+// 	$("#blind-chat-scroll").scrollTop($("#blind-chat-scroll")[0].scrollHeight);
+// 	window.scrollTo(0,document.body.scrollHeight);
+// };
+var typing, typingStarted, typingStopped;
+typing = false;
+
+typingStopped = _.debounce((function() {
+  if (!typing) {
+    return;
+  }
+  typing = false;
+  console.log('typing is done so do what ever you need to do to notify it');
+}), 5000);
+
+typingStarted = function() {
+  if (this.typing) {
+    return;
+  }
+  typing = true;
+  console.log('typing has started so do what ever you need to do to notify it');
 };
 
-		</script>
+document.querySelector("#msg-input").oninput = function(event) {
+  typingStarted();
+  typingStopped();
+  return
+};
+</script>
+{% if messages %}
+<script>
+	$(document).ready(function(){
+	$('#message').click();
+	setTimeout(function(){
+		$('#messagecancel').click();
+	},5000);
+	});
+</script>
+{% endif %}
 
-		 {% if messages %}
-        <script>
-            $(document).ready(function(){
-            $('#message').click();
-            setTimeout(function(){
-                $('#messagecancel').click();
-            },5000);
-            });
-        </script>
-        {% endif %}
-
-	</body>
-	</html>
+</body>
+</html>
 {% else %}
 <script>
     window.location.href = "/accounts/login-view/?next=new-chat"

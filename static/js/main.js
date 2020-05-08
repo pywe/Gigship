@@ -150,11 +150,11 @@ window.specials = ['first']
                         var json_resp = JSON.parse(resp);
                         // You can now use the response for what you want
                         if(json_resp['success']){
-
+                            
+                            
                             for(var i=0;i<json_resp['services'].length;i++){
                                 var service = json_resp['services'][i]
                                 const file = $("#"+service['fileId']).prop('files')
-
                                 if(i === (json_resp['services'].length)-1){
                                     final = true
                                     toast('Please wait...',10000);
