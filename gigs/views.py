@@ -186,13 +186,16 @@ def create_services(request):
 
 
 def file_check(name):
-
+    #TODO: validate other files
     images = ['jpg','jpeg','png','svg','webp']
+    videos = ['mp4','webm']
     name_list = name.split(".")
     if name_list[-1] in images:
         return "image"
-    else:
+    elif name_list[-1] in videos:
         return "video"
+    else:
+        return "not allowed"
 
 
 @csrf_exempt
@@ -206,19 +209,21 @@ def add_service_files(request,id):
     except Exception as e:
         print(e)
     for key,val in files.items():
-        try:
-            sf = GigFile()
-            sf.servicefile = val
-            sf.service = service
-            sf.save()
-            filename = val.name
-            sf.file_type = file_check(filename)
-            sf.save()
-        except Exception as e:
-            pass
-    data = {
-    'success':True,
-    'message':"Services created"}
+        filename = val.name
+        f_type = file_check(filename)
+        if f_type != "not allowed":
+            try:
+                sf = GigFile()
+                sf.servicefile = val
+                sf.service = service
+                sf.save()
+                sf.file_type = f_type
+                sf.save()
+            except Exception as e:
+                pass
+        data = {
+        'success':True,
+        'message':"Services created"}
     dump = json.dumps(data)
     messages.success(request,"Your Gig(s) have beens added")
     return HttpResponse(dump, content_type='application/json')
@@ -349,7 +354,7 @@ def search_api(request):
         for c in each.categories.all():
             service_cats.append(c.name)
     if len(service_names) > 0:
-        # let's do a pattern search first 
+        # let's do a pattern search first
         pat_result_names = pat_search(q,service_names)
         result_names = [i for i in service_names if ratio_match(i,q) >= 0.5]
         result_names.extend(pat_result_names)
@@ -463,6 +468,9 @@ def create_order(request):
     order.save()
     credit.current_bal -= float(total)
     credit.save()
+    order.paid = True
+    order.date_to_complete = exp_date
+    order.save()
     # is there any tax or commission?
     info = {"order_no":order.order_no,
     "total_price":order.total_price,
@@ -472,7 +480,7 @@ def create_order(request):
         custom = body['custom']
     except:
         data={"success":True,"message":"Order created","data":info}
-        # TODO:notify the gigger
+        # TODO:notify the gigger by mail or sms or whatever
     else:
         custom_order = Customization()
         custom.total_price = custom['price']
@@ -535,7 +543,7 @@ def create_request(request):
         Service required : {}.
         Message : {}.
         Here is the link {} to accept this request.
-        When you click on accept, you will be allowed to create 
+        When you click on accept, you will be allowed to create
         a new gig, which will enable us notify the request
         creator to come searching for your gig.""".format(each.username,req.request,req.detail,link)
         send_mail(
@@ -559,6 +567,27 @@ def get_categories(request):
     data ={
         "success":True,
         "objects":objects
+    }
+    dump = json.dumps(data)
+    return HttpResponse(dump, content_type='application/json')
+
+
+@csrf_exempt
+def updateOrder(request):
+    json_data = json.loads(str(request.body, encoding='utf-8'))
+    order_id = json_data['order']
+    status = json_data['status']
+    order = Order.objects.get(id=int(order_id))
+    order.status = status
+    if status == "fully completed":
+        order.completed = True
+        order.date_completed = datetime.now()
+    order.save()
+
+    data ={
+        "success":True,
+        "order":order.id,
+        "order_status":status
     }
     dump = json.dumps(data)
     return HttpResponse(dump, content_type='application/json')

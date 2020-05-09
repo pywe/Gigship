@@ -16,6 +16,38 @@
 </section>
 <!--/Breadcrumb-->
 
+    <!-- Popup Intro-->
+    <div id="confirmModal" class="modal ">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header border-bottom-0">
+                    <a class="close btn  btn-sm btn-secondary" data-dismiss="modal" aria-label="Close">
+                    Close
+                </a>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <div class="item text-center">
+                            <div class="row">
+                                <div class="col-xl-8 col-md-12 d-block mx-auto">
+                                    <div class="testimonia text-center">
+                                        <img src="/static/images/svgs/jobs/work.svg" class="w-70 h-100 mb-5 mx-auto text-center" alt="image">
+                                        <h3>Confirm</h3>
+
+                                        <h5 id="confirm-text"></h5>
+                                        <a href=# class="btn btn-secondary  mb-3" data-dismiss="modal">Change</a>
+                                        <a href=# class="btn btn-primary  mb-3" onclick="updateStatus()" data-dismiss="modal">Yes</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Message modal -->
+
 <!--User Dashboard-->
 <section class="sptb">
     <div class="container">
@@ -72,52 +104,133 @@
                             <div class="row">
                                 <div class="col-xl-12 col-lg-12 col-md-12">
                                     <!--Related Posts-->
-                                    <div id="myCarousel2" class="owl-carousel owl-carousel-icons3">
-                                        <div class="item">
-                                            <div class="card">
-                                                <!-- <div class="arrow-ribbon bg-purple">Gigs</div> -->
-                                                <div class="item-card7-img">
+                                    <div class="scrolling-wrapper">
+                                        {% for order in orders %}
+                                        <div class="card">
+                                                {% if order.order_by == user %}
+                                                 <div class="arrow-ribbon bg-purple">Sent Order</div>
+                                                 <div class="item-card7-img">
                                                     <div class="item-card7-imgs">
-                                                        <a href="jobs.html"></a>
-                                                        <img src="/static/images/products/products/j2.jpg" alt="img"
-                                                            class="cover-image">
+                                                        <a href="#"></a>
+                                                        {% if order.gig.files.all  %}
+                                                        {% for file in order.gig.files.all %}
+                                                            {% if forloop.first %}
+                                                                <img src="{{file.servicefile.url}}" alt="img"class="cover-image">
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        {% else %}
+                                                        <img src="/static/images/products/products/j2.jpg" alt="img"class="cover-image">
+                                                        {% endif %}
                                                     </div>
                                                     <div class="item-card7-overlaytext">
-                                                        <a href="jobs.html" class="text-white"> Gigs </a>
-                                                        <h4 class="font-weight-semibold mb-0">GHc389</h4>
+                                                        <a href="#" class="text-white">{{order.order_no}}</a>
+                                                        <h4 class="font-weight-semibold mb-0">GHc {{order.total_price}} Paid</h4>
                                                     </div>
                                                 </div>
                                                 <div class="card-body">
                                                     <div class="item-card7-desc">
                                                         <a href="jobs.html" class="text-dark">
-                                                            <h4 class="font-weight-semibold">Gig Title</h4>
+                                                            <h4 class="font-weight-semibold">{{order.gig.service}}</h4>
                                                         </a>
                                                     </div>
                                                     <div class="item-card7-text">
                                                         <ul class="icon-card mb-0">
-                                                            <li class=""><a href="#" class="icons"><i
-                                                                        class="si si-location-pin text-muted mr-1"></i>
-                                                                    Los Angles</a></li>
+                                                            <li class=""><a href="#" class="icons" id="status-{{order.id}}"><i class="si si-location-pin text-muted mr-1"></i>Order Status: {{order.status}}</a></li>
+                                                            {% if not order.completed %}
+                                                            <div class="col-sm-6 col-md-6">
+
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Update Status</label>
+                                                                    <select onchange="confirm('{{order.id}}',this)" name="status" class="form-control select2-show-search border-bottom-0 w-100 select2-show-search" data-placeholder="Select Current Status">
+                                										<optgroup label="Status">
+                                											<option>--Select Current Status--</option>
+                                											<option value="Started">Started</option>
+                                											<option value="10% Complete">10% Complete</option>
+                                											<option value="50% Complete">50% Complete</option>
+                                											<option value="80% Complete">80% Complete</option>
+                                											<option value="fully completed">Fully Completed</option>
+                                										</optgroup>
+                                									</select>
+                                                                </div>
+                                                            </div>
+                                                            {% endif %}
+
                                                             <li><a href="#" class="icons"><i
-                                                                        class="si si-event text-muted mr-1"></i> 5 hours
-                                                                    ago</a></li>
+                                                                        class="si si-event text-muted mr-1"></i>Due date: {{order.date_to_complete}}</a></li>
                                                             <li class="mb-0"><a href="#" class="icons"><i
-                                                                        class="si si-user text-muted mr-1"></i> Sally
-                                                                    Peake</a></li>
-                                                            <li class="mb-0"><a href="#" class="icons"><i
-                                                                        class="si si-phone text-muted mr-1"></i>
-                                                                    5-67987608</a></li>
+                                                                        class="si si-user text-muted mr-1"></i>Gigger: {{order.order_to.username}}</a></li>
+                                                            <li class="mb-0"><a href="/chat/" class="icons"><i class="si si-phone text-muted mr-1"></i>Chat Gigger</a></li>
                                                         </ul>
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </div>
+                                                 {% else %}
+                                                 <div class="arrow-ribbon bg-purple">Received Order</div>
+                                                  <div class="item-card7-img">
+                                                    <div class="item-card7-imgs">
+                                                        <a href="#"></a>
+                                                        {% if order.gig.files.all  %}
+                                                        {% for file in order.gig.files.all %}
+                                                            {% if forloop.first %}
+                                                                <img src="{{file.servicefile.url}}" alt="img"class="cover-image">
+                                                            {% endif %}
+                                                        {% endfor %}
+                                                        {% else %}
+                                                        <img src="/static/images/products/products/j2.jpg" alt="img"class="cover-image">
+                                                        {% endif %}
+                                                    </div>
+                                                    <div class="item-card7-overlaytext">
+                                                        <a href="#" class="text-white">{{order.order_no}}</a>
+                                                        <h4 class="font-weight-semibold mb-0">GHc {{order.total_price}} Paid</h4>
+                                                    </div>
+                                                </div>
+                                               <div class="card-body">
+                                                    <div class="item-card7-desc">
+                                                        <a href="jobs.html" class="text-dark">
+                                                            <h4 class="font-weight-semibold">{{order.gig.service}}</h4>
+                                                        </a>
+                                                    </div>
+                                                    <div class="item-card7-text">
+                                                        <ul class="icon-card mb-0">
+                                                            <li class=""><a href="#" class="icons"><i class="si si-location-pin text-muted mr-1"></i>Order Status: {{order.status}}</a></li>
+                                                            <li class=""><a href="#" class="icons" id="status-{{order.id}}"><i class="si si-location-pin text-muted mr-1"></i>Order Status: {{order.status}}</a></li>
+                                                            {% if not order.completed %}
+                                                            <div class="col-sm-6 col-md-6">
+                                                                <div class="form-group">
+                                                                    <label class="form-label">Update Status</label>
+                                                                    <select onchange="confirm('{{order.id}}',this)" name="status" class="form-control select2-show-search border-bottom-0 w-100 select2-show-search" data-placeholder="Select Current Status">
+                                										<optgroup label="Status">
+                                											<option>--Select Current Status--</option>
+                                											<option value="Started">Started</option>
+                                											<option value="10% Complete">10% Complete</option>
+                                											<option value="50% Complete">50% Complete</option>
+                                											<option value="80% Complete">80% Complete</option>
+                                											<option value="99% complete">90% Complete</option>
+                                										</optgroup>
+                                									</select>
+                                                                </div>
+                                                            </div>
+
+                                                            {% endif %}
+                                                            <li><a href="#" class="icons"><i
+                                                                        class="si si-event text-muted mr-1"></i>Due date: {{order.date_to_complete}}</a></li>
+                                                            <li class="mb-0"><a href="#" class="icons"><i
+                                                                        class="si si-user text-muted mr-1"></i>Client: {{order.order_by.username}}</a></li>
+                                                            <li class="mb-0"><a href="/chat/" class="icons"><i class="si si-phone text-muted mr-1"></i>Chat Client</a></li>
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                 {% endif %}
+
+
+                                                </div>
+                                            {% endfor%}
                                     </div>
                                     <!--/Related Posts-->
                                 </div>
                             </div>
                         </div>
                     </section>
+                    <!--orders:{{orders}}-->
                     <!--/Job lists-->
 
                 </div>
@@ -126,5 +239,48 @@
     </div>
 </section>
 
+<script src="https://www.pywe.org/static/js/jquery.min.js"></script>
+<script>
+function confirm(id,ele){
+    console.log(ele.value)
+    window.order = id
+    window.order_status = ele.value
+    $("#confirmModal").modal('show');
+    $("#confirm-text").text("Are you sure that's the current status?")
+}
 
+function updateStatus(){
+    var obj = {
+        order:window.order,
+        status:window.order_status
+    }
+    axios.post('/gigship-api/v1/gigs/update-order-status/',obj)
+  .then(function (response) {
+      console.log(response)
+      if(response.data.success){
+        toaster("Updated successfully",3000);
+        var id = response.data.order
+        var ustatus = response.data.order_status
+        // console.log(ustatus)
+        $("#status-"+id).html(`<i class="si si-location-pin text-muted mr-1"></i>Order status: ${ustatus}`)
+      }
+    })
+    .catch(function (error) {
+        toaster("Failed to update...",3000)
+    if (exists(error.response)){
+                console.log(error.response.data)
+            }
+    });
+}
+// $('.select2-show-search').on('change', function()
+// {
+//     alert(this.value); //or alert($(this).val());
+// });
+
+// $('.select2-show-search').on('change', function() {
+//     console.log(this.value)
+// //   $("#confirmModal").modal('show');
+// });
+
+</script>
 {% endblock content %}

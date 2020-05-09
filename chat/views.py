@@ -310,7 +310,7 @@ def getPeople(request):
             obj = {}
             obj['username']=person.username
             if person.user_img:
-                obj['image']="/"+str(person.user_img.url)
+                obj['image']=person.user_img.url
             else:
                 obj['image']="/static/images/svgs/jobs/work.svg"
             # TODO: Get the online status here
@@ -328,7 +328,7 @@ def getPeople(request):
                 ob['time']=msg.date_created
                 ob['count'] = len(Message.objects.filter(from_user=person))
                 obj['lastMsg']=ob
-                
+
             objects.append(obj)
         data = {'success':True,'objects':objects}
     dump = json.dumps(data,cls=ExtendedEncoderAllFields)
@@ -345,7 +345,7 @@ def getMessages(request):
         msgs = Message.objects.filter(from_user=user,to_user=other)|Message.objects.filter(to_user=user,from_user=other)
     except Exception as e:
         data = {"success":False,"message":str(e)}
-    else:  
+    else:
         chunks = chunkList(msgs,10)
         try:
             chunked = chunks[page-1]

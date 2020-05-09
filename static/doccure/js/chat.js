@@ -1,6 +1,5 @@
 // SETTINGS
-axios.defaults.baseURL = 'http://127.0.0.1:8000/'
-// 'https://gigship.pywe.org';
+axios.defaults.baseURL = "https://gigship.pywe.org";
 axios.defaults.headers.common['Accept'] = 'application/json';
 var iSettings = JSON.parse(localStorage.getItem("settings"))
 
@@ -100,7 +99,7 @@ function getPeople(){
     var obj = {username:iSettings.username}
   axios.post('/gigship-api/v1/chat/get-people/', obj)
   .then(function (response) {
-    
+
     if (response.data.success){
     var people = response.data.objects
     // if we got more than one person
@@ -115,6 +114,18 @@ function getPeople(){
     }
     }else{
         // we did not get anyone
+        var obj ={
+            username:"Gigship",
+            image:"/static/images/svgs/jobs/work.svg",
+            lastMsg:{
+                content:"Hello there, welcome to Gigship",
+                time:new Date(),
+                count:1
+            }
+        }
+        var html = contructGigship(obj.username,obj.image,obj.lastMsg);
+            // console.log(html)
+            $("#orders-list").append(html);
         toaster("No one availble",3000);
         console.log(response)
     }}else{
@@ -150,8 +161,14 @@ function getChats(username,image,page){
     if (exists(error.response)){
                 console.log(error.response.data)
             }
-    }); 
-    
+    });
+
+}
+
+function getNoChats(username,image,page){
+    $("#my-user-name").html(username)
+    $("#count-"+username).html("")
+    $("#myimage").attr("src",image);
 }
 
 getPeople()
@@ -162,6 +179,30 @@ function contructPerson(username,image,msgObj){
     var time =  momentTime(msgObj.time)
     var count = msgObj.count
     div = `<a href="javascript:void(0);" onclick="getChats('${username}','${image}','1')" class="media">
+    <div class="media-img-wrap">
+        <div class="avatar avatar-online">
+            <img src="${image}" alt="User Image" class="avatar-img rounded-circle">
+        </div>
+    </div>
+    <div class="media-body">
+        <div>
+            <div class="user-name">${username}</div>
+            <div class="user-last-chat">${lastMsg}</div>
+        </div>
+        <div>
+            <div class="last-chat-time block">${time}</div>
+            <div class="badge badge-success badge-pill" id="count-${username}">${count}</div>
+        </div>
+    </div>
+</a>`
+return div
+}
+
+function contructGigship(username,image,msgObj){
+    var lastMsg = msgObj.content
+    var time =  momentTime(msgObj.time)
+    var count = msgObj.count
+    div = `<a href="javascript:void(0);" onclick="getNoChats('${username}','${image}','1')" class="media">
     <div class="media-img-wrap">
         <div class="avatar avatar-online">
             <img src="${image}" alt="User Image" class="avatar-img rounded-circle">

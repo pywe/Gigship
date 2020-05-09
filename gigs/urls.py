@@ -13,4 +13,6 @@ urlpatterns = [
     url(r'^gigs/create-request/$', views.create_request,name="create-request"),
     url(r'^gigs/accept-request/(?P<id>[-\w]+)/$', views.accept_request,name="accept-request"),
     url(r'^gigs/get-categories/$', views.get_categories,name="get-categories"),
+
+    url(r'^gigs/update-order-status/$', views.updateOrder,name="update-order"),
     ]

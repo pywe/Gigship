@@ -8,7 +8,7 @@ from django.template.loader import render_to_string
 from django.contrib.auth.hashers import make_password
 from django.core.mail import send_mail
 from django.contrib.auth import authenticate, login, logout
-from gigs.models import Gig
+from gigs.models import Gig,Order
 from datetime import datetime,date, timedelta
 
 
@@ -18,10 +18,9 @@ def get_args(user,page):
     args['categories'] = GiggerCategory.objects.all()
     if page == "my-gigs":
         args['services']=Gig.objects.filter(gigger=user)
-    if page == "my-order":
-        orders = Order.objects.all()
-        gigs = [i.gigs.all() for i in orders]
-        args['orders'] = [i for i in orders if user in gigs]
+    if page == "my-orders":
+        orders = Order.objects.filter(order_to=user)|Order.objects.filter(order_by=user)
+        args['orders'] = orders
     return args
 
 

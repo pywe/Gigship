@@ -53,6 +53,27 @@
     .show{
 	    display:block !important;
         }
+        #toaster {
+          visibility: hidden;
+          min-width: 250px;
+          margin-left: -125px;
+          background-color: #333;
+          color: #fff;
+          text-align: center;
+          border-radius: 2px;
+          padding: 16px;
+          position: fixed;
+          z-index: 1;
+          left: 50%;
+          bottom: 30px;
+          font-size: 17px;
+        }
+
+        #toaster.show {
+          visibility: visible;
+          -webkit-animation: fadein 0.5s, fadeout 0.5s 2.5s;
+          animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
     </style>
 </head>
 
@@ -152,6 +173,7 @@
     <!--/Horizontal-main-->
     </div>
     <!--/Header Main-->
+    <div id="toaster"></div>
     <!-- Popup Intro-->
     <div id="messageModal" class="modal ">
         <div class="modal-dialog" role="document">
@@ -406,6 +428,12 @@
     });
     }
     getCats()
+    function toaster(msg,time) {
+    var x = document.getElementById("toaster");
+    x.innerHTML = msg;
+    x.className = "show";
+    setTimeout(function(){ x.className = x.className.replace("show", ""); }, time);
+  }
     </script>
     {% if messages %}
     <script>

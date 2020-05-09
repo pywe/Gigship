@@ -73,7 +73,7 @@ class Gig(models.Model):
     service_detail = models.TextField(null=True)
     rating = models.FloatField(default=0.0)
     gigger = models.ForeignKey(settings.AUTH_USER_MODEL,null=True,on_delete=models.SET_NULL)
-    
+
 
     class Meta:
         verbose_name = "Gig"
@@ -103,7 +103,7 @@ class GigPlan(models.Model):
     delivery_time = models.IntegerField(default=1,help_text="Number of days")
     revision = models.IntegerField(default=1,help_text="How many times will you review?")
     price = models.FloatField(default=0.0)
-    
+
 
 
 # add extra features to gig

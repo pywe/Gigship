@@ -63,7 +63,7 @@ class Shipper(CustomUser):
 
     class Meta:
         verbose_name = "Shipper"
-        
+
 
 
 
@@ -80,3 +80,4 @@ class Transaction(models.Model):
 
     def __str__(self):
         return self.transaction_id
+
